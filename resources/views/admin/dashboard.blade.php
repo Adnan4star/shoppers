@@ -85,7 +85,7 @@
 @endsection
 
 @section('customJs')
-    <script>
-        console.log('hello')
-    </script>
+<script>
+    console.log('hello')
+</script>
 @endsection
