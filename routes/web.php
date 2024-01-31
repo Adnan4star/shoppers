@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HomeController;
+use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +46,23 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('/categories/{category}/edit',[CategoryController::class, 'edit'])->name('categories.edit');
         Route::put('/categories/{category}',[CategoryController::class, 'update'])->name('categories.update'); //edit submit
         Route::delete('/categories/{category}',[CategoryController::class, 'destroy'])->name('categories.destroy');
+
+        //sub_category routes
+        Route::get('/sub-categories',[SubCategoryController::class, 'index'])->name('sub-categories.index');
+        Route::get('/sub-categories/create',[SubCategoryController::class, 'create'])->name('sub-categories.create');
+        Route::post('/sub-categories',[SubCategoryController::class, 'store'])->name('sub-categories.store');
+        Route::get('/sub-categories/{subCategory}/edit',[SubCategoryController::class, 'edit'])->name('sub-categories.edit');
+        Route::put('/sub-categories/{subCategory}',[SubCategoryController::class, 'update'])->name('sub-categories.update'); //edit submit
+        Route::delete('/sub-categories/{subCategory}',[SubCategoryController::class, 'destroy'])->name('sub-categories.delete');
+
+        //Brands route
+        Route::get('/brands',[BrandController::class, 'index'])->name('brands.index');
+        Route::get('/brands/create',[BrandController::class, 'create'])->name('brands.create');
+        Route::post('/brands',[BrandController::class, 'store'])->name('brands.store');
+        Route::get('/brands/{brand}/edit',[BrandController::class, 'edit'])->name('brands.edit');
+        Route::put('/brands/{brand}',[BrandController::class, 'update'])->name('brands.update'); //edit submit
+        Route::delete('/brands/{brand}',[BrandController::class, 'destroy'])->name('brands.destroy');
+
 
         //temp-images.create
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');

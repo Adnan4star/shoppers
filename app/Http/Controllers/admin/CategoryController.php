@@ -163,8 +163,7 @@ class CategoryController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Category not found',
-            ]);
-            
+            ]); 
         }
         File::delete(public_path().'/uploads/category/'.$category->image);
         $category->delete();

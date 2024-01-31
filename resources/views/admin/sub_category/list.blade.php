@@ -6,11 +6,11 @@
         <div class="row g-2 align-items-center">
             <div class="col">
                 <h2 class="page-title">
-                    Categories
+                    SubCategories
                 </h2>
             </div>
             <div class="col-sm-6 text-right">
-                <a href="{{ route('categories.create') }}" class="btn btn-primary">New Category</a>
+                <a href="{{ route('sub-categories.create') }}" class="btn btn-primary">New Category</a>
             </div>
         </div>
     </div>
@@ -24,28 +24,32 @@
                         <table class="table table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th width="10%">ID</th>
-                                    <th width="25%">Name</th>
-                                    <th width="25%">Slug</th>
-                                    <th width="10%">Status</th>
+                                    <th width="5%">ID</th>
+                                    <th width="20%">Name</th>
+                                    <th width="20%">Category</th>
+                                    <th width="20%">Slug</th>
+                                    <th width="5%">Status</th>
                                     <th width="30%">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($categories->IsNotEmpty())
-                                    @foreach ($categories as $category)
+                                @if ($subCategories->IsNotEmpty())
+                                    @foreach ($subCategories as $subCategory)
                                     <tr>
-                                        <td>{{ $category->id }}</td>
+                                        <td>{{ $subCategory->id }}</td>
                                         <td class="text-muted">
-                                            {{ $category->name }}
+                                            {{ $subCategory->name }}
                                         </td>
-                                        <td class="text-muted"><a href="#" class="text-reset">{{ $category->slug }}</a></td>
                                         <td class="text-muted">
-                                            {{ $category->status }}
+                                            {{ $subCategory->categoryName }}
+                                        </td>
+                                        <td class="text-muted"><a href="#" class="text-reset">{{ $subCategory->slug }}</a></td>
+                                        <td class="text-muted">
+                                            {{ $subCategory->status }}
                                         </td>
                                         <td>
-                                            <a href="{{route('categories.edit',$category->id)}}" class="btn btn-primary">Edit</a>
-                                            <a href="#" onclick="deleteCategory({{ $category->id }})" class="btn btn-danger">Delete</a>
+                                            <a href="{{route('sub-categories.edit',$subCategory->id)}}" class="btn btn-primary">Edit</a>
+                                            <a href="#" onclick="deleteSubCategory({{ $subCategory->id }})" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -66,9 +70,9 @@
 
 @section('customJs')
     <script>
-        function deleteCategory(id)
+        function deleteSubCategory(id)
         {
-            var url = '{{ route("categories.destroy","ID") }}';
+            var url = '{{ route("sub-categories.delete","ID") }}';
             var newUrl = url.replace("ID",id);
             newUrl = url.replace("ID",id);
             
@@ -84,10 +88,10 @@
                     success: function(response){
                         $("button[type=submit]").prop('disabled',false);
 
-                        if(response['status']){
-                            // window.location.href = "{{ route('categories.index') }}";
-                            location.reload();
-                        }
+                        // if(response['status']){
+                            window.location.href = "{{ route('sub-categories.index') }}";
+                            // location.reload();
+                        // }
                     }
                 });
             }

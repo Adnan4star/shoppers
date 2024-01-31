@@ -6,11 +6,11 @@
         <div class="row g-2 align-items-center">
             <div class="col">
                 <h2 class="page-title">
-                    Categories
+                    Brands
                 </h2>
             </div>
             <div class="col-sm-6 text-right">
-                <a href="{{ route('categories.create') }}" class="btn btn-primary">New Category</a>
+                <a href="{{ route('brands.create') }}" class="btn btn-primary">New Brand</a>
             </div>
         </div>
     </div>
@@ -32,20 +32,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($categories->IsNotEmpty())
-                                    @foreach ($categories as $category)
+                                @if ($brands->IsNotEmpty())
+                                    @foreach ($brands as $brand)
                                     <tr>
-                                        <td>{{ $category->id }}</td>
+                                        <td>{{ $brand->id }}</td>
                                         <td class="text-muted">
-                                            {{ $category->name }}
+                                            {{ $brand->name }}
                                         </td>
-                                        <td class="text-muted"><a href="#" class="text-reset">{{ $category->slug }}</a></td>
+                                        <td class="text-muted"><a href="#" class="text-reset">{{ $brand->slug }}</a></td>
                                         <td class="text-muted">
-                                            {{ $category->status }}
+                                            {{ $brand->status }}
                                         </td>
                                         <td>
-                                            <a href="{{route('categories.edit',$category->id)}}" class="btn btn-primary">Edit</a>
-                                            <a href="#" onclick="deleteCategory({{ $category->id }})" class="btn btn-danger">Delete</a>
+                                            <a href="{{route('brands.edit',$brand->id)}}" class="btn btn-primary">Edit</a>
+                                            <a href="#" onclick="deleteBrand({{ $brand->id }})" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -66,9 +66,9 @@
 
 @section('customJs')
     <script>
-        function deleteCategory(id)
+        function deleteBrand(id)
         {
-            var url = '{{ route("categories.destroy","ID") }}';
+            var url = '{{ route("brands.destroy","ID") }}';
             var newUrl = url.replace("ID",id);
             newUrl = url.replace("ID",id);
             
