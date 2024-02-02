@@ -35,6 +35,9 @@
                                     <a class="dropdown-item" href="{{route('brands.index')}}">
                                         Brands
                                     </a>
+                                    <a class="dropdown-item" href="{{route('products.index')}}">
+                                        Products
+                                    </a>
                                 </div>
                                 <div class="dropdown-menu-column">
                                     <div class="dropend">

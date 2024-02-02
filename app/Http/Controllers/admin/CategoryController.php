@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\category;
 use App\Models\TempImage;
 use Illuminate\Support\Facades\File;
-use Image;
+use Intervention\Image\Laravel\Facades\Image;
 
 class CategoryController extends Controller
 {
@@ -45,19 +45,23 @@ class CategoryController extends Controller
             //Save Image Here
             if(!empty($request->image_id))
             {
-                $tempImage = TempImage::find($request->image_id);
+                $tempImage = TempImage::find($request->image_id); //finding id of temo image stored in Db
                 $extArray = explode('.',$tempImage->name);
                 $ext = last($extArray);
 
-                $newImageName = $category->id.'.'.$ext;
-                $spath = public_path().'/temp/'.$tempImage->name;
-                $dpath = public_path().'/uploads/category/'.$newImageName;
+                $newImageName = $category->id.'.'.$ext; //combining last saved category with image name
+                $spath = public_path().'/temp/'.$tempImage->name; //temp path with actual image name
+                $dpath = public_path().'/uploads/category/'.$newImageName; //copying image with new destination and with new image name
                 File::copy($spath,$dpath);
 
                 //Generate image thumbnail
-                // $img = Image::make('$spath');
+                $dpath = public_path().'/uploads/category/thumb'.$newImageName;
+                $img = Image::make($spath); 
+                $img -> resize(450,600); //resize method of image intervention
+                $img -> save($dpath);
 
-                $category->image = $newImageName;
+
+                $category->image = $newImageName; //saving image name on category's image column
                 $category->save();
             
             }

@@ -31,8 +31,8 @@
                 </div>
             </div>
             <div class="mb-3 row">
-                <input type="hidden" name="image_id" id="image_id" value="">
-                <label for="image" class="col-3 col-form-Image">Image</label>
+                <input type="hidden" name="image_id" id="image_id" value=""> {{--Getting id of uploaded image whic makes it posiible to track images and connect with categories etc--}}
+                <label class="col-3 col-form-Image">Image</label>
                 <div class="col">
                     <div id="image" class="dropzone dz-clickable">
                         <div class="dz-message needsclick">    
@@ -112,6 +112,8 @@
                 }
             })
         });
+
+
         //getting slug set in routes
         $("#name").change(function(){
             $("button[type=submit]").prop('disabled',true);
@@ -151,7 +153,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }, success: function(file, response){
-                $("#image_id").val(response.image_id);
+                $("#image_id").val(response.image_id); //saving response of tempImageController into Media field image_id.
                 //console.log(response)
             }
         });
