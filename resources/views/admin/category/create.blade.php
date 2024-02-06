@@ -2,7 +2,7 @@
 
 @section('content') {{--calling dynamic content with same name provided in parent directory--}}
 <div class="col-md-6">
-    <form class="card" action="" method="POST" id="categoryForm" name="categoryForm">
+    <form class="card" action="" method="POST" id="categoryForm" name="categoryForm" enctype="multipart/form-data">
         <div class="row g-2 align-items-center">
             <div class="col">
                 <h3 class="card-title">Create Category</h3>
@@ -31,14 +31,9 @@
                 </div>
             </div>
             <div class="mb-3 row">
-                <input type="hidden" name="image_id" id="image_id" value=""> {{--Getting id of uploaded image whic makes it posiible to track images and connect with categories etc--}}
-                <label class="col-3 col-form-Image">Image</label>
+                <label for="image" class="col-3 col-form-label">Image</label>
                 <div class="col">
-                    <div id="image" class="dropzone dz-clickable">
-                        <div class="dz-message needsclick">    
-                            <br>Drop files here or click to upload.<br><br>                                            
-                        </div>
-                    </div>
+                    <input type="file" name="image" id="image" value="" class="form-control"/>
                 </div>
             </div>
             <div class="mb-3 row">
@@ -47,6 +42,15 @@
                     <select name="status" id="status" class="form-control">
                         <option value="1">Active</option>
                         <option value="0">Block</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="showHome" class="col-3 col-form-label">Show on Home</label>
+                <div class="col">
+                    <select name="showHome" id="showHome" class="form-control">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
                     </select>
                 </div>
             </div>
@@ -63,16 +67,17 @@
         $("#categoryForm").submit(function(event){
             event.preventDefault();
 
-            var element = $("#categoryForm");
-            $("button[type=submit]").prop('disabled',true);
+            var registerData = $("#categoryForm")[0];
+            var element = new FormData(registerData)
 
             $.ajax({
                 url: "{{ route('categories.store') }}",
                 type: 'post',
-                data: element.serializeArray(), //serialize array will get the form enteries and pass on to ajax
-                dataType: 'json',
+                data: element,
+                contentType: false,
+                processData: false,
                 success: function(response){
-                    $("button[type=submit]").prop('disabled',false);
+                    console.log(response);
 
                     if(response['status'] == true){
                         window.location.href = "{{ route('categories.index') }}";
@@ -107,7 +112,8 @@
                             .removeClass('invalid-feedback').html("");
                         }
                     }
-                }, error: function(jqXHR, exception){
+                }, 
+                error: function(jqXHR, exception){
                     console.log("Something went wrong"); //jqXHR identifies the error
                 }
             })
@@ -134,29 +140,29 @@
             });
         });
        
-        //Drop zone script for image upload in category module 
-    document.addEventListener("DOMContentLoaded", function() {
-        Dropzone.autoDiscover = false;    
-        const dropzone = $("#image").dropzone({ 
-            init: function() {
-                this.on('addedfile', function(file) {
-                    if (this.files.length > 1) {
-                        this.removeFile(this.files[0]);
-                    }
-                });
-            },
-            url:  "{{ route('temp-images.create') }}",
-            maxFiles: 1,
-            paramName: 'image',
-            addRemoveLinks: true,
-            acceptedFiles: "image/jpeg,image/png,image/gif",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }, success: function(file, response){
-                $("#image_id").val(response.image_id); //saving response of tempImageController into Media field image_id.
-                //console.log(response)
-            }
-        });
-    });
+    //     Drop zone script for image upload in category module 
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     Dropzone.autoDiscover = false;    
+    //     const dropzone = $("#image").dropzone({ 
+    //         init: function() {
+    //             this.on('addedfile', function(file) {
+    //                 if (this.files.length > 1) {
+    //                     this.removeFile(this.files[0]);
+    //                 }
+    //             });
+    //         },
+    //         url:  "",
+    //         maxFiles: 1,
+    //         paramName: 'image',
+    //         addRemoveLinks: true,
+    //         acceptedFiles: "image/jpeg,image/png,image/gif",
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }, success: function(file, response){
+    //             $("#image_id").val(response.image_id); //saving response of tempImageController into Media field image_id.
+    //             //console.log(response)
+    //         }
+    //     });
+    // })
     </script>
     @endsection

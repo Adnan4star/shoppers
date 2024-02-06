@@ -37,7 +37,7 @@
             <div class="mb-3 row">
                 <label for="slug" class="col-3 col-form-label required">Slug</label>
                 <div class="col">
-                    <input type="text" readonly name="slug" id="slug" value="{{ $subCategory->slug }}" class="form-control" placeholder="slug">
+                    <input type="text" name="slug" id="slug" value="{{ $subCategory->slug }}" class="form-control" placeholder="slug">
                     <p></p>
                     <small class="form-hint">
                         Please enter slug for your sub-category.
@@ -50,6 +50,15 @@
                     <select name="status" id="status" class="form-control">
                         <option {{ ($subCategory->status == 1) ? 'selected' : '' }}  value="1">Active</option>
                         <option {{ ($subCategory->status == 0) ? 'selected' : '' }} value="0">Block</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-3 col-form-label">Show on Home</label>
+                <div class="col">
+                    <select name="showHome" id="showHome" class="form-control">
+                        <option {{ ($subCategory->showHome == 'Yes') ? 'selected' : '' }} value="Yes">Yes</option>
+                        <option {{ ($subCategory->showHome == 'No') ? 'selected' : '' }} value="No">No</option>
                     </select>
                 </div>
             </div>

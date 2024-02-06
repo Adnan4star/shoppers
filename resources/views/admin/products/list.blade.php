@@ -38,14 +38,14 @@
                                 @if($products->isNotEmpty())
                                     @foreach ($products as $product)
 
-                                    @php
+                                    {{-- @php
                                         $productImage = $product->product_images->first(); //calling product_image table defined relation with products table of product model   
-                                    @endphp
+                                    @endphp --}}
                                 <tr>
                                     <td>{{ $product->id }}</td>
                                     <td>
-                                        @if(!empty($productImage->image))
-                                            <img src="{{ asset('uploads/category/'.$productImage->image) }}" class="img-thumbnail" width="50" >
+                                        @if(!empty($product->image))
+                                            <img src="{{ asset('uploads/products/'.$product->image) }}" class="img-thumbnail" width="50" >
                                         @endif
                                     </td>
                                     <td><a href="#">{{ $product->title }}</a></td>

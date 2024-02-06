@@ -45,6 +45,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+
         $rules = [
             'title' => 'required',
             'slug' => 'required|unique:products',
@@ -61,6 +62,16 @@ class ProductController extends Controller
         $Validator = Validator::make($request->all(),$rules);
         if($Validator->passes()){
 
+            //save gallery pics
+            $request->all();
+            $filename = '';
+            if($request->hasFile('image'))
+            {
+                $image = $request->file('image');
+                $filename = $image->getClientOriginalName(); 
+                $image->move('uploads/products',$filename);
+            }
+
             $product = new Product;
             $product->title = $request->title;
             $product->slug = $request->slug;
@@ -76,32 +87,12 @@ class ProductController extends Controller
             $product->sub_category_id = $request->sub_category;
             $product->brand_id = $request->brand;
             $product->is_featured = $request->is_featured;
+            $product->image = $filename;
             $product->save();
 
-            //save gallery pics
-            if(!empty($request->image_array)){
-                foreach($request->image_array as $temp_image_id){
+            
 
-                    $tempImageInfo = TempImage::find($temp_image_id);
-                    $extArray = explode('.',$tempImageInfo->name);
-                    $ext = last($extArray);
-
-                    $productImage = new ProductImage();
-                    $productImage->product_id = $product->id;
-                    $productImage->image = 'NULL';
-                    $productImage->save();
-                
-                    $imageName = $product->id.'-'.$productImage->id.'-'.time().'.'.$ext;
-                    $productImage->image = $imageName;
-                    $productImage->save();
-
-                    
-
-
-                }
-            }
-
-            $request->session()->forget('product');
+            // $request->session()->forget('product');
             
             return response()->json([
                 'status' => true,
@@ -118,7 +109,7 @@ class ProductController extends Controller
         }
     }
 
-    public function edit($id, Request $request)
+    public function edit($id)
     {
         $product = Product::find($id); // finding id to edit products
         
@@ -127,7 +118,7 @@ class ProductController extends Controller
         }
 
         //Fetch Product Images
-        $productImages = ProductImage::where('product_id',$product->id)->get();
+        // $productImages = ProductImage::where('product_id',$product->id)->get();
 
         $subCategories = SubCategory::where('category_id',$product->category_id)->get();
         
@@ -139,13 +130,13 @@ class ProductController extends Controller
         $data['brands'] = $brands;
         $data['subCategories'] = $subCategories;
         $data['product'] = $product;
-        $data['productImages'] = $productImages;
+        // $data['productImages'] = $productImages;
         return view('admin.products.edit',$data);
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
-    
+        // dd($request->all());
         $product = Product::find($id);
         
         $rules = [
@@ -181,7 +172,14 @@ class ProductController extends Controller
             $product->save();
 
             //save gallery pics
-            
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $filename = $image->getClientOriginalName(); 
+                $image->move('uploads/products', $filename);
+
+                $product->image = $filename;
+                $product->save();
+            }
 
             $request->session()->forget('product');
             

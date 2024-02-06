@@ -63,11 +63,21 @@
       <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
           <ul class="site-menu js-clone-nav d-none d-md-block">
+          @if(getCategories()->isNotEmpty())
+          @foreach(getCategories() as $category)
             <li class="has-children active">
-              <a href="index.html">Home</a>
+              <a href="index.html">{{$category->name}}</a>
+
+              @if($category->sub_category->isNotEmpty())
               <ul class="dropdown">
-                <li><a href="#">Menu One</a></li>
-                <li><a href="#">Menu Two</a></li>
+                @foreach($category->sub_category as $subcategory)
+                  <li><a href="#">{{$subcategory->name}}</a></li>
+                @endforeach
+              </ul>
+              @endif
+              
+                
+                {{-- <li><a href="#">Menu Two</a></li>
                 <li><a href="#">Menu Three</a></li>
                 <li class="has-children">
                   <a href="#">Sub Menu</a>
@@ -76,10 +86,12 @@
                     <li><a href="#">Menu Two</a></li>
                     <li><a href="#">Menu Three</a></li>
                   </ul>
-                </li>
-              </ul>
+                </li> --}}
+              
             </li>
-            <li class="has-children">
+            @endforeach
+            @endif
+            {{-- <li class="has-children">
               <a href="about.html">About</a>
               <ul class="dropdown">
                 <li><a href="#">Menu One</a></li>
@@ -90,7 +102,7 @@
             <li><a href="shop.html">Shop</a></li>
             <li><a href="#">Catalogue</a></li>
             <li><a href="#">New Arrivals</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li> --}}
           </ul>
         </div>
       </nav>
@@ -149,6 +161,8 @@
     <div class="site-section site-blocks-2">
       <div class="container">
         <div class="row">
+          @if(getCategories()->isNotEmpty())
+          @foreach(getCategories() as $category)
           <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
             <a class="block-2-item" href="#">
               <figure class="image">
@@ -156,11 +170,13 @@
               </figure>
               <div class="text">
                 <span class="text-uppercase">Collections</span>
-                <h3>Women</h3>
+                <h3>{{$category->name}}</h3>
               </div>
             </a>
           </div>
-          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
+          @endforeach
+          @endif
+          {{-- <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
             <a class="block-2-item" href="#">
               <figure class="image">
                 <img src="{{ asset('front-assets/images/children.jpg') }}" alt="" class="img-fluid">
@@ -181,7 +197,7 @@
                 <h3>Men</h3>
               </div>
             </a>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>
@@ -196,19 +212,30 @@
         <div class="row">
           <div class="col-md-12">
             <div class="nonloop-block-3 owl-carousel">
+              @if($featuredProducts->isNotEmpty())
+              @foreach($featuredProducts as $product)
+              
               <div class="item">
                 <div class="block-4 text-center">
                   <figure class="block-4-image">
                     <img src="{{ asset('front-assets/images/cloth_1.jpg') }}" alt="Image placeholder" class="img-fluid">
                   </figure>
                   <div class="block-4-text p-4">
-                    <h3><a href="#">Tank Top</a></h3>
-                    <p class="mb-0">Finding perfect t-shirt</p>
-                    <p class="text-primary font-weight-bold">$50</p>
+                    <h3><a href="#">{{$product->title}}</a></h3>
+                    <p class="mb-0">{{$product->description}}</p>
+                    <p class="text-primary font-weight-bold">{{$product->price}}</p>
+                    @if($product->compare_price > 0)
+                    <p class="text-primary text-underline"><del>{{$product->compare_price}}</del></p>
+                    @endif
+
                   </div>
                 </div>
               </div>
-              <div class="item">
+
+              @endforeach
+              @endif
+
+              {{-- <div class="item">
                 <div class="block-4 text-center">
                   <figure class="block-4-image">
                     <img src="{{ asset('front-assets/images/shoe_1.jpg') }}" alt="Image placeholder" class="img-fluid">
@@ -255,7 +282,7 @@
                     <p class="text-primary font-weight-bold">$50</p>
                   </div>
                 </div>
-              </div>
+              </div> --}}
             </div>
           </div>
         </div>

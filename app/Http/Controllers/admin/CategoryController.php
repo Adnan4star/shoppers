@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\category;
 use App\Models\TempImage;
 use Illuminate\Support\Facades\File;
-use Intervention\Image\Laravel\Facades\Image;
+
+// use Intervention\Image\ImageManager;
+// use Intervention\Image\Drivers\Gd\Driver;
 
 class CategoryController extends Controller
 {
@@ -35,51 +37,40 @@ class CategoryController extends Controller
             'name' => 'required',
             'slug' => 'required|unique:categories',
         ]);
+
         if($validator->passes()){
-            $category = new Category();
-            $category->name = $request->name;
-            $category->slug = $request->slug;
-            $category->status = $request->status;
-            $category->save();
 
             //Save Image Here
-            if(!empty($request->image_id))
+            $inputArray = $request->all();
+            $filename = '';
+            if($request->hasFile('image'))
             {
-                $tempImage = TempImage::find($request->image_id); //finding id of temo image stored in Db
-                $extArray = explode('.',$tempImage->name);
-                $ext = last($extArray);
-
-                $newImageName = $category->id.'.'.$ext; //combining last saved category with image name
-                $spath = public_path().'/temp/'.$tempImage->name; //temp path with actual image name
-                $dpath = public_path().'/uploads/category/'.$newImageName; //copying image with new destination and with new image name
-                File::copy($spath,$dpath);
-
-                //Generate image thumbnail
-                $dpath = public_path().'/uploads/category/thumb'.$newImageName;
-                $img = Image::make($spath); 
-                $img -> resize(450,600); //resize method of image intervention
-                $img -> save($dpath);
-
-
-                $category->image = $newImageName; //saving image name on category's image column
-                $category->save();
-            
+                $image = $request->file('image');
+                $filename = $image->getClientOriginalName(); 
+                $image->move('uploads',$filename);
             }
 
-            $request->session()->forget('category');
+            category::create([
+                'name' =>  $inputArray['name'],
+                'slug' =>  $inputArray['slug'],
+                'status' =>  $inputArray['status'],
+                'showHome' =>  $inputArray['showHome'],
+                'image' =>  $filename,
+            ]);
 
             return response()->json([
                 'status' => true,
                 'message' => 'Category added successfully'
             ]);
 
-        }else{
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors()
-            ]);
+            }else{
+                return response()->json([
+                    'status' => false,
+                    'errors' => $validator->errors()
+                ]);
+            }
         }
-    }
+
 
     public function edit($categoryId, Request $request)
     {
@@ -93,13 +84,14 @@ class CategoryController extends Controller
         return view('admin.category.edit',compact('category'));
     }
 
-    public function update($categoryId, Request $request)
+    public function update(Request $request,$categoryId)
     {
+       
         $category = category::find($categoryId);
 
         if(empty($category))
             {
-                $request->session()->forget('category');
+                // $request->session()->forget('category');
 
                 return response()->json([
                     'status' => false,
@@ -110,40 +102,28 @@ class CategoryController extends Controller
 
         $validator = Validator::make($request->all(),[   //validating and inserting data
             'name' => 'required',
-            'slug' => 'required|unique:categories,slug,'.$category->id.',id',
+            'slug' => 'required|unique:categories,slug,' . $categoryId, // Ensure slug uniqueness except for the current category
         ]);
+
         if($validator->passes()){
 
-            $category->name = $request->name;
-            $category->slug = $request->slug;
-            $category->status = $request->status;
-            $category->save();
+            // Update the image if a new one is provided
+            if ($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $filename = $image->getClientOriginalName(); 
+                    $image->move('uploads', $filename);
 
-            $oldImage = $category->image;
-
-            //Save Image Here
-            if(!empty($request->image_id))
-            {
-                $tempImage = TempImage::find($request->image_id);
-                $extArray = explode('.',$tempImage->name);
-                $ext = last($extArray);
-
-                $newImageName = $category->id.'-'.time().'.'.$ext;
-                $spath = public_path().'/temp/'.$tempImage->name;
-                $dpath = public_path().'/uploads/category/'.$newImageName;
-                File::copy($spath,$dpath);
-
-                //Generate image thumbnail
-                // $img = Image::make('$spath');
-
-                $category->image = $newImageName;
-                $category->save();
-                
-                //Delete old images
-                File::delete(public_path().'/uploads/category/'.$oldImage);
+                    $category->image = $filename;
             }
 
-            $request->session()->forget('category');
+                // Update category data
+                $category->name = $request->input('name');
+                $category->slug = $request->input('slug');
+                $category->status = $request->input('status');
+                $category->showHome = $request->input('showHome');
+                $category->save();
+                
+                // $request->session()->forget('category');
 
             return response()->json([
                 'status' => true,

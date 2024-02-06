@@ -33,28 +33,12 @@
                 </div>
             </div>
             <div class="mb-3 row">
-                <label for="image" class="col-3 col-form-Image">Media</label>
-                <div class="col">
-                    <div id="image" class="dropzone dz-clickable">
-                        <div class="dz-message needsclick">    
-                            <br>Drop files here or click to upload.<br><br>                                            
-                        </div>
-                    </div>
+                <label for="image" class="col-3 col-form-label">Image</label>
+                <div class="col-9">
+                    {{ $imagePath = asset('uploads/products/' . $product->image) }}
+                    <img src=" {{ $imagePath }}" alt="Product Image">
+                    <input type="file" name="image" id="image" value="" />
                 </div>
-            </div>
-            <div class="row" id="product-gallery">
-                @if($productImages->isNotEmpty())
-                    @foreach ($productImages as $image)
-                    <div class="col-md-3" id="image-row-{{ $image->id }}">
-                        <div class="card">
-                            <input type="hidden" name="image_array[]" value="{{ $image->id }}">
-                            <img src="{{ asset('temp/') }}" class="card-img-top" alt="">
-                            <div class="card-body">
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                    @endif
             </div>
             <div class="mb-3 row">
                 <label for="pricing" class="col-3 col-form-label required">Pricing</label>
@@ -140,7 +124,7 @@
                         {{--fetching for edit purpose to auto get selected when ressing edit button--}}
                         @if($subCategories->isNotEmpty())
                         @foreach ($subCategories as $subCategory)
-                        <option {{ ($product->sub_category_id == $subCategory->id) ? 'selected' : '' }} value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
+                            <option {{ ($product->sub_category_id == $subCategory->id) ? 'selected' : '' }} value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
                         @endforeach
                         @endif
                     </select>
@@ -155,7 +139,7 @@
                     
                     @if($brands->isNotEmpty())
                     @foreach ($brands as $brand)
-                    <option {{ $product->brand_id == $brand->id ? 'selected' : ''}} value="{{ $brand->id }}">{{ $brand->name }}</option>
+                        <option {{ $product->brand_id == $brand->id ? 'selected' : ''}} value="{{ $brand->id }}">{{ $brand->name }}</option>
                     @endforeach
                     @endif
                     
@@ -207,15 +191,18 @@ $("#title").change(function(){
 //validating form through ajax
 $("#productForm").submit(function(event){
     event.preventDefault();
-    var formArray = $(this).serializeArray(); //serialize array stores form info into the data
-    $("button[type='submit']").prop('disabled',true);
-    
-    $.ajax({
-        url: '{{ route("products.update",$product->id) }}',
-        type: 'put',
-        data: formArray,
-        dataType: 'json',
-        success:function(response){
+
+    var registerData = $("#productForm")[0];
+            var element = new FormData(registerData)
+
+            $.ajax({
+                url: "{{ route('products.update',$product->id) }}",
+                type: 'post',
+                data: element,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    console.log(response);
             if(response['status'] == true){
                 $(".error").removeClass('invalid-feedback').html(''); //removing error class from eveery field
                 $("input[type='text'], select,input[type='number']").removeClass('is-invalid'); //text and select elements removing invalid class
@@ -260,35 +247,6 @@ $("#category").change(function(){
         },
         error:function(){
             console.log("Something went wrong");
-        }
-    });
-})
-       
-//Drop zone script for image upload in category module 
-document.addEventListener("DOMContentLoaded", function() {
-    Dropzone.autoDiscover = false;    
-    const dropzone = $("#image").dropzone({ 
-        
-        url:  "{{ route('product-images.update') }}",
-        maxFiles: 10,
-        paramName: 'image',
-        Params: {'product_id': '{{ $product->id }}'},
-        addRemoveLinks: true,
-        acceptedFiles: "image/jpeg,image/png,image/gif",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }, success: function(file, response){
-            // $("#image_id").val(response.image_id);
-            //console.log(response)
-
-            var html = `<div class="card">
-                <input type="hidden" name="image_array[]" value="${response.image_id}">
-                <img src="${response.ImagePath}" class="card-img-top" alt="">
-                <div class="card-body">
-                </div>
-            </div>`;
-
-            $("#product-gallery").append(html);
         }
     });
 });

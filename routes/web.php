@@ -50,7 +50,7 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('/categories/create',[CategoryController::class, 'create'])->name('categories.create');
         Route::post('/categories',[CategoryController::class, 'store'])->name('categories.store');
         Route::get('/categories/{category}/edit',[CategoryController::class, 'edit'])->name('categories.edit');
-        Route::put('/categories/{category}',[CategoryController::class, 'update'])->name('categories.update'); //edit submit
+        Route::post('/categories/{category}',[CategoryController::class, 'update'])->name('categories.update'); //edit submit
         Route::delete('/categories/{category}',[CategoryController::class, 'destroy'])->name('categories.destroy');
 
         //sub_category routes
@@ -74,7 +74,7 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('/products/create',[ProductController::class, 'create'])->name('products.create');
         Route::post('/products',[ProductController::class, 'store'])->name('products.store');
         Route::get('/products/{product}/edit',[ProductController::class, 'edit'])->name('products.edit');
-        Route::put('/products/{product}',[ProductController::class, 'update'])->name('products.update'); //edit submit
+        Route::post('/products/{product}',[ProductController::class, 'update'])->name('products.update'); //edit submit
         Route::delete('/products/{product}',[ProductController::class, 'destroy'])->name('products.delete');
 
 

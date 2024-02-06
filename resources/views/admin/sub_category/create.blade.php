@@ -53,6 +53,15 @@
                     </select>
                 </div>
             </div>
+            <div class="mb-3 row">
+                <label class="col-3 col-form-label">Show on Home</label>
+                <div class="col">
+                    <select name="showHome" id="showHome" class="form-control">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+            </div>
             <div class="card-footer text-end">
                 <button type="submit" class="btn btn-primary">Create</button>
                 <a href="{{route('sub-categories.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
