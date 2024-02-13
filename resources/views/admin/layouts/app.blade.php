@@ -23,8 +23,9 @@
     <link href="{{ asset('admin-assets/dist/css/tabler-payments.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('admin-assets/dist/css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('admin-assets/dist/css/demo.min.css?1684106062') }}" rel="stylesheet"/>
-   
+    {{-- <link href="{{ asset('admin-assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet"/> --}}
 
+    
     <style>
         @import url('https://rsms.me/inter/inter.css');
         :root {
@@ -120,9 +121,8 @@
                     <a href="{{route('admin.logout')}}" class="dropdown-item">Logout</a>
                 </div>
             </div>
-        </div>
-    </div>
-</header>
+        
+        </header>
 
 <!-- Page navbar start--> 
 @include('admin.layouts.navbar')
@@ -284,6 +284,8 @@
 <script src="{{ asset('admin-assets/dist/js/tabler.min.js?1684106062') }}" defer></script>
 <script src="{{ asset('admin-assets/dist/js/demo.min.js?1684106062') }}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{{-- <script src="{{ asset('admin-assets/plugins/select2/js/select2.min.js') }}" defer></script> --}}
+
 
 
 

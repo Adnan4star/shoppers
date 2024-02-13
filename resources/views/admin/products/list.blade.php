@@ -24,14 +24,14 @@
                         <table class="table table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th width="60">ID</th>
-                                    <th width="80"></th>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Qty</th>
-                                    <th>SKU</th>
-                                    <th width="100">Status</th>
-                                    <th width="100">Action</th>
+                                    <th width="5%">ID</th>
+                                    <th width="10%"></th>
+                                    <th width="10%">Product</th>
+                                    <th width="10%">Price</th>
+                                    <th width="10%">Qty</th>
+                                    <th width="10%">SKU</th>
+                                    <th width="10%">Status</th>
+                                    <th width="35%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,8 +57,6 @@
                                     </td>
                                     <td>
                                         <a href="{{route('products.edit',$product->id)}}" class="btn btn-primary">Edit</a>
-                                    </td>
-                                    <td>
                                         <a href="#" onclick="deleteProduct({{ $product->id }})" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>

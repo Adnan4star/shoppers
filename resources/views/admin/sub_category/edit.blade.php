@@ -1,74 +1,87 @@
 @extends('admin.layouts.app') {{--This is child layout and i am calling parent layout(app.blade.php)--}}
 
 @section('content') {{--calling dynamic content with same name provided in parent directory--}}
-<div class="col-md-6">
-    <form class="card" action="" method="POST" id="subCategoryForm" name="subCategoryForm">
-        <div class="row g-2 align-items-center">
-            <div class="col">
-                <h3 class="card-title">Edit Sub Category</h3>
-            </div>
-            <div class="col-sm-2 text-right">
-                <a href="{{ route('sub-categories.index') }}" class="btn btn-primary">Back</a>
+    <div class="page-header d-print-none">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <h2 class="page-title">
+                        Edit Sub-Category
+                    </h2>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="{{ route('sub-categories.index') }}" class="btn btn-primary">Back</a>
+                </div>
             </div>
         </div>
-        <div class="card-body">
-            <div class="mb-3 row">
-                <label for="category" class="col-3 col-form-label">Category</label>
-                <div class="col">
-                    <select name="category" id="category" class="form-control">
-                        <option value="">Select a Category</option>
-                        @if($categories->isNotEmpty())
-                        @foreach ($categories as $category)
-                            <option {{ ($subCategory->category_id == $category->id) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                        @endif
-                    </select>
-                    <p></p>
+    </div>   
+    <div class="page-body">
+        <div class="container">
+            <div class="row row-cards">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="form-responsive" style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
+                            <form class="form-horizontal form-vcenter" action="" method="POST" id="subCategoryForm" name="subCategoryForm">
+                                <div class="card-body">
+                                    <div class="mb-3 row">
+                                        <label for="category" class="col-3 col-form-label">Category</label>
+                                        <div class="col">
+                                            <select name="category" id="category" class="form-control">
+                                                <option value="">Select a Category</option>
+                                                @if($categories->isNotEmpty())
+                                                @foreach ($categories as $category)
+                                                    <option {{ ($subCategory->category_id == $category->id) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                                @endif
+                                            </select>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="name" class="col-3 col-form-label required">Name</label>
+                                        <div class="col">
+                                            <input type="text" name="name" id="name" value="{{ $subCategory->name }}" class="form-control" aria-describedby="nameHelp" placeholder="Enter name">
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="slug" class="col-3 col-form-label required">Slug</label>
+                                        <div class="col">
+                                            <input type="text" name="slug" id="slug" value="{{ $subCategory->slug }}" class="form-control" placeholder="slug">
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="status" class="col-3 col-form-label">Status</label>
+                                        <div class="col">
+                                            <select name="status" id="status" class="form-control">
+                                                <option {{ ($subCategory->status == 1) ? 'selected' : '' }}  value="1">Active</option>
+                                                <option {{ ($subCategory->status == 0) ? 'selected' : '' }} value="0">Block</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-3 col-form-label">Show on Home</label>
+                                        <div class="col">
+                                            <select name="showHome" id="showHome" class="form-control">
+                                                <option {{ ($subCategory->showHome == 'Yes') ? 'selected' : '' }} value="Yes">Yes</option>
+                                                <option {{ ($subCategory->showHome == 'No') ? 'selected' : '' }} value="No">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-end">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        <a href="{{route('sub-categories.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label for="name" class="col-3 col-form-label required">Name</label>
-                <div class="col">
-                    <input type="text" name="name" id="name" value="{{ $subCategory->name }}" class="form-control" aria-describedby="nameHelp" placeholder="Enter name">
-                    <p></p>
-                    <small class="form-hint">Please enter name for your sub-category.</small>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="slug" class="col-3 col-form-label required">Slug</label>
-                <div class="col">
-                    <input type="text" name="slug" id="slug" value="{{ $subCategory->slug }}" class="form-control" placeholder="slug">
-                    <p></p>
-                    <small class="form-hint">
-                        Please enter slug for your sub-category.
-                    </small>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="status" class="col-3 col-form-label">Status</label>
-                <div class="col">
-                    <select name="status" id="status" class="form-control">
-                        <option {{ ($subCategory->status == 1) ? 'selected' : '' }}  value="1">Active</option>
-                        <option {{ ($subCategory->status == 0) ? 'selected' : '' }} value="0">Block</option>
-                    </select>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-3 col-form-label">Show on Home</label>
-                <div class="col">
-                    <select name="showHome" id="showHome" class="form-control">
-                        <option {{ ($subCategory->showHome == 'Yes') ? 'selected' : '' }} value="Yes">Yes</option>
-                        <option {{ ($subCategory->showHome == 'No') ? 'selected' : '' }} value="No">No</option>
-                    </select>
-                </div>
-            </div>
-            <div class="card-footer text-end">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{route('sub-categories.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
-            </div>
-        </form>
+        </div>
     </div>
-    @endsection
+@endsection
     
 @section('customJs')
 <script>

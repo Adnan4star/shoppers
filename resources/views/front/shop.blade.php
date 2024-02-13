@@ -24,11 +24,11 @@
                                 
                             </div>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                                    <a class="dropdown-item" href="#">Price, low to high</a>
-                                    <a class="dropdown-item" href="#">Price, high to low</a>
-                                </div>
+                                <select name="sort" id="sort" class="form-control">
+                                    <option value="latest" {{ ($sort == 'latest') ? 'selected' : '' }}>Latest</option>
+                                    <option value="price_desc" {{ ($sort == 'price_desc') ? 'selected' : '' }}>Price High</option>
+                                    <option value="price_asc"  {{ ($sort == 'price_asc') ? 'selected' : '' }}>Price Low</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,8 @@
                 @endif
 
                 <div class="row" data-aos="fade-up">
-                    <div class="col-md-12 text-center">
+                    {{ $products->withQueryString()->links() }}
+                    {{-- <div class="col-md-12 text-center">
                         <div class="site-block-27">
                             <ul>
                                 <li><a href="#">&lt;</a></li>
@@ -75,7 +76,7 @@
                                 <li><a href="#">&gt;</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             
@@ -85,7 +86,7 @@
                 <div class="border p-4 rounded mb-4">
                     <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
                     @if($categories->isNotEmpty())
-                    <ul class="list-unstyled mb-0">
+                    <ul class="list-unstyled mb-0 ">
                         @foreach($categories as $category)
                             <li class="mb-4">
                                 <a href="{{ route("front.shop",$category->slug) }}" class="d-flex category-toggle">
@@ -109,21 +110,21 @@
                     @endif
                 </div>
 
-                <div class="border p-4 rounded mb-4">
+                {{-- <div class="border p-4 rounded mb-4">
                     <h3 class="mb-3 h6 text-uppercase text-black d-block">Brands</h3>
                     @if($brands->isNotEmpty())
                         <ul class="list-unstyled mb-0">
                             @foreach($brands as $brand)
                                 <li class="mb-4">
                                     <a href="#" class="d-flex category-toggle">
-                                        <span>{{$brand->name}}</span>
+                                        <span for="">{{$brand->name}}</span> --}}
                                         {{-- <span class="text-black ml-auto">()</span> --}}
-                                    </a>
+                                    {{-- </a>
                                 </li>
                             @endforeach
                         </ul>
                     @endif
-                </div>
+                </div> --}}
                 
                 
                 <div class="border p-4 rounded mb-4">
@@ -133,7 +134,7 @@
                         <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />
                     </div>
                     
-                    <div class="mb-4">
+                    {{-- <div class="mb-4">
                         <h3 class="mb-3 h6 text-uppercase text-black d-block">Size</h3>
                         <label for="s_sm" class="d-flex">
                             <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">Small (2,319)</span>
@@ -160,7 +161,7 @@
                         <a href="#" class="d-flex color-item align-items-center" >
                             <span class="bg-primary color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Purple (1,075)</span>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -195,16 +196,24 @@
         </div>
     </div>
 </div>
-{{-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var categoryToggles = document.querySelectorAll('.category-toggle');
-        categoryToggles.forEach(function(toggle) {
-            toggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                var subcategories = this.nextElementSibling;
-                subcategories.style.display = (subcategories.style.display === 'none') ? 'block' : 'none';
-            });
-        });
+@endsection
+
+@section('customJs')
+<script>
+    $("#sort").change(function(){
+        apply_filters();
     });
-</script> --}}
+
+    function apply_filters(){
+        var url = '{{ url()->current() }}?';
+
+        url += '&sort='+$("#sort").val()
+
+        window.location.href = url;
+    }
+
+    
+
+    
+</script>
 @endsection

@@ -14,7 +14,8 @@
   <link rel="stylesheet" href="{{ asset('front-assets/css/owl.carousel.min.css') }}">
   <link rel="stylesheet" href="{{ asset('front-assets/css/owl.theme.default.min.css') }}">
   
-  
+  <link rel="stylesheet" href="{{ asset('front-assets/css/rangeslider.css') }}">
+
   <link rel="stylesheet" href="{{ asset('front-assets/css/aos.css') }}">
   
   <link rel="stylesheet" href="{{ asset('front-assets/css/style.css') }}">
@@ -71,7 +72,7 @@
               @if($category->sub_category->isNotEmpty()) {{--defined relation of sub_category in category model--}}
               <ul class="dropdown">
                 @foreach($category->sub_category as $subcategory)
-                <li><a href="#">{{$subcategory->name}}</a></li>
+                <li><a href="{{ route('front.shop',[$category->slug,$subcategory->slug]) }}">{{$subcategory->name}}</a></li>
                 @endforeach
               </ul>
               @endif
@@ -171,6 +172,8 @@
   <script src="{{ asset('front-assets/js/aos.js') }}"></script>
   
   <script src="{{ asset('front-assets/js/main.js') }}"></script>
+  <script src="{{ asset('front-assets/js/rangeslider.min.js') }}"></script>
   
+  @yield('customJs');
 </body>
 </html>

@@ -99,19 +99,19 @@
           
           <div class="item">
             <div class="block-4 text-center">
-              
-              @if($product->image != "")
-              <figure class="block-4-image">
-                <img src="{{ asset('uploads/products/'.$product->image) }}" alt="Image placeholder" class="img-fluid">
-              </figure>
-              @else
-              <figure class="block-4-image">
-                <img src="{{ asset('front-assets/images/cloth_1.jpg') }}" alt="Image placeholder" class="img-fluid">
-              </figure>
-              @endif
-
+              <a href="{{ route("front.product",$product->slug) }}" class="product-img">
+                @if($product->image != "")
+                <figure class="block-4-image">
+                  <img src="{{ asset('uploads/products/'.$product->image) }}" alt="Image placeholder" class="img-fluid">
+                </figure>
+                @else
+                <figure class="block-4-image">
+                  <img src="{{ asset('front-assets/images/cloth_1.jpg') }}" alt="Image placeholder" class="img-fluid">
+                </figure>
+                @endif
+              </a>
               <div class="block-4-text p-4">
-                <h3><a href="#">{{$product->title}}</a></h3>
+                <h3><a href="">{{$product->title}}</a></h3>
                 <p class="mb-0">{{$product->description}}</p>
                 <p class="text-primary font-weight-bold">{{$product->price}}</p>
                 @if($product->compare_price > 0)
