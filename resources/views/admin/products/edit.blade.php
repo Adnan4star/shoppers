@@ -181,22 +181,7 @@
 @endsection
 
 @section('customJs')
-<script> 
-$('.related-product').select2({
-    ajax: {
-        url: '{{ url("/data") }}',
-        dataType: 'json',
-        tags: true,
-        multiple: true,
-        minimumInputLength: 3,
-        processResults: function (data) {
-            return {
-                results: data.tags
-            };
-        }
-    }
-}); 
-
+<script>
 
 //getting slug set in routes
 $("#title").change(function(){

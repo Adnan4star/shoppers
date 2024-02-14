@@ -70,18 +70,76 @@
       <div class="row">
         <div class="col-md-12">
           <div class="nonloop-block-3 owl-carousel">
-                    <div class="item">
-                    <div class="block-4 text-center">
-                        <figure class="block-4-image">
-                        <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                        </figure>
-                        <div class="block-4-text p-4">
-                        <h3><a href="#">Tank Top</a></h3>
-                        <p class="mb-0">Finding perfect t-shirt</p>
-                        <p class="text-primary font-weight-bold">$50</p>
-                        </div>
-                    </div>
-                    </div>
+          @if($featuredProducts != 'No')
+            @foreach($featuredProducts as $featured)
+              <div class="item">
+                <div class="block-4 text-center">
+                  @if($featured->image != '')
+                    <figure class="block-4-image">
+                      <a href="{{ route("front.product",$featured->slug) }}"><img src="{{ asset('uploads/products/'.$featured->image) }}" alt="Image placeholder" class="img-fluid"></a>
+                    </figure>
+                    @else
+                    <figure class="block-4-image">
+                      <a href="{{ route("front.product",$featured->slug) }}"><img src="{{ asset('front-assets/images/cloth_1.jpg') }}" alt="Image placeholder" class="img-fluid"></a>
+                    </figure>
+                  @endif
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">{{ $featured->title }}</a></h3>
+                    <p class="mb-0">{{ $featured->description }}</p>
+                    <p class="text-primary font-weight-bold">{{ $featured->price }}</p>
+                  </div>
+                </div>
+              </div>
+            @endforeach
+          @endif
+            {{-- <div class="item">
+              <div class="block-4 text-center">
+                <figure class="block-4-image">
+                  <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="#">Corater</a></h3>
+                  <p class="mb-0">Finding perfect products</p>
+                  <p class="text-primary font-weight-bold">$50</p>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="block-4 text-center">
+                <figure class="block-4-image">
+                  <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="#">Polo Shirt</a></h3>
+                  <p class="mb-0">Finding perfect products</p>
+                  <p class="text-primary font-weight-bold">$50</p>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="block-4 text-center">
+                <figure class="block-4-image">
+                  <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="#">T-Shirt Mockup</a></h3>
+                  <p class="mb-0">Finding perfect products</p>
+                  <p class="text-primary font-weight-bold">$50</p>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="block-4 text-center">
+                <figure class="block-4-image">
+                  <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a href="#">Corater</a></h3>
+                  <p class="mb-0">Finding perfect products</p>
+                  <p class="text-primary font-weight-bold">$50</p>
+                </div>
+              </div>
+            </div> --}}
           </div>
         </div>
       </div>

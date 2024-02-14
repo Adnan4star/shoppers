@@ -111,7 +111,7 @@
                 @endif
               </a>
               <div class="block-4-text p-4">
-                <h3><a href="">{{$product->title}}</a></h3>
+                <h3><a href="{{ route("front.product",$product->slug) }}">{{$product->title}}</a></h3>
                 <p class="mb-0">{{$product->description}}</p>
                 <p class="text-primary font-weight-bold">{{$product->price}}</p>
                 @if($product->compare_price > 0)

@@ -41,11 +41,11 @@
                                 <div class="block-4 text-center border">
                                     @if($product->image != "")
                                         <figure class="block-4-image">
-                                            <a href="shop-single.html"><img src="{{ asset('uploads/products/'.$product->image)}}" alt="Image placeholder" class="img-fluid"></a>
+                                            <a href="{{ route("front.product",$product->slug) }}"><img src="{{ asset('uploads/products/'.$product->image)}}" alt="Image placeholder" class="img-fluid"></a>
                                         </figure>
                                     @else
                                         <figure class="block-4-image">
-                                            <a href="shop-single.html"><img src="{{ asset('front-assets/images/men.jpg') }}" alt="Image placeholder" class="img-fluid"></a>
+                                            <a href="{{ route("front.product",$product->slug) }}"><img src="{{ asset('front-assets/images/men.jpg') }}" alt="Image placeholder" class="img-fluid"></a>
                                         </figure>
                                     @endif
                                         <div class="block-4-text p-4">
@@ -64,19 +64,6 @@
 
                 <div class="row" data-aos="fade-up">
                     {{ $products->withQueryString()->links() }}
-                    {{-- <div class="col-md-12 text-center">
-                        <div class="site-block-27">
-                            <ul>
-                                <li><a href="#">&lt;</a></li>
-                                <li class="active"><span>1</span></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">&gt;</a></li>
-                            </ul>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
             
@@ -133,35 +120,6 @@
                         <div id="slider-range" class="border-primary"></div>
                         <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />
                     </div>
-                    
-                    {{-- <div class="mb-4">
-                        <h3 class="mb-3 h6 text-uppercase text-black d-block">Size</h3>
-                        <label for="s_sm" class="d-flex">
-                            <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">Small (2,319)</span>
-                        </label>
-                        <label for="s_md" class="d-flex">
-                            <input type="checkbox" id="s_md" class="mr-2 mt-1"> <span class="text-black">Medium (1,282)</span>
-                        </label>
-                        <label for="s_lg" class="d-flex">
-                            <input type="checkbox" id="s_lg" class="mr-2 mt-1"> <span class="text-black">Large (1,392)</span>
-                        </label>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
-                        <a href="#" class="d-flex color-item align-items-center" >
-                            <span class="bg-danger color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Red (2,429)</span>
-                        </a>
-                        <a href="#" class="d-flex color-item align-items-center" >
-                            <span class="bg-success color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Green (2,298)</span>
-                        </a>
-                        <a href="#" class="d-flex color-item align-items-center" >
-                            <span class="bg-info color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Blue (1,075)</span>
-                        </a>
-                        <a href="#" class="d-flex color-item align-items-center" >
-                            <span class="bg-primary color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Purple (1,075)</span>
-                        </a>
-                    </div> --}}
                 </div>
             </div>
         </div>

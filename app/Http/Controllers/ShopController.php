@@ -51,6 +51,9 @@ class ShopController extends Controller
             abort(404);
         }
 
+        $featuredProducts = Product::where('is_featured','Yes')->get();
+        
+        $data['featuredProducts'] = $featuredProducts;
         $data['product'] = $product;
         return view('front.product',$data);
     }
