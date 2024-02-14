@@ -28,20 +28,7 @@
           @if($product->compare_price > 0)
             <p  class="text-secondary h5"><del>{{$product->compare_price}}</del></p>
           @endif
-          {{-- <div class="mb-1 d-flex">
-            <label for="option-sm" class="d-flex mr-3 mb-3">
-              <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-sm" name="shop-sizes"></span> <span class="d-inline-block text-black">Small</span>
-            </label>
-            <label for="option-md" class="d-flex mr-3 mb-3">
-              <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-md" name="shop-sizes"></span> <span class="d-inline-block text-black">Medium</span>
-            </label>
-            <label for="option-lg" class="d-flex mr-3 mb-3">
-              <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-lg" name="shop-sizes"></span> <span class="d-inline-block text-black">Large</span>
-            </label>
-            <label for="option-xl" class="d-flex mr-3 mb-3">
-              <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-xl" name="shop-sizes"></span> <span class="d-inline-block text-black"> Extra Large</span>
-            </label>
-          </div> --}}
+
           <div class="mb-5">
             <div class="input-group mb-3" style="max-width: 120px;">
             <div class="input-group-prepend">
@@ -53,7 +40,7 @@
             </div>
             </div>
           </div>
-          <p><a href="cart.html" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+          <p><a href="javascript:void(0);" onclick="addToCart({{ $product->id }})"  class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
 
         </div>
       </div>
@@ -70,80 +57,51 @@
       <div class="row">
         <div class="col-md-12">
           <div class="nonloop-block-3 owl-carousel">
-          @if($featuredProducts != 'No')
-            @foreach($featuredProducts as $featured)
-              <div class="item">
-                <div class="block-4 text-center">
-                  @if($featured->image != '')
-                    <figure class="block-4-image">
-                      <a href="{{ route("front.product",$featured->slug) }}"><img src="{{ asset('uploads/products/'.$featured->image) }}" alt="Image placeholder" class="img-fluid"></a>
-                    </figure>
-                    @else
-                    <figure class="block-4-image">
-                      <a href="{{ route("front.product",$featured->slug) }}"><img src="{{ asset('front-assets/images/cloth_1.jpg') }}" alt="Image placeholder" class="img-fluid"></a>
-                    </figure>
-                  @endif
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">{{ $featured->title }}</a></h3>
-                    <p class="mb-0">{{ $featured->description }}</p>
-                    <p class="text-primary font-weight-bold">{{ $featured->price }}</p>
+            @if($featuredProducts != 'No')
+              @foreach($featuredProducts as $featured)
+                <div class="item">
+                  <div class="block-4 text-center">
+                    @if($featured->image != '')
+                      <figure class="block-4-image">
+                        <a href="{{ route("front.product",$featured->slug) }}"><img src="{{ asset('uploads/products/'.$featured->image) }}" alt="Image placeholder" class="img-fluid"></a>
+                      </figure>
+                      @else
+                      <figure class="block-4-image">
+                        <a href="{{ route("front.product",$featured->slug) }}"><img src="{{ asset('front-assets/images/cloth_1.jpg') }}" alt="Image placeholder" class="img-fluid"></a>
+                      </figure>
+                    @endif
+                    <div class="block-4-text p-4">
+                      <h3><a href="#">{{ $featured->title }}</a></h3>
+                      <p class="mb-0">{{ $featured->description }}</p>
+                      <p class="text-primary font-weight-bold">{{ $featured->price }}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            @endforeach
-          @endif
-            {{-- <div class="item">
-              <div class="block-4 text-center">
-                <figure class="block-4-image">
-                  <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                </figure>
-                <div class="block-4-text p-4">
-                  <h3><a href="#">Corater</a></h3>
-                  <p class="mb-0">Finding perfect products</p>
-                  <p class="text-primary font-weight-bold">$50</p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="block-4 text-center">
-                <figure class="block-4-image">
-                  <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
-                </figure>
-                <div class="block-4-text p-4">
-                  <h3><a href="#">Polo Shirt</a></h3>
-                  <p class="mb-0">Finding perfect products</p>
-                  <p class="text-primary font-weight-bold">$50</p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="block-4 text-center">
-                <figure class="block-4-image">
-                  <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
-                </figure>
-                <div class="block-4-text p-4">
-                  <h3><a href="#">T-Shirt Mockup</a></h3>
-                  <p class="mb-0">Finding perfect products</p>
-                  <p class="text-primary font-weight-bold">$50</p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="block-4 text-center">
-                <figure class="block-4-image">
-                  <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                </figure>
-                <div class="block-4-text p-4">
-                  <h3><a href="#">Corater</a></h3>
-                  <p class="mb-0">Finding perfect products</p>
-                  <p class="text-primary font-weight-bold">$50</p>
-                </div>
-              </div>
-            </div> --}}
+              @endforeach
+            @endif
           </div>
         </div>
       </div>
     </div>
   </div>
+@endsection
 
+@section('customJs')
+  <script>
+    function addToCart(id){
+      $.ajax({
+        url: '{{ route("front.addToCart") }}',
+        type: 'post',
+        data: {id:id},
+        dataType: 'json',
+        success: function(response){
+          if (response.status == true) {
+            window.location.href = "{{ route('front.cart') }}";
+          } else {
+            alert(response.message);
+          }
+        }
+      });
+    }
+  </script>
 @endsection

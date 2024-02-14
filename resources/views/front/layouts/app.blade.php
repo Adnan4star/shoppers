@@ -4,6 +4,7 @@
   <title>Shoppers &mdash; Colorlib e-Commerce Template</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}"> {{--attaching csrf token in header for ajax--}}
   
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
   <link rel="stylesheet" href="{{ asset('front-assets/fonts/icomoon/style.css') }}">
@@ -38,7 +39,7 @@
             
             <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
               <div class="site-logo">
-                <a href="/" class="js-logo-clone">Shoppers</a>
+                <a href="{{ route('front.home') }}" class="js-logo-clone">Shoppers</a>
               </div>
             </div>
             
@@ -48,7 +49,7 @@
                   <li><a href="#"><span class="icon icon-person"></span></a></li>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                   <li>
-                    <a href="cart.html" class="site-cart">
+                    <a href="{{ route('front.cart') }}" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
                       <span class="count">2</span>
                     </a>
@@ -68,7 +69,7 @@
             @if(getCategories()->isNotEmpty())
             @foreach(getCategories() as $category)
             <li class="has-children active">
-              <a href="index.html">{{$category->name}}</a>
+              <a href="{{ route("front.shop",$category->slug) }}">{{$category->name}}</a>
               @if($category->sub_category->isNotEmpty()) {{--defined relation of sub_category in category model--}}
               <ul class="dropdown">
                 @foreach($category->sub_category as $subcategory)
@@ -174,6 +175,16 @@
   <script src="{{ asset('front-assets/js/main.js') }}"></script>
   <script src="{{ asset('front-assets/js/rangeslider.min.js') }}"></script>
   
+  <script>
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+  </script>
+
   @yield('customJs');
+
+  
 </body>
 </html>

@@ -46,6 +46,7 @@ class ShopController extends Controller
 
     public function product($slug){
         $product = Product::where('slug',$slug)->first();
+        
         // dd($product);
         if($product == null){
             abort(404);
@@ -57,4 +58,5 @@ class ShopController extends Controller
         $data['product'] = $product;
         return view('front.product',$data);
     }
+
 }

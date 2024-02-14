@@ -56,27 +56,27 @@
   <div class="container">
     <div class="row">
       @if(getCategories()->isNotEmpty())
-      @foreach(getCategories() as $category)
-      <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-        <a class="block-2-item" href="#">
+        @foreach(getCategories() as $category)
+          <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+            <a class="block-2-item" href="{{ route('front.shop',$category->slug) }}">
 
-          @if($category->image != "")
-          <figure class="image">
-            <img src="{{ asset('uploads/'.$category->image) }}" alt="" class="img-fluid">
-          </figure>
-          @else
-          <figure class="image">
-            <img src="{{ asset('front-assets/images/men.jpg') }}" alt="" class="img-fluid">
-          </figure>
-          @endif
+              @if($category->image != "")
+                <figure class="image">
+                  <img src="{{ asset('uploads/'.$category->image) }}" alt="" class="img-fluid">
+                </figure>
+                @else
+                <figure class="image">
+                  <img src="{{ asset('front-assets/images/men.jpg') }}" alt="" class="img-fluid">
+                </figure>
+              @endif
 
-          <div class="text">
-            <span class="text-uppercase">Collections</span>
-            <h3>{{$category->name}}</h3>
+              <div class="text">
+                <span class="text-uppercase">Collections</span>
+                <h3>{{$category->name}}</h3>
+              </div>
+            </a>
           </div>
-        </a>
-      </div>
-      @endforeach
+        @endforeach
       @endif
     
     </div>
