@@ -15,7 +15,10 @@ class category extends Model
 
     public function sub_category()
     {
-        
         return $this->hasMany(SubCategory::class);
+    }
+    public function NoOfProducts()
+    {
+        return $this->hasMany(Product::class);
     }
 }

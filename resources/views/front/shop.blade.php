@@ -12,10 +12,8 @@
 
 <div class="site-section">
     <div class="container">
-        
         <div class="row mb-5">
             <div class="col-md-9 order-2">
-                
                 <div class="row">
                     <div class="col-md-12 mb-5">
                         <div class="float-md-left mb-4"><h2 class="text-black h5">Shop All</h2></div>
@@ -33,7 +31,6 @@
                         </div>
                     </div>
                 </div>
-
                 @if($products->isNotEmpty())
                     <div class="row mb-5">
                         @foreach($products as $product)
@@ -43,7 +40,7 @@
                                         <figure class="block-4-image">
                                             <a href="{{ route("front.product",$product->slug) }}"><img src="{{ asset('uploads/products/'.$product->image)}}" alt="Image placeholder" class="img-fluid"></a>
                                         </figure>
-                                    @else
+                                        @else
                                         <figure class="block-4-image">
                                             <a href="{{ route("front.product",$product->slug) }}"><img src="{{ asset('front-assets/images/men.jpg') }}" alt="Image placeholder" class="img-fluid"></a>
                                         </figure>
@@ -61,39 +58,56 @@
                         @endforeach
                     </div>
                 @endif
-
+                    {{--pagination--}}
                 <div class="row" data-aos="fade-up">
                     {{ $products->withQueryString()->links() }}
                 </div>
             </div>
-            
-            
-            
             <div class="col-md-3 order-1 mb-5 mb-md-0">
+                {{-- <nav class="site-navigation text-right text-md-center" role="navigation">
+                    <div class="container">
+                        <ul class="site-menu js-clone-nav d-none d-md-block">
+                            @if($categories->isNotEmpty())
+                                @foreach($categories as $category)
+                                    <li class="has-children active">
+                                        <a href="{{ route("front.shop",$category->slug) }}">{{$category->name}}</a>
+                                        @if($category->sub_category->isNotEmpty())
+                                            <ul class="dropdown">
+                                                @foreach($category->sub_category as $subcategory)
+                                                <li><a href="{{ route('front.shop',[$category->slug,$subcategory->slug]) }}">{{$subcategory->name}}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            @endif
+                        </ul>
+                    </div>
+                </nav> --}}
                 <div class="border p-4 rounded mb-4">
                     <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
                     @if($categories->isNotEmpty())
-                    <ul class="list-unstyled mb-0 ">
-                        @foreach($categories as $category)
-                            <li class="mb-4">
-                                <a href="{{ route("front.shop",$category->slug) }}" class="d-flex category-toggle">
-                                    <span>{{$category->name}}</span>
-                                    <span class="text-black ml-auto">({{$category->sub_category->count()}})</span>
-                                </a>
-                                {{-- @if($category->sub_category->isNotEmpty())
-                                    <ul class="list-unstyled subcategories" style="display: none;">
-                                        @foreach($category->sub_category as $subcategory)
-                                            <li class="mb-1">
-                                                <a href="{{ route("front.shop",[$category->slug,$subcategory->slug]) }}" class="d-flex">
-                                                    <span>{{$subcategory->name}}</span>
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endif --}}
-                            </li>
-                        @endforeach
-                    </ul>
+                        <ul class="list-unstyled mb-0">
+                            @foreach($categories as $category)
+                                <li class="mb-4"> {{--{{ ($categorySelected == $category->id) ? 'show' : ''}} 4 higlighting selected category--}}
+                                    <a href="{{ route("front.shop",$category->slug) }}" class="d-flex category-toggle">
+                                        <span>{{$category->name}}</span>
+                                        <span class="text-black ml-auto">({{$category->no_of_products_count}})</span>
+                                    </a>
+                                    {{-- @if($category->sub_category->isNotEmpty())
+                                        <ul class="list-unstyled subcategories" style="display: none;">
+                                            @foreach($category->sub_category as $subcategory)
+                                                <li class="mb-1">
+                                                    <a href="{{ route("front.shop",[$subcategory->slug]) }}" class="d-flex">
+                                                        <span>{{$subcategory->name}}</span>
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif --}}
+                                </li>
+                            @endforeach
+                        </ul>
                     @endif
                 </div>
 
@@ -157,21 +171,17 @@
 @endsection
 
 @section('customJs')
-<script>
-    $("#sort").change(function(){
-        apply_filters();
-    });
+    <script>
+        $("#sort").change(function(){
+            apply_filters();
+        });
 
-    function apply_filters(){
-        var url = '{{ url()->current() }}?';
+        function apply_filters(){
+            var url = '{{ url()->current() }}?';
 
-        url += '&sort='+$("#sort").val()
+            url += '&sort='+$("#sort").val()
 
-        window.location.href = url;
-    }
-
-    
-
-    
-</script>
+            window.location.href = url;
+        }
+    </script>
 @endsection

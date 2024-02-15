@@ -67,4 +67,64 @@ class CartController extends Controller
 
         return view('front.cart',$data);
     }
+
+    public function updateCart(Request $request) 
+    {
+        $rowId = $request->rowId;
+        $qty = $request->qty;
+
+        $itemInfo = Cart::get($rowId); // Getting row id via library used
+        $product = Product::find($itemInfo->id); //id come from Cart::product->id
+        
+        // check qty available in stock
+        if ($product->track_qty == 'Yes') { // product will have track_qty checked in admin to track stock level
+            if ($qty <= $product->qty) {
+                Cart::update($rowId, $qty); // Will update the quantity 
+                $message = 'Cart updated successfully.';
+                $status  = true;
+                session()->flash('success', $message);
+            } else {
+                $message = 'Requested qty ('.$qty.') not available in stock.';
+                $status = false;
+                session()->flash('error', $message);
+            }
+        } else {
+            Cart::update($rowId, $qty); // Will update the quantity 
+            $message = 'Cart updated successfully.';
+            $status  = true;
+            session()->flash('success', $message);
+        }
+        return response()->json([
+            'status' => $status,
+            'message' => $message
+        ]);
+    }
+
+    public function deleteItem(Request $request)
+    {
+        $rowId = $request->rowId;
+        $itemInfo = Cart::get($rowId);
+
+        if ($itemInfo == null) {
+            $errorMsg = 'Item not found in cart.';
+            session()->flash('error', $errorMsg);
+
+            return response()->json([
+                'status' => false,
+                'message' => $errorMsg
+            ]);
+        } else {
+            Cart::remove($request->rowId);
+            $message = 'Item removed successfully.';
+
+            session()->flash('success', $message);
+            return response()->json([
+                'status' => true,
+                'message' => $message
+            ]);
+        }
+        
+
+        
+    }
 }

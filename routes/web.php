@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ShopController;
@@ -31,20 +32,33 @@ use Illuminate\Support\Str;
 //     return view('welcome');
 // });
 
+ // Shop routes
 Route::get('/',[FrontController::class,'index'])->name('front.home');
 Route::get('/shop/{categorySlug?}/{subCategorySlug?}',[ShopController::class, 'index'])->name('front.shop');
 Route::get('/product/{slug}',[ShopController::class,'product'])->name('front.product');
 Route::get('/cart',[CartController::class,'cart'])->name('front.cart');
 Route::post('/add-to-cart',[CartController::class,'addToCart'])->name('front.addToCart');
+Route::post('/update-Cart',[CartController::class,'updateCart'])->name('front.updateCart');
+Route::post('/delete-item',[CartController::class,'deleteItem'])->name('front.deleteItem.cart');
 
+ // User login/register routes
+Route::group(['prefix' => 'account'],function(){
+    Route::group(['middleware' => 'guest'],function(){
+        Route::get('/login',[AuthController::class,'login'])->name('account.login');
+        Route::post('/process-login',[AuthController::class,'processLogin'])->name('account.processLogin');
+        Route::get('/register',[AuthController::class,'register'])->name('account.register');
+        Route::post('/process-register',[AuthController::class,'processRegister'])->name('account.processRegister');
+    });
+    Route::group(['middleware' => 'auth'],function(){
 
+    });
+});
 
+// admin login route
 Route::group(['prefix' => 'admin'],function(){
     Route::group(['middleware' => 'admin.guest'],function(){
-
-        Route::get('/login',[AdminLoginController::class, 'index'])->name('admin.login'); //admin login route
+        Route::get('/login',[AdminLoginController::class, 'index'])->name('admin.login'); 
         Route::post('/authenticate',[AdminLoginController::class, 'authenticate'])->name('admin.authenticate');
-
     });
 
     Route::group(['middleware' => 'admin.auth'],function(){
@@ -83,16 +97,16 @@ Route::group(['prefix' => 'admin'],function(){
         Route::post('/products/{product}',[ProductController::class, 'update'])->name('products.update'); //edit submit
         Route::delete('/products/{product}',[ProductController::class, 'destroy'])->name('products.delete');
 
-
-        Route::get('/product-subcategories',[ProductSubCategoryController::class, 'index'])->name('product-subcategories.index'); //Selecting subcategory auto when selecting category on create products 
+        // Selecting subcategory auto when selecting category on create products 
+        Route::get('/product-subcategories',[ProductSubCategoryController::class, 'index'])->name('product-subcategories.index'); 
 
         //product-Images in update 
         Route::post('/product-images/update',[ProductImageController::class, 'create'])->name('product-images.update');
 
-
-        //temp-images.create
+        //temp-images create route
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');
 
+        // Auto slug route
         Route::get('/getSlug',function(Request $request){
             $slug = '';
             if(!empty($request->title)){
@@ -103,6 +117,5 @@ Route::group(['prefix' => 'admin'],function(){
                 'slug' => $slug
             ]);
         })->name('getSlug');
-
     });
 });
