@@ -11,27 +11,37 @@
                         {{ Session::get('success') }}
                     </div>
                 @endif
+                @if (Session::has('error'))
+                    <div class="alert alert-danger">
+                        {{ Session::get('error') }}
+                    </div>
+                @endif
             </div>
             
             <div class="col-md-7">
-                <form action="#" method="post" name="registrationForm" id="registrationForm">
+                <form action="{{ route('account.authenticate') }}" method="post">
+                    @csrf
                     <div class="p-3 p-lg-5 border">
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label for="email" class="text-black">Email <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                                <p></p>
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Email">
+                                @error('email')
+                                    <p class="invalid-feedback">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label for="password" class="text-black">Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                                <p></p>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password">
+                                @error('password')
+                                    <p class="invalid-feedback">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block" value="register">Login</button>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block" value="login">Login</button>
                         </div>
                     </div>
                 </form>
@@ -43,47 +53,5 @@
 @endsection
 
 @section('customJs')
-    <script type="text/javascript">
-        $("#registrationForm").submit(function(event){
-            event.preventDefault();
 
-            $.ajax({
-                url: '{{ route("account.processLogin") }}',
-                type: 'post',
-                data: $(this).serializeArray(),
-                dataType: 'json',
-                success: function(response){
-                    // Display errors in p tag which received in var response
-                    var errors = response.errors;
-
-                    if (response.status == false) { // showing errors on fields if status = false
-                        if (errors.email) {
-                            $("#email").siblings("p").addClass('invalid-feedback').html(errors.email); //displaying error on email field p tag
-                            $("#email").addClass('is-invalid'); // adding red colour border
-                        } else {
-                            $("#email").siblings("p").removeClass('invalid-feedback').html('');
-                            $("#email").removeClass('is-invalid');
-                        }
-
-                        if (errors.password) {
-                            $("#password").siblings("p").addClass('invalid-feedback').html(errors.password); //displaying error on password field p tag
-                            $("#password").addClass('is-invalid'); // adding red colour border
-                        } else {
-                            $("#password").siblings("p").removeClass('invalid-feedback').html('');
-                            $("#password").removeClass('is-invalid');
-                        }
-                    } else { // removing errors from fields if status = true
-                        $("#email").siblings("p").removeClass('invalid-feedback').html('');
-                        $("#email").removeClass('is-invalid');
-
-                        $("#password").siblings("p").removeClass('invalid-feedback').html('');
-                        $("#password").removeClass('is-invalid');
-                    }
-                },
-                error: function(jQXHR, exception){
-                    console.log("something went wrong");
-                }
-            });
-        });
-    </script>
 @endsection

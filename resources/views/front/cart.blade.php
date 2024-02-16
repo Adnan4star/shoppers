@@ -4,7 +4,7 @@
     <div class="bg-light py-3">
         <div class="container">
         <div class="row">
-            <div class="col-md-12 mb-0"><a href="{{ route('front.home') }}">Home</a> <span class="mx-1 mb-2">/ <a href="{{ route('front.shop') }}">Shop</a> <span class="mx-1 mb-2">/</span> <strong class="text-black">Cart</strong></div>
+            <div class="col-md-12 mb-0"><a href="{{ route('front.home') }}">Home</a> <span class="mx-2 mb-0">/</span> <a href="{{ route('front.shop') }}">Shop</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Cart</strong></div>
         </div>
         </div>
     </div>
@@ -132,7 +132,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Proceed To Checkout</button>
+                                    <a href="{{ route('front.checkout') }}"><button class="btn btn-primary btn-lg py-3 btn-block" >Proceed To Checkout</button></a>
                                 </div>
                             </div>
                             </div>
