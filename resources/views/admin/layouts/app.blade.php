@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <meta name="csrf-token" content="{{ csrf_token() }}"> {{--attaching csrf token in header for ajax--}}
 
-    <title>Dashboard - Tabler - Premium and Open Source dashboard template with responsive and high quality UI.</title>
+    <title>Dashboard - Premium</title>
     <!--Dropzone css files -->
     <link href="{{ asset('admin-assets/plugins/dropzone/min/dropzone.min.css') }}" rel="stylesheet"/>
     <!-- CSS files -->
@@ -120,7 +120,7 @@
                     <ul class="list-inline list-inline-dots mb-0">
                         <li class="list-inline-item">
                             Copyright &copy; 2023
-                            <a href="." class="link-secondary">Tabler</a>.
+                            <a href="." class="link-secondary">Shoppers</a>.
                             All rights reserved.
                         </li>
                         <li class="list-inline-item">
