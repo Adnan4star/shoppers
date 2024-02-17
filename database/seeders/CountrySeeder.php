@@ -260,3 +260,5 @@ class CountrySeeder extends Seeder
         DB::table('countries')->insert($countries);
     }
 }
+
+// php artisan db:seed --class=CountrySeeder

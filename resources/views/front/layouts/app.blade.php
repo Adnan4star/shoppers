@@ -51,7 +51,7 @@
                   <li>
                     <a href="{{ route('front.cart') }}" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
+                      <span class="count">0</span>
                     </a>
                   </li> 
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
@@ -126,16 +126,16 @@
             <a href="#" class="block-6">
               <img src="{{ asset('front-assets/images/hero_1.jpg') }}" alt="Image placeholder" class="img-fluid rounded mb-4">
               <h3 class="font-weight-light  mb-0">Finding Your Perfect Shoes</h3>
-              <p>Promo from  nuary 15 &mdash; 25, 2019</p>
+              <p>Promo from February 16 &mdash; 17, 2024</p>
             </a>
           </div>
           <div class="col-md-6 col-lg-3">
             <div class="block-5 mb-5">
               <h3 class="footer-heading mb-4">Contact Info</h3>
               <ul class="list-unstyled">
-                <li class="address">203 Fake St. Mountain View, San Francisco, California, USA</li>
-                <li class="phone"><a href="tel://23923929210">+2 392 3929 210</a></li>
-                <li class="email">emailaddress@domain.com</li>
+                <li class="address">51,B PGECHS, MODEL TOWN LAHORE</li>
+                <li class="phone"><a href="tel://23923929210">+92 320 6500 405</a></li>
+                <li class="email">Adnanafzal@tetralogicx.com</li>
               </ul>
             </div>
             

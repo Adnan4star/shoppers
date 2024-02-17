@@ -41,6 +41,8 @@ Route::post('/add-to-cart',[CartController::class,'addToCart'])->name('front.add
 Route::post('/update-Cart',[CartController::class,'updateCart'])->name('front.updateCart');
 Route::post('/delete-item',[CartController::class,'deleteItem'])->name('front.deleteItem.cart');
 Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout');
+Route::post('/process-checkout',[CartController::class,'processCheckout'])->name('front.processCheckout');
+Route::get('/thankyou/{orderId}',[CartController::class,'thankyou'])->name('front.thankyou');
 
  // User login/register routes
 Route::group(['prefix' => 'account'],function(){
