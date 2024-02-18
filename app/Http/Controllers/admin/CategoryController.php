@@ -80,13 +80,11 @@ class CategoryController extends Controller
             return redirect()->route('categories.index');
         }
 
-
         return view('admin.category.edit',compact('category'));
     }
 
     public function update(Request $request,$categoryId)
     {
-       
         $category = category::find($categoryId);
 
         if(empty($category))

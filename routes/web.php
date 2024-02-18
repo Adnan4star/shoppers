@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
+use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\AuthController;
@@ -96,7 +97,7 @@ Route::group(['prefix' => 'admin'],function(){
         Route::put('/brands/{brand}',[BrandController::class, 'update'])->name('brands.update'); //edit submit
         Route::delete('/brands/{brand}',[BrandController::class, 'destroy'])->name('brands.destroy');
 
-        //Product Route
+        //Product routes
         Route::get('/products',[ProductController::class, 'index'])->name('products.index');
         Route::get('/products/create',[ProductController::class, 'create'])->name('products.create');
         Route::post('/products',[ProductController::class, 'store'])->name('products.store');
@@ -109,6 +110,14 @@ Route::group(['prefix' => 'admin'],function(){
 
         //product-Images in update 
         Route::post('/product-images/update',[ProductImageController::class, 'create'])->name('product-images.update');
+
+        // Shipping routes
+        Route::get('/shipping',[ShippingController::class, 'index'])->name('shipping.index');
+        Route::get('/shipping/create',[ShippingController::class, 'create'])->name('shipping.create');
+        Route::post('/shipping',[ShippingController::class, 'store'])->name('shipping.store');
+        Route::get('/shipping/{id}/edit',[ShippingController::class, 'edit'])->name('shipping.edit');
+        Route::post('/shipping/{id}',[ShippingController::class, 'update'])->name('shipping.update'); //edit submit
+        Route::delete('/shipping/{id}',[ShippingController::class, 'destroy'])->name('shipping.delete');
 
         //temp-images create route
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');
