@@ -7,8 +7,10 @@ use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Shipping;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Mail\Mailables\Content;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -150,14 +152,45 @@ class CartController extends Controller
             
             return redirect()->route('account.login');
         }
+        session()->forget('url.intended');
 
         $customerAddress = CustomerAddress::where('user_id',Auth::user()->id)->first(); // pre-filling billing form if user has already placed order
 
-        session()->forget('url.intended');
         $countries = Country::orderBy('name','ASC')->get();
 
+        // if user address not logged in than shipping charge = 0
+        // Calculate Shipping charges
+        if ($customerAddress != '') {
+
+            $userCountry = $customerAddress->country_id;
+            $shippingInfo = Shipping::where('country_id',$userCountry)->first();
+
+            if ($shippingInfo) {
+                $totalQty = 0;
+                $totalShippingCharges = 0;
+                $grandTotal = 0;
+
+                foreach (Cart::content() as $item) {
+                    $totalQty += $item->qty;
+                }
+
+                $totalShippingCharges = $totalQty*$shippingInfo->amount;
+                $grandTotal = Cart::Subtotal(2,'.','') + $totalShippingCharges;
+            } else {
+                $grandTotal = Cart::Subtotal(2,'.','');
+                $totalShippingCharges = 0;
+            }
+
+        } else {
+            $grandTotal = Cart::Subtotal(2,'.','');
+            $totalShippingCharges = 0;
+        }
+        
         $data['countries'] = $countries;
         $data['customerAddress'] = $customerAddress;
+        $data['totalShippingCharges'] = $totalShippingCharges;
+        $data['grandTotal'] = $grandTotal;
+
         return view('front.checkout', $data);
     }
 
@@ -209,10 +242,28 @@ class CartController extends Controller
         
         // Step-3 store data in orders table
         if ($request->payment_method == 'cod') {
-            $shipping = 0;
+            // Shipping charges
             $discount = 0;
+            $shipping = 0;
             $subTotal = Cart::subtotal(2,'.',''); // (3 parameters decimal, decimal separator, thousandSeparator)
-            $grandTotal =  $subTotal + $shipping;
+    
+            $shippingInfo = Shipping::where('country_id',$request->country)->first();
+
+            $totalQty = 0;
+            foreach (Cart::content() as $item) {
+                $totalQty += $item->qty;
+            }
+
+            if ($shippingInfo != null){
+                $shipping = $totalQty * $shippingInfo->amount;
+                $grandTotal = $subTotal + $shipping;
+
+            } else {
+                $shippingInfo = Shipping::where('country_id','others')->first();
+                $shipping = $totalQty * $shippingInfo->amount;
+                $grandTotal = $subTotal + $shipping;
+
+            }
 
             $order = new Order;
             $order->subtotal = $subTotal;
@@ -262,5 +313,50 @@ class CartController extends Controller
     {
         $data['id'] = $id;
         return view('front.thankyou',$data);
+    }
+
+    public function getOrderSummary(Request $request)
+    {
+        $subTotal = Cart::subTotal(2,'.','');
+
+        if ($request->country_id > 0){
+
+            $shippingInfo = Shipping::where('country_id',$request->country_id)->first();
+
+            $totalQty = 0;
+            foreach (Cart::content() as $item) {
+                $totalQty += $item->qty;
+            }
+
+            if ($shippingInfo != null){
+                $shippingCharge = $totalQty * $shippingInfo->amount;
+                $grandTotal = $subTotal + $shippingCharge;
+
+                return response()->json([
+                    'status' => true,
+                    'grandTotal' => $grandTotal,
+                    'shippingCharge' => $shippingCharge,
+                ]);
+
+            } else {
+                $shippingInfo = Shipping::where('country_id','others')->first();
+                $shippingCharge = $totalQty * $shippingInfo->amount;
+                $grandTotal = $subTotal + $shippingCharge;
+
+                return response()->json([
+                    'status' => true,
+                    'grandTotal' => $grandTotal,
+                    'shippingCharge' => $shippingCharge,
+                ]);
+            }
+
+        } else {
+
+            return response()->json([
+                'status' => true,
+                'grandTotal' => $subTotal,
+                'shippingCharge' => 0,
+            ]);
+        }
     }
 }

@@ -12,6 +12,7 @@ use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DiscountCodeController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ Route::post('/delete-item',[CartController::class,'deleteItem'])->name('front.de
 Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout');
 Route::post('/process-checkout',[CartController::class,'processCheckout'])->name('front.processCheckout');
 Route::get('/thankyou/{orderId}',[CartController::class,'thankyou'])->name('front.thankyou');
+Route::post('/get-order-summary',[CartController::class,'getOrderSummary'])->name('front.getOrderSummary');
 
  // User login/register routes
 Route::group(['prefix' => 'account'],function(){
@@ -118,6 +120,11 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('/shipping/{id}/edit',[ShippingController::class, 'edit'])->name('shipping.edit');
         Route::post('/shipping/{id}',[ShippingController::class, 'update'])->name('shipping.update'); //edit submit
         Route::delete('/shipping/{id}',[ShippingController::class, 'destroy'])->name('shipping.delete');
+
+        // Coupon code routes
+        Route::get('/coupons',[DiscountCodeController::class, 'index'])->name('coupons.index');
+        Route::get('/coupons/create',[DiscountCodeController::class, 'create'])->name('coupons.create');
+        Route::post('/coupons',[DiscountCodeController::class, 'store'])->name('coupons.store');
 
         //temp-images create route
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');

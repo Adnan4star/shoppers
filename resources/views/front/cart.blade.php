@@ -121,14 +121,14 @@
                                 <strong class="text-black">${{ Cart::Subtotal() }}</strong>
                                 </div>
                             </div>
-                            <div class="row mb-5">
+                            {{-- <div class="row mb-5">
                                 <div class="col-md-6">
                                 <span class="text-black">Total</span>
                                 </div>
                                 <div class="col-md-6 text-right">
                                 <strong class="text-black">${{ Cart::Subtotal() }}</strong>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="row">
                                 <div class="col-md-12">

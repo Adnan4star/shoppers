@@ -23,6 +23,7 @@
     <link href="{{ asset('admin-assets/dist/css/tabler-payments.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('admin-assets/dist/css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('admin-assets/dist/css/demo.min.css?1684106062') }}" rel="stylesheet"/>
+    <link href="{{ asset('admin-assets/dist/css/datetimepicker.css') }}" rel="stylesheet"/>
     {{-- <link href="{{ asset('admin-assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet"/> --}}
 
     
@@ -146,6 +147,7 @@
 <!-- Tabler Core -->
 <script src="{{ asset('admin-assets/dist/js/tabler.min.js?1684106062') }}" defer></script>
 <script src="{{ asset('admin-assets/dist/js/demo.min.js?1684106062') }}" defer></script>
+<script src="{{ asset('admin-assets/dist/js/datetimepicker.js') }}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 {{-- <script src="{{ asset('admin-assets/plugins/select2/js/select2.min.js') }}" defer></script> --}}
 

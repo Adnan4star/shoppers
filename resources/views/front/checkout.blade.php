@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label for="country" class="text-black">Country <span class="text-danger">*</span></label>
                             <select id="country" name="country" class="form-control">
-                                <option>Select a country</option>    
+                                <option value="">Select a country</option>    
                                     @if ($countries->isNotEmpty())
                                         @foreach ($countries as $country)
                                             <option {{ (!empty($customerAddress) && $customerAddress->country_id == $country->id) ? 'selected' : ''}} value="{{ $country->id }}">{{ $country->name }}</option>    
@@ -134,8 +134,12 @@
                                                 <td class="text-black">${{ Cart::Subtotal() }}</td>
                                             </tr>
                                             <tr>
+                                                <td class="text-black font-weight-bold"><strong>Shipping</strong></td>
+                                                <td class="text-black" id="shippingAmount">${{ $totalShippingCharges }}</td> {{--number_format formats result to like .00--}}
+                                            </tr>
+                                            <tr>
                                                 <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                                                <td class="text-black font-weight-bold"><strong>${{ Cart::Subtotal() }}</strong></td>
+                                                <td class="text-black font-weight-bold" id="grandTotal"><strong>${{ $grandTotal }}</strong></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -325,6 +329,24 @@
                         window.location.href = "{{ url('thankyou/') }}/"+response.orderId;
                     }
 
+                }
+            });
+        });
+
+        // If User Changes Country on checkout then shipping charges should calculate
+        $("#country").change(function(){
+            $.ajax({
+                url: '{{ route("front.getOrderSummary") }}',
+                type: 'post',
+                data: {country_id: $(this).val()},
+                dataType: 'json',
+                success: function(response){
+                    if (response.status == true) {
+                        $("#shippingAmount").html(response.shippingCharge);
+                        $("#grandTotal").html(response.grandTotal);
+                    } else {
+                        
+                    }
                 }
             });
         });
