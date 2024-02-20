@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductImageController;
@@ -12,7 +13,6 @@ use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\DiscountCodeController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Http\Request;
@@ -125,6 +125,7 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('/coupons',[DiscountCodeController::class, 'index'])->name('coupons.index');
         Route::get('/coupons/create',[DiscountCodeController::class, 'create'])->name('coupons.create');
         Route::post('/coupons',[DiscountCodeController::class, 'store'])->name('coupons.store');
+        Route::get('/coupons/{id}/edit',[DiscountCodeController::class, 'edit'])->name('coupons.edit');
 
         //temp-images create route
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');

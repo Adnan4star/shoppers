@@ -6,11 +6,11 @@
         <div class="row g-2 align-items-center">
             <div class="col">
                 <h2 class="page-title">
-                    Coupon Codes
+                    Coupons
                 </h2>
             </div>
             <div class="col-sm-5 text-right">
-                <a href="{{ route('coupons.create') }}" class="btn btn-primary">New Coupoun</a>
+                <a href="{{ route('coupons.create') }}" class="btn btn-primary">New Coupon</a>
             </div>
             <div class="my-2 my-md-2 flex-grow-1 flex-md-grow-0 order-first order-md-last col-lg-10">
                 <form action="" method="get" autocomplete="off" novalidate>
@@ -38,40 +38,54 @@
                         <table class="table table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th width="5%">ID</th>
-                                    <th width="20%">Name</th>
-                                    <th width="20%">Category</th>
-                                    <th width="20%">Slug</th>
-                                    <th width="5%">Status</th>
+                                    <th width="10%">ID</th>
+                                    <th width="10%">Code</th>
+                                    <th width="10%">Name</th>
+                                    <th width="10%">Discount</th>
+                                    <th width="10%">Start Date</th>
+                                    <th width="10%">End Date</th>
+                                    <th width="10%">Status</th>
                                     <th width="30%">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @if ($subCategories->IsNotEmpty())
-                                    @foreach ($subCategories as $subCategory) --}}
+                                @if ($discountCoupons->IsNotEmpty())
+                                    @foreach ($discountCoupons as $discountCoupon)
                                     <tr>
-                                        <td></td>
+                                        <td>{{ $discountCoupon->id }}</td>
                                         <td class="text-muted">
-                                            
+                                            {{ $discountCoupon->code }}
                                         </td>
                                         <td class="text-muted">
-                                            
+                                            {{ $discountCoupon->name }}
                                         </td>
-                                        <td class="text-muted"><a href="#" class="text-reset"></a></td>
                                         <td class="text-muted">
-                                            
+                                            @if ($discountCoupon->type == 'percent')
+                                                {{ $discountCoupon->discount_amount }}%
+                                            @else
+                                                ${{ $discountCoupon->discount_amount }}
+                                            @endif
+                                        </td>
+                                        <td class="text-muted">
+                                            {{ (!empty($discountCoupon->starts_at)) ? \Carbon\Carbon::parse($discountCoupon->starts_at)->format('Y/m/d H:i:s') : '' }}
+                                        </td>
+                                        <td class="text-muted">
+                                            {{ (!empty($discountCoupon->expires_at)) ? \Carbon\Carbon::parse($discountCoupon->expires_at)->format('Y/m/d H:i:s') : '' }}
+                                        </td>
+                                        <td class="text-muted">
+                                            {{ $discountCoupon->status }}
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-primary">Edit</a>
-                                            <a href="#" onclick="" class="btn btn-danger">Delete</a>
+                                            <a href="{{route('coupons.edit',$discountCoupon->id)}}" class="btn btn-primary">Edit</a>
+                                            <a href="#" onclick="deleteCategory({{ $discountCoupon->id }})" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
-                                    {{-- @endforeach
-                                @else --}}
+                                    @endforeach
+                                @else
                                     <tr>
                                         <td colspan="5">Records Not Found</td>
                                     </tr>
-                                {{-- @endif --}}
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -80,13 +94,14 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @section('customJs')
     <script>
-        function deleteSubCategory(id)
+        function deleteCategory(id)
         {
-            var url = '{{ route("sub-categories.delete","ID") }}';
+            var url = '{{ route("categories.destroy","ID") }}';
             var newUrl = url.replace("ID",id);
             newUrl = url.replace("ID",id);
             
@@ -102,10 +117,10 @@
                     success: function(response){
                         $("button[type=submit]").prop('disabled',false);
 
-                        // if(response['status']){
-                            window.location.href = "{{ route('sub-categories.index') }}";
-                            // location.reload();
-                        // }
+                        if(response['status']){
+                            // window.location.href = "{{ route('categories.index') }}";
+                            location.reload();
+                        }
                     }
                 });
             }

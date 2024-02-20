@@ -65,6 +65,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('coupons.index') }}" >
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                
+                            </span>
+                            <span class="nav-link-title">
+                                Coupons
+                            </span>
+                        </a>
+                    </li>
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="#" >
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 
@@ -73,7 +83,7 @@
                                 Orders
                             </span>
                         </a>
-                    </li>
+                    </li> --}}
                     
                     {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >

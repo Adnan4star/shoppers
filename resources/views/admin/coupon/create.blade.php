@@ -106,7 +106,7 @@
                                     </div>
                                     <div class="card-footer text-end">
                                         <button type="submit" class="btn btn-primary">Create</button>
-                                        <a href="#" class="btn btn-outline-dark ml-3">Cancel</a>
+                                        <a href="{{ route('coupons.index') }}" class="btn btn-outline-dark ml-3">Cancel</a>
                                     </div>
                                 </div>
                             </form>
