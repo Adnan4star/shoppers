@@ -1,68 +1,58 @@
 @extends('front.layouts.app')
 
 @section('content')
-<div class="page-wrapper">
-    <!-- Page header -->
-    <div class="page-header d-print-none">
-        <div class="container-xl">
-            <div class="row g-2 align-items-center">
-                <div class="col">
-                    <h4 class="page-title">
-                        <div class="col-md-8 mb-0"><a href="#">My Account</a><span class="mx-1 mb-2">/</span> <strong class="text-black">Settings</strong></div>
-                    </h4>
+<main>
+    <section class="section-5 pt-3 pb-3 mb-3 bg-white">
+        <div class="container">
+            <div class="light-font">
+                <ol class="breadcrumb primary-color mb-0">
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">My Account</a></li>
+                    <li class="breadcrumb-item">My Profile</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section class=" section-11 ">
+        <div class="container  mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    @include('front.account.common.sidebar')
+                </div>
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 pt-2 pb-2">Personal Information</h2>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <div class="mb-3">               
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" id="name" placeholder="Enter Your Name" class="form-control">
+                                </div>
+                                <div class="mb-3">            
+                                    <label for="email">Email</label>
+                                    <input type="text" name="email" id="email" placeholder="Enter Your Email" class="form-control">
+                                </div>
+                                <div class="mb-3">                                    
+                                    <label for="phone">Phone</label>
+                                    <input type="text" name="phone" id="phone" placeholder="Enter Your Phone" class="form-control">
+                                </div>
+
+                                <div class="mb-3">                                    
+                                    <label for="phone">Address</label>
+                                    <textarea name="address" id="address" class="form-control" cols="30" rows="5" placeholder="Enter Your Address"></textarea>
+                                </div>
+
+                                <div class="btn-block">
+                                    <button class="btn btn-primary btn-sm py-3 btn-block">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Page body -->
-    <div class="card">
-        <div class="row g-0">
-            
-            @include('front.account.common.sidebar')
-
-            <form action="#" method="POST">
-                <div class="card-body">
-                    <h2 class="mb-4">Personal Information</h2>
-                    <h3 class="card-title mt-4">Name</h3>
-                    <div>
-                        <div class="row g-2">
-                            <div class="col-auto">
-                                <input type="text" class="form-control w-auto" name="name" id="name" placeholder="Enter your name">
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="card-title mt-4">Email</h3>
-                    <div>
-                        <div class="row g-2">
-                            <div class="col-auto">
-                                <input type="text" class="form-control w-auto" name="email" id="email" placeholder="Enter your email">
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="card-title mt-4">Phone</h3>
-                    <div>
-                        <div class="row g-2">
-                            <div class="col-auto">
-                                <input type="text" class="form-control w-auto" name="phone" id="phone" placeholder="Enter your phone">
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="card-title mt-4">Address</h3>
-                    <div>
-                        <div class="row g-2">
-                            <div class="col-auto">
-                                <input type="text" class="form-control w-auto" name="address" id="address" placeholder="Enter your address">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-transparent mt-4">
-                        <div class="btn-list justify-content-end"><a href="#" class="btn">Cancel</a>
-                            <a href="#" class="btn btn-primary">Submit</a>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+    </section>
+</main>
 @endsection
