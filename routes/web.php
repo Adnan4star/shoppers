@@ -46,6 +46,8 @@ Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout
 Route::post('/process-checkout',[CartController::class,'processCheckout'])->name('front.processCheckout');
 Route::get('/thankyou/{orderId}',[CartController::class,'thankyou'])->name('front.thankyou');
 Route::post('/get-order-summary',[CartController::class,'getOrderSummary'])->name('front.getOrderSummary');
+Route::post('/apply-discount',[CartController::class,'applyDiscount'])->name('front.applyDiscount');
+Route::post('/remove-discount',[CartController::class,'removeCoupon'])->name('front.removeCoupon');
 
  // User login/register routes
 Route::group(['prefix' => 'account'],function(){
@@ -120,12 +122,15 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('/shipping/{id}/edit',[ShippingController::class, 'edit'])->name('shipping.edit');
         Route::post('/shipping/{id}',[ShippingController::class, 'update'])->name('shipping.update'); //edit submit
         Route::delete('/shipping/{id}',[ShippingController::class, 'destroy'])->name('shipping.delete');
-
+        
         // Coupon code routes
         Route::get('/coupons',[DiscountCodeController::class, 'index'])->name('coupons.index');
         Route::get('/coupons/create',[DiscountCodeController::class, 'create'])->name('coupons.create');
         Route::post('/coupons',[DiscountCodeController::class, 'store'])->name('coupons.store');
         Route::get('/coupons/{id}/edit',[DiscountCodeController::class, 'edit'])->name('coupons.edit');
+        Route::post('/coupons/{id}',[DiscountCodeController::class, 'update'])->name('coupons.update'); //edit submit
+        Route::delete('/coupons/{id}',[DiscountCodeController::class, 'destroy'])->name('coupons.delete');
+
 
         //temp-images create route
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');

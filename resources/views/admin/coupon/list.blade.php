@@ -77,7 +77,7 @@
                                         </td>
                                         <td>
                                             <a href="{{route('coupons.edit',$discountCoupon->id)}}" class="btn btn-primary">Edit</a>
-                                            <a href="#" onclick="deleteCategory({{ $discountCoupon->id }})" class="btn btn-danger">Delete</a>
+                                            <a href="#" onclick="deleteCoupon({{ $discountCoupon->id }})" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -99,9 +99,9 @@
 
 @section('customJs')
     <script>
-        function deleteCategory(id)
+        function deleteCoupon(id)
         {
-            var url = '{{ route("categories.destroy","ID") }}';
+            var url = '{{ route("coupons.delete","ID") }}';
             var newUrl = url.replace("ID",id);
             newUrl = url.replace("ID",id);
             
@@ -118,8 +118,7 @@
                         $("button[type=submit]").prop('disabled',false);
 
                         if(response['status']){
-                            // window.location.href = "{{ route('categories.index') }}";
-                            location.reload();
+                            window.location.href = "{{ route('coupons.index') }}";
                         }
                     }
                 });

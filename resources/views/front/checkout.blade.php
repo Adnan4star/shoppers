@@ -96,22 +96,31 @@
                     </div>
                     <div class="col-md-6">
 
-                        {{-- <div class="row mb-5">
+                        <div class="row mb-5">
                             <div class="col-md-12">
-                            <h2 class="h3 mb-3 text-black">Coupon Code</h2>
-                            <div class="p-3 p-lg-5 border">
-                                
-                                <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
-                                <div class="input-group w-75">
-                                <input type="text" class="form-control" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary btn-sm" type="button" id="button-addon2">Apply</button>
+                                <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+                                <div class="p-3 p-lg-5 border">
+                                    
+                                    <label class="text-black mb-3">Enter your coupon code if you have one</label>
+                                    <div class="input-group w-75">
+                                        <input type="text" class="form-control" name="discount_code" id="discount_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary btn-sm" type="button" id="apply-discount">Apply</button>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div id="discount-response-wrapper">
+                                    @if (Session::has('code'))
+                                        <div class="input-group w-85" id="discount-response">
+                                            <strong class="form-control"> {{ Session::get('code')->code }} </strong>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-danger btn-sm" type="button" id="remove-discount">Delete</button>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
-
                             </div>
-                            </div>
-                        </div> --}}
+                        </div>
                     
                         <div class="row mb-5">
                             <div class="col-md-12">
@@ -132,6 +141,10 @@
                                             <tr>
                                                 <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
                                                 <td class="text-black">${{ Cart::Subtotal() }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-black font-weight-bold"><strong>Discount</strong></td>
+                                                <td id="discount_value" class="text-black">${{ $discount }}</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-black font-weight-bold"><strong>Shipping</strong></td>
@@ -342,13 +355,56 @@
                 dataType: 'json',
                 success: function(response){
                     if (response.status == true) {
-                        $("#shippingAmount").html(response.shippingCharge);
-                        $("#grandTotal").html(response.grandTotal);
+                        $("#shippingAmount").html('$'+ response.shippingCharge);
+                        $("#grandTotal").html('$'+ response.grandTotal);
                     } else {
                         
                     }
                 }
             });
         });
+
+        // Coupon code apply
+        $("#apply-discount").click(function(){
+            $.ajax({
+                url: '{{ route("front.applyDiscount") }}',
+                type: 'post',
+                data: {code: $("#discount_code").val(), country_id: $("#country").val()},
+                dataType: 'json',
+                success: function(response){
+                    if (response.status == true) {
+                        $("#shippingAmount").html('$'+ response.shippingCharge);
+                        $("#grandTotal").html('$' + response.grandTotal);
+                        $("#discount_value").html('$' + response.discount);
+                        $("#discount-response-wrapper").html(response.discountString);
+                    } else {
+                        $("#discount-response-wrapper").html("<span class='text-danger'>" + response.message + "</span>");
+                    }
+                    
+                }
+            });
+        });
+        
+        // Remove coupon
+        $('body').on('click',"#remove-discount",function(){
+            $.ajax({
+                url: '{{ route("front.removeCoupon") }}',
+                type: 'post',
+                data: {country_id: $("#country").val()},
+                dataType: 'json',
+                success: function(response){
+                    if (response.status == true) {
+                        $("#shippingAmount").html('$'+ response.shippingCharge);
+                        $("#grandTotal").html('$' + response.grandTotal);
+                        $("#discount_value").html('$' + response.discount);
+                        $("#discount-response").html('');
+                        $("#discount_code").html('');
+                        
+                    }
+                    
+                }
+            });
+        });
+
     </script>
 @endsection
