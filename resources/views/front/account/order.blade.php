@@ -1,9 +1,6 @@
 @extends('front.layouts.app')
 
 @section('content')
-@extends('front.layouts.app')
-
-@section('content')
 <main>
     <section class="section-5 pt-3 pb-3 mb-3 bg-white">
         <div class="container">
@@ -15,15 +12,15 @@
             </div>
         </div>
     </section>
-18Min 37/59
+
     <section class=" section-11 ">
-        <div class="container  mt-5">
+        <div class="container  mt-4">
             <div class="row">
                 <div class="col-md-3">
                     @include('front.account.common.sidebar')
                 </div>
                 <div class="col-md-9">
-                    <div class="card">
+                    <div class="card" style="margin-top: 20px">
                         <div class="card-header">
                             <h2 class="h5 mb-0 pt-2 pb-2">My Orders</h2>
                         </div>
@@ -43,7 +40,7 @@
                                             @foreach ($orders as $order)
                                                 <tr>
                                                     <td>
-                                                        <a href="order-detail.php">{{ $order->id }}</a>
+                                                        <a href="{{ route('account.orderdetail',$order->id) }}">{{ $order->id }}</a>
                                                     </td>
                                                     <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d M, Y') }}</td>
                                                     <td>
@@ -73,5 +70,4 @@
         </div>
     </section>
 </main>
-@endsection
 @endsection

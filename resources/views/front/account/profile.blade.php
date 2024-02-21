@@ -20,17 +20,17 @@
                     @include('front.account.common.sidebar')
                 </div>
                 <div class="col-md-9">
-                    <div class="card">
+                    <div class="card" style="margin-top: 20px">
                         <div class="card-header">
                             <h2 class="h5 mb-0 pt-2 pb-2">Personal Information</h2>
                         </div>
-                        <div class="card-body p-4">
-                            <div class="row">
-                                <div class="mb-3">               
+                        <div class="card-body p-4"  >
+                            <div class="row" >
+                                <div class="mb-3" style="margin-right: 10px;">               
                                     <label for="name">Name</label>
                                     <input type="text" name="name" id="name" placeholder="Enter Your Name" class="form-control">
                                 </div>
-                                <div class="mb-3">            
+                                <div class="mb-3" style="margin-right: 10px;">            
                                     <label for="email">Email</label>
                                     <input type="text" name="email" id="email" placeholder="Enter Your Email" class="form-control">
                                 </div>
@@ -41,7 +41,7 @@
 
                                 <div class="mb-3">                                    
                                     <label for="phone">Address</label>
-                                    <textarea name="address" id="address" class="form-control" cols="30" rows="5" placeholder="Enter Your Address"></textarea>
+                                    <textarea name="address" id="address" class="form-control" cols="81" rows="2" placeholder="Enter Your Address"></textarea>
                                 </div>
 
                                 <div class="btn-block">

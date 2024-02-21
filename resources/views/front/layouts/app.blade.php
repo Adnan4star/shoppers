@@ -46,8 +46,12 @@
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                  <li><a href="{{ route('account.login') }}"><span class="icon icon-person"></span></a></li>
-                  <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+                  @if (\Auth::check())
+                    <li><a href="{{ route('account.profile') }}"><span class="icon icon-person"></span></a></li>
+                  @else
+                    <li><a href="{{ route('account.login') }}"><span class="icon icon-person"></span></a></li>
+                  @endif
+                    <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                   <li>
                     <a href="{{ route('front.cart') }}" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>

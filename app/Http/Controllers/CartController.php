@@ -260,7 +260,7 @@ class CartController extends Controller
             // Shipping charges
             $discount = 0;
             $shipping = 0;
-            $discountCodeId = '';
+            $discountCodeId = NULL;
             $promoCode = '';
             $subTotal = Cart::subtotal(2,'.',''); // (3 parameters decimal, decimal separator, thousandSeparator)
     

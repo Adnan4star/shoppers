@@ -1,5 +1,6 @@
 <?php
 use App\Models\category;
+use App\Models\Product;
 
 function getCategories()
 {
@@ -11,5 +12,10 @@ function getCategories()
         ->get();
 }
 
+// For order detail page
+function getProductImage($product_Id)
+{
+    return Product::where('id',$product_Id)->first();
+}
 
 ?>
