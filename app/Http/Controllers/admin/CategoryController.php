@@ -58,9 +58,12 @@ class CategoryController extends Controller
                 'image' =>  $filename,
             ]);
 
+            $message = 'Category created successfully';
+            session()->flash('success',$message);
+
             return response()->json([
                 'status' => true,
-                'message' => 'Category added successfully'
+                'message' => $message
             ]);
 
             }else{
@@ -69,9 +72,8 @@ class CategoryController extends Controller
                     'errors' => $validator->errors()
                 ]);
             }
-        }
-
-
+    }
+            
     public function edit($categoryId, Request $request)
     {
         $category = category::find($categoryId);
@@ -121,12 +123,13 @@ class CategoryController extends Controller
                 $category->showHome = $request->input('showHome');
                 $category->save();
                 
-                // $request->session()->forget('category');
+                $message = 'Category updated successfully';
+                session()->flash('success',$message);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Category updated successfully'
-            ]);
+                return response()->json([
+                    'status' => true,
+                    'message' => $message
+                ]);
 
         }else{
             return response()->json([
@@ -141,19 +144,23 @@ class CategoryController extends Controller
         $category = category::find($categoryId);
         if(empty($category))
         {
-            $request->session()->forget('category');
+            $message = 'Category not found';
+            session()->flash('success',$message);
+
             return response()->json([
                 'status' => true,
-                'message' => 'Category not found',
+                'message' => $message
             ]); 
         }
         File::delete(public_path().'/uploads/category/'.$category->image);
         $category->delete();
+        
+        $message = 'Category deleted successfully';
+        session()->flash('success',$message);
 
-        $request->session()->forget('category');
         return response()->json([
             'status' => true,
-            'message' => 'Category Deleted Successfully'
+            'message' => $message
         ]);
     }
 }

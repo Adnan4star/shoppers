@@ -38,10 +38,12 @@ class BrandController extends Controller
             $brand->status = $request->status;
             $brand->save();
 
-            $request->session()->forget('brand');
+            $message = 'brand added successfully';
+            session()->flash('success',$message);
+
             return response()->json([
                 'status' => true,
-                'message' => 'brand added successfully'
+                'message' => $message
             ]);
 
         } else {
@@ -69,7 +71,9 @@ class BrandController extends Controller
         $brand = Brand::find($id);
 
         if(empty($brand)) {
-            $request->session()->forget('brand');
+
+            $message = 'Brand not found';
+            session()->flash('error',$message);
             return response()->json([
                 'status' => false,
                 'notFound' => true
@@ -86,10 +90,12 @@ class BrandController extends Controller
             $brand->status = $request->status;
             $brand->save();
 
-            $request->session()->forget('brand');
+            $message = 'Brand updated successfully';
+            session()->flash('success',$message);
+
             return response()->json([
                 'status' => true,
-                'message' => 'brand updated successfully'
+                'message' => $message
             ]);
 
         } else {
@@ -104,18 +110,21 @@ class BrandController extends Controller
     {
         $brand = Brand::find($id); //fetch clicked id result
         if(empty($brand)) {
-            $request->session()->forget('brand');
+
+            $message = 'Brand not found';
+            session()->flash('error',$message);
             return response([
                 'status' => false,
                 'notFound' => true
             ]);
         }
-
         $brand->delete();
-        $request->session()->forget('brand');
+
+        $message = 'Brand deleted successfully';
+        session()->flash('success',$message);
         return response([
             'status' => true,
-            'message' => 'brand deleted successfully'
+            'message' => $message
         ]);
     }
 }

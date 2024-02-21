@@ -82,7 +82,6 @@ class DiscountCodeController extends Controller
             $discountCode->save();
 
             $message = 'Discount coupon created successfully.';
-
             session()->flash('success',$message);
 
             return response()->json([
@@ -161,7 +160,6 @@ class DiscountCodeController extends Controller
             $discountCode->save();
 
             $message = 'Discount coupon Updated successfully.';
-
             session()->flash('success',$message);
 
             return response()->json([

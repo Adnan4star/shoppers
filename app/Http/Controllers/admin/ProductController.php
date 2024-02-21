@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\category;
 use App\Models\Product;
-use App\Models\ProductImage;
 use App\Models\SubCategory;
-use App\Models\TempImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -92,11 +90,12 @@ class ProductController extends Controller
 
             
 
-            // $request->session()->forget('product');
+            $message = 'Product added successfully';
+            session()->flash('success',$message);
             
             return response()->json([
                 'status' => true,
-                'message' => 'Product added successfully'
+                'message' => $message
             ]);
 
             
@@ -181,11 +180,12 @@ class ProductController extends Controller
                 $product->save();
             }
 
-            $request->session()->forget('product');
+            $message = 'Product updated successfully';
+            session()->flash('success',$message);
             
             return response()->json([
                 'status' => true,
-                'message' => 'Product updated successfully'
+                'message' => $message
             ]);
 
             
@@ -202,7 +202,10 @@ class ProductController extends Controller
     {
         $product = Product::find($id); //fetch clicked id result
         if(empty($product)) {
-            $request->session()->forget('product');
+
+            $message = 'Product not found';
+            session()->flash('error',$message);
+
             return response([
                 'status' => false,
                 'notFound' => true
@@ -210,10 +213,12 @@ class ProductController extends Controller
         }
 
         $product->delete();
-        $request->session()->forget('product');
+
+        $message = 'Product deleted successfully';
+        session()->flash('success',$message);
         return response([
             'status' => true,
-            'message' => 'product deleted successfully'
+            'message' => $message
         ]);
     }
 }

@@ -34,36 +34,37 @@ class SubCategoryController extends Controller
 
     public function store(Request $request)
     {
-      $validator = Validator::make($request->all(),[ //validating form fields
-        'name' => 'required',
-        'slug' => 'required|unique:sub_categories',
-        'category' => 'required',
-        'status' => 'required'
-      ]);
-      
-      if($validator->passes()){
-        $subCategory = new SubCategory(); //inserting form data into subCategory table via model
-
-        $subCategory->name = $request->name;
-        $subCategory->slug = $request->slug;
-        $subCategory->category_id = $request->category;
-        $subCategory->status = $request->status;
-        $subCategory->showHome = $request->showHome;
-        $subCategory->save();
-
-        $request->session()->forget('subCategory');
-        
-        return response([
-            'status' => true,
-            'message' => 'SubCategory added successfully'
+        $validator = Validator::make($request->all(),[ //validating form fields
+            'name' => 'required',
+            'slug' => 'required|unique:sub_categories',
+            'category' => 'required',
+            'status' => 'required'
         ]);
+    
+        if($validator->passes()){
+            $subCategory = new SubCategory(); //inserting form data into subCategory table via model
 
-      } else {
-        return response([
-            'status' => false,
-            'errors' => $validator->errors()
-        ]);
-      }
+            $subCategory->name = $request->name;
+            $subCategory->slug = $request->slug;
+            $subCategory->category_id = $request->category;
+            $subCategory->status = $request->status;
+            $subCategory->showHome = $request->showHome;
+            $subCategory->save();
+
+            $message = 'SubCategory added successfully';
+            session()->flash('success',$message);
+            
+            return response([
+                'status' => true,
+                'message' => $message
+            ]);
+
+        } else {
+            return response([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
     public function edit($id, Request $request)
@@ -102,30 +103,30 @@ class SubCategoryController extends Controller
             'slug' => 'required|unique:sub_categories,slug,'.$subCategory->id.',id',
             'category' => 'required',
             'status' => 'required'
-          ]);
-          
-          if($validator->passes()){
-    
+        ]);
+        
+        if($validator->passes()){
             $subCategory->name = $request->name;
             $subCategory->slug = $request->slug;
             $subCategory->category_id = $request->category;
             $subCategory->status = $request->status;
             $subCategory->showHome = $request->showHome;
             $subCategory->save();
-    
-            $request->session()->forget('subCategory');
+
+            $message = 'SubCategory Updated successfully';
+            session()->flash('success',$message);
             
             return response([
                 'status' => true,
-                'message' => 'SubCategory Updated successfully'
+                'message' => $message
             ]);
-    
-          } else {
+
+        } else {
             return response([
                 'status' => false,
                 'errors' => $validator->errors()
             ]);
-          }
+        }
     }
 
     public function destroy($id, Request $request)
@@ -140,10 +141,13 @@ class SubCategoryController extends Controller
         }
 
         $subCategory->delete();
-        $request->session()->forget('subCategory');
+
+        $message = 'Sub Category deleted successfully';
+        session()->flash('success',$message);
+
         return response([
             'status' => true,
-            'message' => 'Sub Category deleted successfully'
+            'message' =>  $message
         ]);
     }
 }

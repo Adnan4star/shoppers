@@ -33,6 +33,7 @@
     <div class="container-xl">
         <div class="row row-cards">
             <div class="col-lg-10">
+                @include('admin.message')
                 <div class="card">
                     <div class="table-responsive">
                         <table class="table table-vcenter card-table">

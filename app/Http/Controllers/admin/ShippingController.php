@@ -44,7 +44,9 @@ class ShippingController extends Controller
             $count = Shipping::where('country_id',$request->country)->count();
             
             if ($count > 0) {
-                session()->flash('error','Shipping already exists');
+                $message = 'Shipping already exists';
+                session()->flash('error',$message);
+                
                 return response()->json([
                     'status' => true,
                 ]);
@@ -57,10 +59,12 @@ class ShippingController extends Controller
             $shipping->amount = $request->amount;
             $shipping->save();
 
-            session()->flash('success','Shipping saved successfully');
+            $message = 'Shipping created successfully';
+            session()->flash('success',$message);
+
             return response()->json([
                 'status' => true,
-                'success' => 'Shipping saved successfully',
+                'success' => $message
             ]);
         } else {
             return response()->json([
@@ -95,10 +99,12 @@ class ShippingController extends Controller
             $shipping->amount = $request->amount;
             $shipping->save();
 
-            session()->flash('success','Shipping Updated successfully');
+            $message = 'Shipping Updated successfully';
+            session()->flash('success', $message);
+
             return response()->json([
                 'status' => true,
-                'success' => 'Shipping saved successfully',
+                'success' => $message
             ]);
         } else {
             return response()->json([
@@ -113,7 +119,9 @@ class ShippingController extends Controller
         $shipping = Shipping::find($id);
 
         if ($shipping == null) {
-            session()->flash('error','Shipping not found.');
+
+            $message = 'Shipping not found!';
+            session()->flash('error', $message);
             return response()->json([
                 'status' => true,
             ]);
@@ -121,9 +129,11 @@ class ShippingController extends Controller
 
         $shipping->delete();
 
-        session()->flash('success','Shipping deleted successfully.');
-            return response()->json([
-                'status' => true,
-            ]);
+        $message = 'Shipping deleted successfully';
+        session()->flash('success', $message);
+        
+        return response()->json([
+            'status' => true,
+        ]);
     }
 }
