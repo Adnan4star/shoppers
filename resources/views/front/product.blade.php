@@ -40,8 +40,15 @@
             </div>
             </div>
           </div>
-          <p><a href="javascript:void(0);" onclick="addToCart({{ $product->id }})"  class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
-
+          @if ($product->track_qty == 'Yes')
+            @if ($product->qty > 0)
+              <p><a href="javascript:void(0);" onclick="addToCart({{ $product->id }})"  class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+            @else 
+              <p><a href="javascript:void(0);" class="buy-now btn btn-sm btn-primary">Out of Stock</a></p>
+            @endif
+          @else
+            <p><a href="javascript:void(0);" onclick="addToCart({{ $product->id }})"  class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+          @endif
         </div>
       </div>
     </div>

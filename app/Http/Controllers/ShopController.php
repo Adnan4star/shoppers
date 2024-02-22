@@ -31,6 +31,12 @@ class ShopController extends Controller
             $products = $products->where('sub_category_id',$subCategory->id);
             $subCategorySelected = $subCategory->id;
         }
+
+        // Home search filtering
+        if (!empty($request->get('search'))) {
+            $products = $products->where('title', 'like','%'.$request->get('search').'%');
+
+        }
         
         //Sorting filters
         if($request->get('sort') != ''){
