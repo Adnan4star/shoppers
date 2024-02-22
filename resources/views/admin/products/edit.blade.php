@@ -9,7 +9,7 @@
                         Edit Products
                     </h2>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-auto">
                     <a href="{{ route('products.index') }}" class="btn btn-primary">Back</a>
                 </div>
             </div>
@@ -18,7 +18,7 @@
     <div class="page-body">
         <div class="container">
             <div class="row row-cards">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="form-responsive" style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
                             <form class="form-horizontal form-vcenter"  action="" method="POST" id="productForm" name="productForm">
@@ -46,9 +46,8 @@
                                     <div class="mb-3 row">
                                         <label for="image" class="col-3 col-form-label">Image</label>
                                         <div class="col-9">
-                                            {{ $imagePath = asset('uploads/products/' . $product->image) }}
-                                            <img src=" {{ $imagePath }}" alt="Product Image">
-                                            <input type="file" name="image" id="image" value="" />
+                                            <img src=" {{ asset('uploads/products/' . $product->image) }}" alt="Product Image" style="width: auto;height: 150px;">
+                                            <input type="file" name="image" id="image" value="" class="form-control mt-2"/>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -71,103 +70,104 @@
                                     <div class="mb-3 row">
                                         <h2 class="col-3 col-form-label required">Inventory</h2>								
                                         <div class="col">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="sku">SKU (Stock Keeping Unit)</label>
-                                                <input type="text" name="sku" id="sku" class="form-control" placeholder="sku" value="{{ $product->sku }}">
-                                                <p class="error"></p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="barcode">Barcode</label>
-                                                <input type="text" name="barcode" id="barcode" class="form-control" placeholder="Barcode" value="{{ $product->barcode }}">	
-                                            </div>
-                                        </div>   
-                                        <div class="col-md-12">
-                                            <div class="mb-3">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="hidden" name="track_qty" value="No">
-                                                    <input class="custom-control-input" type="checkbox" id="track_qty" name="track_qty" value="Yes" {{ ($product->track_qty == 'Yes') ? 'checked' : '' }}>
-                                                    <label for="track_qty" class="custom-control-label">Track Quantity</label>
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="sku">SKU (Stock Keeping Unit)</label>
+                                                    <input type="text" name="sku" id="sku" class="form-control" placeholder="sku" value="{{ $product->sku }}">
                                                     <p class="error"></p>
                                                 </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <input type="number" min="0" name="qty" id="qty" class="form-control" placeholder="Qty" value="{{ $product->qty }}">	
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="barcode">Barcode</label>
+                                                    <input type="text" name="barcode" id="barcode" class="form-control" placeholder="Barcode" value="{{ $product->barcode }}">	
+                                                </div>
+                                            </div>   
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="hidden" name="track_qty" value="No">
+                                                        <input class="custom-control-input" type="checkbox" id="track_qty" name="track_qty" value="Yes" {{ ($product->track_qty == 'Yes') ? 'checked' : '' }}>
+                                                        <label for="track_qty" class="custom-control-label">Track Quantity</label>
+                                                        <p class="error"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <input type="number" min="0" name="qty" id="qty" class="form-control" placeholder="Qty" value="{{ $product->qty }}">	
+                                                    <p class="error"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <h2 class="col-3 col-form-label">Product status</h2>
+                                            <div class="col">
+                                                <select name="status" id="status" class="form-control">
+                                                    <option {{ $product->status == 1 ? 'selected' : "" }} value="1">Active</option>
+                                                    <option {{ $product->status == 0 ? 'selected' : "" }} value="0">Block</option>
+                                                </select>
+                                            </div>
+                                        </div> 
+                                        <div class="mb-3 row">	
+                                            <h2 class="col-3 col-form-label required">Product category</h2>
+                                            <div class="col">
+                                                <select name="category" id="category" class="form-control" >
+                                                    <option value="">Select a Category</option>
+                                                    
+                                                    @if($categories->isNotEmpty())
+                                                    @foreach ($categories as $category)
+                                                    <option {{ ($product->category_id == $category->id) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    @endforeach
+                                                    @endif
+                                                    
+                                                </select>
                                                 <p class="error"></p>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <h2 class="col-3 col-form-label">Product status</h2>
-                                        <div class="col">
-                                            <select name="status" id="status" class="form-control">
-                                                <option {{ $product->status == 1 ? 'selected' : "" }} value="1">Active</option>
-                                                <option {{ $product->status == 0 ? 'selected' : "" }} value="0">Block</option>
-                                            </select>
+                                        <div class="mb-3 row">
+                                            <label for="sub_category" class="col-3 col-form-label">Sub category</label>
+                                            <div class="col">
+                                                <select name="sub_category" id="sub_category" class="form-control" value="{{ $product->sub_category }}">
+                                                    <option value="">Select a SubCategory</option>
+                                                    {{--Visit "ProductSubCategoryController" to see working based on category selection, subcategory will select automatically--}}
+                                                    
+                                                    {{--fetching for edit purpose to auto get selected when ressing edit button--}}
+                                                    @if($subCategories->isNotEmpty())
+                                                    @foreach ($subCategories as $subCategory)
+                                                        <option {{ ($product->sub_category_id == $subCategory->id) ? 'selected' : '' }} value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
+                                                    @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div> 
-                                    <div class="mb-3 row">	
-                                        <h2 class="col-3 col-form-label required">Product category</h2>
-                                        <div class="col">
-                                            <select name="category" id="category" class="form-control" >
-                                                <option value="">Select a Category</option>
-                                                
-                                                @if($categories->isNotEmpty())
-                                                @foreach ($categories as $category)
-                                                <option {{ ($product->category_id == $category->id) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endforeach
-                                                @endif
-                                                
-                                            </select>
-                                            <p class="error"></p>
+                                        <div class="mb-3 row">	
+                                            <h2 class="col-3 col-form-label">Product brand</h2>
+                                            <div class="col">
+                                                <select name="brand" id="brand" class="form-control">
+                                                    <option value="">Select a Brand</option>
+                                                    
+                                                    @if($brands->isNotEmpty())
+                                                    @foreach ($brands as $brand)
+                                                        <option {{ $product->brand_id == $brand->id ? 'selected' : ''}} value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
+                                                    @endif
+                                                    
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="sub_category" class="col-3 col-form-label">Sub category</label>
-                                        <div class="col">
-                                            <select name="sub_category" id="sub_category" class="form-control" value="{{ $product->sub_category }}">
-                                                <option value="">Select a SubCategory</option>
-                                                {{--Visit "ProductSubCategoryController" to see working based on category selection, subcategory will select automatically--}}
-                                                
-                                                {{--fetching for edit purpose to auto get selected when ressing edit button--}}
-                                                @if($subCategories->isNotEmpty())
-                                                @foreach ($subCategories as $subCategory)
-                                                    <option {{ ($product->sub_category_id == $subCategory->id) ? 'selected' : '' }} value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
-                                                @endforeach
-                                                @endif
-                                            </select>
+                                        <div class="mb-3 row">	
+                                            <h2 class="col-3 col-form-label required">Featured product</h2>
+                                            <div class="col">
+                                                <select name="is_featured" id="is_featured" class="form-control">
+                                                    <option {{ $product->is_featured == 'Yes' ? 'selected' : "" }} value="Yes">Yes</option>
+                                                    <option {{ $product->is_featured == 'No' ? 'selected' : "" }} value="No">No</option>                                                
+                                                </select>
+                                                <p class="error"></p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="mb-3 row">	
-                                        <h2 class="col-3 col-form-label">Product brand</h2>
-                                        <div class="col">
-                                            <select name="brand" id="brand" class="form-control">
-                                                <option value="">Select a Brand</option>
-                                                
-                                                @if($brands->isNotEmpty())
-                                                @foreach ($brands as $brand)
-                                                    <option {{ $product->brand_id == $brand->id ? 'selected' : ''}} value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                                @endforeach
-                                                @endif
-                                                
-                                            </select>
+                                        <div class="card-footer text-end">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <a href="{{ route('products.index') }}" class="btn btn-outline-dark ml-3">Cancel</a>
                                         </div>
-                                    </div>
-                                    <div class="mb-3 row">	
-                                        <h2 class="col-3 col-form-label required">Featured product</h2>
-                                        <div class="col">
-                                            <select name="is_featured" id="is_featured" class="form-control">
-                                                <option {{ $product->is_featured == 'Yes' ? 'selected' : "" }} value="Yes">Yes</option>
-                                                <option {{ $product->is_featured == 'No' ? 'selected' : "" }} value="No">No</option>                                                
-                                            </select>
-                                            <p class="error"></p>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer text-end">
-                                        <button type="submit" class="btn btn-primary">Update</button>
-                                        <a href="{{ route('products.index') }}" class="btn btn-outline-dark ml-3">Cancel</a>
                                     </div>
                                 </div>
                             </form>

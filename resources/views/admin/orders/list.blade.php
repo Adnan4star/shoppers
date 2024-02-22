@@ -9,9 +9,9 @@
                     Orders
                 </h2>
             </div>
-            <div class="col-sm-5 text-right">
+            <div class="col-auto">
             </div>
-            <div class="my-2 my-md-2 flex-grow-1 flex-md-grow-0 order-first order-md-last col-lg-10">
+            <div class="my-2 my-md-2 flex-grow-1 flex-md-grow-0 order-first order-md-last col-lg-12">
                 <form action="" method="get" autocomplete="off" novalidate>
                     {{-- <div class="card-title">
                         <button type="button" onclick="window.location.href='{{ route('categories.index') }}'" class="btn btn-success btn-sm form-control">Reset</button>
@@ -31,7 +31,7 @@
 <div class="page-body">
     <div class="container-xl">
         <div class="row row-cards">
-            <div class="col-lg-10">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="table-responsive">
                         <table class="table table-vcenter card-table">

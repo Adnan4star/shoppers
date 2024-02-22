@@ -9,7 +9,7 @@
                         Edit Category
                     </h2>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-auto">
                     <a href="{{ route('categories.index') }}" class="btn btn-primary">Back</a>
                 </div>
             </div>
@@ -18,7 +18,7 @@
     <div class="page-body">
         <div class="container">
             <div class="row row-cards">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="form-responsive" style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
                             <form class="form-horizontal form-vcenter" action="" method="POST" id="categoryForm" name="categoryForm" enctype="multipart/form-data">
@@ -40,9 +40,8 @@
                                     <div class="mb-3 row">
                                         <label for="image" class="col-3 col-form-label">Image</label>
                                         <div class="col-9">
-                                            {{ $imagePath = asset('uploads/' . $category->image) }}
-                                            <img src="{{ $imagePath }}" alt="category image">
-                                            <input type="file" name="image" id="image" value="" />
+                                            <img src="{{ asset('uploads/' . $category->image) }}" alt="category image" style="width: auto;height: 150px;">
+                                            <input type="file" name="image" id="image" value="" class="form-control mt-2" />
                                         </div>
                                     </div>
                                     <div class="mb-3 row">

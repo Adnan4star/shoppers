@@ -331,6 +331,9 @@ class CartController extends Controller
                 $orderItem->total = $item->price * $item->qty;
                 $orderItem->save();
             }
+            // Send order Email, function defined in helper.php
+            orderEmail($order->id,'customer');
+
             session()->flash('success','Order placed successfully.');
 
             Cart::destroy(); // Destroying cart items

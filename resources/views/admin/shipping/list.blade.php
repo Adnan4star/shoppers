@@ -9,11 +9,11 @@
                     Shipping Management
                 </h2>
             </div>
-            <div class="col-sm-5 text-right">
+            <div class="col-auto">
                 <a href="{{ route('shipping.create') }}" class="btn btn-primary">New Shipping</a>
             </div>
             {{--Search--}}
-            <div class="my-2 my-md-2 flex-grow-1 flex-md-grow-0 order-first order-md-last col-lg-10">
+            <div class="my-2 my-md-2 flex-grow-1 flex-md-grow-0 order-first order-md-last col-lg-12">
                 <form action="" method="get" autocomplete="off" novalidate>
                     <div class="input-icon">
                         <span class="input-icon-addon">
@@ -30,7 +30,7 @@
 <div class="page-body">
     <div class="container-xl">
         <div class="row row-cards">
-            <div class="col-lg-10">
+            <div class="col-lg-12">
                 @include('admin.message')
                 <div class="card">
                     <div class="table-responsive">

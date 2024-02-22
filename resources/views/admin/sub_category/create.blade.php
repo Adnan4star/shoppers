@@ -9,7 +9,7 @@
                         Create Sub-Category
                     </h2>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-auto">
                     <a href="{{ route('sub-categories.index') }}" class="btn btn-primary">Back</a>
                 </div>
             </div>
@@ -18,7 +18,7 @@
     <div class="page-body">
         <div class="container">
             <div class="row row-cards">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="form-responsive" style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
                             <form class="form-horizontal form-vcenter" action="" method="POST" id="subCategoryForm" name="subCategoryForm">
@@ -86,6 +86,7 @@
     
 @section('customJs')
     <script>
+        // Form submit
         $("#subCategoryForm").submit(function(event){
             event.preventDefault();
 
