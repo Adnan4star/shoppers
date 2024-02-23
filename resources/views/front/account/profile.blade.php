@@ -25,35 +25,34 @@
                         <div class="card-header">
                             <h2 class="h5 mb-0 pt-2 pb-2">Personal Information</h2>
                         </div>
-                        <form action="#" method="post" name="profileForm" id="profileForm">
-                            <div class="p-3 p-lg-5 border">
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <label for="name" class="text-black">Name <span class="text-danger">*</span></label>
-                                        <input value="{{ $user->name }}" type="text" class="form-control" id="name" name="name" placeholder="Name">
-                                        <p></p>
+                        <form action="" method="POST" id="profileForm" name="profileForm">
+                            <div class="row">
+                                <div class="col-md-12 mb-5 mb-md-0">
+                                    <div class="p-3 p-lg-5 border">
+                                        <div class="form-group row">
+                                            <div class="col-md-4">
+                                                <label for="name" class="text-black">Name <span class="text-danger">*</span></label>
+                                                <input value="{{ $user->name }}" type="text" class="form-control" id="name" name="name">
+                                                <p></p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                                                <input value="{{ $user->phone }}" type="text" class="form-control" id="phone" name="phone">
+                                                <p></p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="email" class="text-black">Email <span class="text-danger">*</span></label>
+                                                <input value="{{ $user->email }}" type="text" class="form-control" id="email" name="email">
+                                                <p></p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <label for="email" class="text-black">Email <span class="text-danger">*</span></label>
-                                        <input value="{{ $user->email }}" type="text" class="form-control" id="email" name="email" placeholder="Email">
-                                        <p></p>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <label for="phone" class="text-black">Phone</label>
-                                        <input value="{{ $user->phone }}" type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
-                                        <p></p>
-                                    </div>
-                                <div class="col-lg-12 mt-3">
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block" value="register">Update</button>
                                 </div>
                             </div>
+                            <div class="col-lg-12 mt-3">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block" value="update">Update</button>
+                            </div>
                         </form>
-                    </div>
-                </div>
                 <div class="card" style="margin-top: 20px">
                     <div class="card-header">
                         <h2 class="h5 mb-0 pt-2 pb-2">Address</h2>

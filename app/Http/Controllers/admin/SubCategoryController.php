@@ -90,7 +90,7 @@ class SubCategoryController extends Controller
         if (empty($subCategory)){
 
             $request->session()->forget('subCategory');
-            // return redirect()->route('sub-categories.index');
+            return redirect()->route('sub-categories.index');
             return response([
                 'status' => false,
                 'notFound' => true

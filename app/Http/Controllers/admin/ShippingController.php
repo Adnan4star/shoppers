@@ -25,7 +25,13 @@ class ShippingController extends Controller
     {
         $shippings = Shipping::select('shippings.*','countries.name')
                             ->leftJoin('countries','countries.id','shippings.country_id')
-                            ->get();
+                            ->latest();
+
+        if(!empty($request->get('keyword'))){
+            //search by keyword on list category
+            $shippings = $shippings->orWhere('amount','like','%'.$request->get('keyword').'%');
+        }
+        $shippings = $shippings->paginate(10);
 
         $data['shippings'] = $shippings;
 

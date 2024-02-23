@@ -62,7 +62,16 @@
                                         </td>
                                         <td class="text-muted"><a href="#" class="text-reset">{{ $category->slug }}</a></td>
                                         <td class="text-muted">
-                                            {{ $category->status }}
+                                            @if ($category->status == 1)
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" viewBox="0 0 16 16" class="bi bi-check-circle" style="width: 1em; height: 1em;">
+                                                    <path d="M7.177 11.97a.75.75 0 0 0 1.058 1.06l4.545-4.546a.75.75 0 1 0-1.06-1.06L7.177 11.97z"/>
+                                                    <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM4.646 7.646a.5.5 0 0 1 .708 0L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708l-5 5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708z"/>
+                                                </svg>
+                                            @else
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" viewBox="0 0 16 16" class="bi bi-x-circle" style="width: 1em; height: 1em;">
+                                                    <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM4.646 4.646a.5.5 0 0 1 .708-.708L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1-.708-.708z"/>
+                                                </svg>
+                                            @endif
                                         </td>
                                         <td>
                                             <a href="{{route('categories.edit',$category->id)}}" class="btn btn-primary">Edit</a>
