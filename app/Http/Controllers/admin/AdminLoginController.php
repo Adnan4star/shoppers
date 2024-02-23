@@ -35,7 +35,7 @@ class AdminLoginController extends Controller
                     }
             }else{
 
-               return redirect()->route('admin.login')->with('error','Either email/password is incorrect');
+                return redirect()->route('admin.login')->with('error','Either email/password is incorrect');
             }
         }else{
             return redirect()->route('admin.login')

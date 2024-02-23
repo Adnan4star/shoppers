@@ -41,7 +41,7 @@ return [
             'provider' => 'users',
         ],
         'admin' => [
-            'driver' => 'session', //registerning admin guard
+            'driver' => 'session', //registering admin guard
             'provider' => 'admins',
         ],
     ],
@@ -69,7 +69,7 @@ return [
             'model' => App\Models\User::class,
         ],
         'admins' => [
-            'driver' => 'eloquent', //registerning admin providers
+            'driver' => 'eloquent', //registering admin providers
             'model' => App\Models\User::class,
         ],
 
