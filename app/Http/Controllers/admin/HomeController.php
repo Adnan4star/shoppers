@@ -17,6 +17,7 @@ class HomeController extends Controller
 
     public function logout()
     {
+        // If user is not admin he will be looged out from admin panel, this is adminloginCntroller else part code
         Auth::guard('admin')->logout();
         return redirect()->route('admin.login');
     }

@@ -55,7 +55,7 @@ Route::post('/get-order-summary',[CartController::class,'getOrderSummary'])->nam
 Route::post('/apply-discount',[CartController::class,'applyDiscount'])->name('front.applyDiscount');
 Route::post('/remove-discount',[CartController::class,'removeCoupon'])->name('front.removeCoupon');
 
- // User login/register routes
+ // User authentication / routes
 Route::group(['prefix' => 'account'],function(){
     Route::group(['middleware' => 'guest'],function(){
 
@@ -77,7 +77,7 @@ Route::group(['prefix' => 'account'],function(){
     });
 });
 
-// admin login route
+// admin authentication / routes
 Route::group(['prefix' => 'admin'],function(){
     Route::group(['middleware' => 'admin.guest'],function(){
         Route::get('/login',[AdminLoginController::class, 'index'])->name('admin.login'); 

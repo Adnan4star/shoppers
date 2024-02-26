@@ -18,7 +18,7 @@ class AdminRedirectIfAuthenticated
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
         if (Auth::guard('admin')->check()) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard'); //Admin authenticated/LoggedIn routes will be redirected to dashboard
         }
 
         return $next($request);

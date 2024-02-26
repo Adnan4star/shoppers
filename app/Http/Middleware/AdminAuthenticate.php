@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class AdminAuthenticate extends Middleware
 {
-    /**
+        /**
      * Get the path the user should be redirected to when they are not authenticated.
      */
     protected function redirectTo(Request $request): ?string
@@ -17,6 +17,7 @@ class AdminAuthenticate extends Middleware
 
     protected function authenticate($request, array $guards)
     {
+        // Dedicated admin middleware, only used for admin authentication
         if ($this->auth->guard('admin')->check()) {
             return $this->auth->shouldUse('admin');
         }
