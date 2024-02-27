@@ -88,6 +88,9 @@ class AuthController extends Controller
     {
         $user_id = Auth::user()->id;
         $user = User::where('id', $user_id )->first();
+
+        $user = User::with('permissions')->find($user_id); // Defined permissions in database user_permission
+
         $countries = Country::orderBy('name','ASC')->get();
         $customerAddress = CustomerAddress::where('user_id', $user_id)->first();
 
@@ -100,6 +103,7 @@ class AuthController extends Controller
     public function updateProfile(Request $request)
     {
         $userId = Auth::user()->id;
+
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$userId.',id',
@@ -192,9 +196,11 @@ class AuthController extends Controller
     public function orders() 
     {
         $user = Auth::user(); // Getting logged in user id
-
         $orders = Order::where('user_id',$user->id)->orderBy('created_at','DESC')->get();
 
+        $userPermission = User::with('permissions')->find($user->id); // Defined permissions in database user_permission
+
+        $data['userPermission'] = $userPermission;
         $data['orders'] = $orders;
         return view('front.account.order',$data);
     }

@@ -43,4 +43,9 @@ class AdminLoginController extends Controller
             ->withInput($request->only('email'));
         }
     }
+
+    public function register()
+    {
+        return view('admin.register');
+    }
 }
