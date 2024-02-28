@@ -24,7 +24,7 @@ class BrandController extends Controller
     {
         $permissions = data_get($request->all(), 'permissions') ?? [];
         
-        if (in_array('create_brands', $permissions, true)) {
+        if (in_array('create_brand', $permissions, true)) {
             return view('admin.brands.create');
         } else {
             abort(401);
