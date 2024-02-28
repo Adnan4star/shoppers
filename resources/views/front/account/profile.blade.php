@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-9 mb-2">
                     <div class="card" style="margin-top: 20px">
-                        @if($user->permissions->contains('name', 'view_profile'))
+                        
                             <div class="card-header">
                                 <h2 class="h5 mb-0 pt-2 pb-2">Personal Information</h2>
                             </div>
@@ -54,7 +54,7 @@
                                     <button type="submit" class="btn btn-primary btn-lg btn-block" value="update">Update</button>
                                 </div>
                             </form>
-                        @endif
+                        
                 <div class="card" style="margin-top: 20px">
                     <div class="card-header">
                         <h2 class="h5 mb-0 pt-2 pb-2">Address</h2>

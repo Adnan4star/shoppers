@@ -28,7 +28,7 @@ class AdminLoginController extends Controller
 
                     $admin = Auth::guard('admin')->user();
                     if($admin->role == 2){
-                        return redirect()->route('admin.dashboard'); // admin.dash in HomeController
+                        return redirect()->route('admin.dashboard'); // in HomeController
                     }else{
                         $admin = Auth::guard('admin')->logout();
                         return redirect()->route('admin.login')->with('error','You are not authorized to access admin panel');
@@ -42,10 +42,5 @@ class AdminLoginController extends Controller
             ->withErrors($validator)
             ->withInput($request->only('email'));
         }
-    }
-
-    public function register()
-    {
-        return view('admin.register');
     }
 }

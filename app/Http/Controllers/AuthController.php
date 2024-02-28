@@ -89,7 +89,7 @@ class AuthController extends Controller
         $user_id = Auth::user()->id;
         $user = User::where('id', $user_id )->first();
 
-        $user = User::with('permissions')->find($user_id); // Defined permissions in database user_permission
+        // $user = User::with('permissions')->find($user_id); // Defined permissions in database user_permission
 
         $countries = Country::orderBy('name','ASC')->get();
         $customerAddress = CustomerAddress::where('user_id', $user_id)->first();
@@ -193,16 +193,21 @@ class AuthController extends Controller
         ->with('success','You successfully logged out!');
     }
 
-    public function orders() 
+    public function orders(Request $request) 
     {
-        $user = Auth::user(); // Getting logged in user id
-        $orders = Order::where('user_id',$user->id)->orderBy('created_at','DESC')->get();
+        $permissions = data_get($request->all(), 'permissions') ?? []; // Getting permissions sent through Rolepermission middleware via request 
+        
+        if (in_array('view_orderss', $permissions, true)) {
+            
+            $user = Auth::user(); // Getting logged in user id
+            $orders = Order::where('user_id',$user->id)->orderBy('created_at','DESC')->get();
 
-        $userPermission = User::with('permissions')->find($user->id); // Defined permissions in database user_permission
+            $data['orders'] = $orders;
+            return view('front.account.order',$data);
+        } else {
+            abort(401);
+        }
 
-        $data['userPermission'] = $userPermission;
-        $data['orders'] = $orders;
-        return view('front.account.order',$data);
     }
 
     public function orderdetail($id)

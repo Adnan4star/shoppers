@@ -71,7 +71,7 @@ Route::group(['prefix' => 'account'],function(){
         Route::post('/update/profile',[AuthController::class,'updateProfile'])->name('account.updateProfile');
         Route::post('/update/address',[AuthController::class,'updateAddress'])->name('account.updateAddress');
 
-        Route::get('/my-orders',[AuthController::class,'orders'])->name('account.orders');
+        Route::get('/my-orders',[AuthController::class,'orders'])->name('account.orders')->middleware('RolePermission');
         Route::get('/order-detail/{orderId}',[AuthController::class,'orderdetail'])->name('account.orderdetail');
         Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
     });
@@ -82,8 +82,6 @@ Route::group(['prefix' => 'admin'],function(){
     Route::group(['middleware' => 'admin.guest'],function(){
         Route::get('/login',[AdminLoginController::class, 'index'])->name('admin.login'); 
         Route::post('/authenticate',[AdminLoginController::class, 'authenticate'])->name('admin.authenticate');
-
-        Route::get('/register',[AdminLoginController::class, 'register'])->name('admin.register'); 
     });
 
     Route::group(['middleware' => 'admin.auth'],function(){
@@ -108,7 +106,7 @@ Route::group(['prefix' => 'admin'],function(){
 
         //Brands route
         Route::get('/brands',[BrandController::class, 'index'])->name('brands.index');
-        Route::get('/brands/create',[BrandController::class, 'create'])->name('brands.create');
+        Route::get('/brands/create',[BrandController::class, 'create'])->name('brands.create')->middleware('RolePermission');
         Route::post('/brands',[BrandController::class, 'store'])->name('brands.store');
         Route::get('/brands/{brand}/edit',[BrandController::class, 'edit'])->name('brands.edit');
         Route::put('/brands/{brand}',[BrandController::class, 'update'])->name('brands.update'); //edit submit

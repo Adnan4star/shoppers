@@ -20,9 +20,16 @@ class BrandController extends Controller
         return view('admin.brands.list',compact('brands'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.brands.create');
+        $permissions = data_get($request->all(), 'permissions') ?? [];
+        
+        if (in_array('create_brands', $permissions, true)) {
+            return view('admin.brands.create');
+        } else {
+            abort(401);
+        }
+        
     }
 
     public function store(Request $request)

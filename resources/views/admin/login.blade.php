@@ -34,7 +34,7 @@
   <div class="page page-center">
     <div class="container container-tight py-4">
       <div class="text-center mb-4">
-        <a href="." class="navbar-brand navbar-brand-autodark"><img src="{{ asset('admin-assets/static/logo.svg') }}" height="36" alt=""></a>
+        <a href="#" class="navbar-brand navbar-brand-autodark"><img src="{{ asset('admin-assets/static/logo.svg') }}" height="36" alt=""></a>
       </div>
       @include('admin.message')
       <div class="card card-md">
@@ -96,7 +96,7 @@
         </div>
       </div>
       <div class="text-center text-muted mt-3">
-        Don't have account yet? <a href="{{ route('admin.register') }}" tabindex="-1">Sign up</a>
+        Don't have account yet? <a href="#" tabindex="-1">Sign up</a>
       </div>
     </div>
   </div>
