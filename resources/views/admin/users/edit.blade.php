@@ -48,13 +48,28 @@
                                         <label for="password" class="col-3 col-form-label">Password</label>
                                         <div class="col">
                                             <input type="password" name="password" id="password" class="form-control" aria-describedby="nameHelp" placeholder="Enter password">
-                                            <span>To change password you have to enter new password, otherwise leave blank</span>
+                                            <span>Enter to change password, otherwise leave blank.</span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="role" class="col-3 col-form-label required">Role</label>
+                                        <label for="roles" class="col-3 col-form-label required">Roles</label>
                                         <div class="col">
-                                            <input value="{{$user->role}}"  type="number" name="role" id="role" class="form-control" aria-describedby="nameHelp" placeholder="Enter role">
+                                            <select id="roles" class="form-control" multiple name="roles[]">
+                                                @foreach ($roles as $role)
+                                                    <option  value="{{$role->id}}" @if(in_array($role->id, $user->roles->pluck('id')->toArray())) selected @endif> {{$role->name}} </option>
+                                                @endforeach
+                                            </select>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="permissions" class="col-3 col-form-label required">Permissions</label>
+                                        <div class="col">
+                                            <select id="permissions" class="form-control" multiple name="permissions[]">
+                                                @foreach ($permissions as $permission)
+                                                    <option  value="{{$permission->id}}"   > {{$permission->name}} </option>
+                                                @endforeach
+                                            </select>
                                             <p></p>
                                         </div>
                                     </div>
@@ -108,7 +123,7 @@
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
 
-                        $("#role").removeClass('is-invalid')
+                        $("#roles").removeClass('is-invalid')
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
                         
@@ -134,12 +149,12 @@
                             .removeClass('invalid-feedback').html("");
                         }
 
-                        if(errors['role']){
-                            $("#role").addClass('is-invalid')
+                        if(errors['roles']){
+                            $("#roles").addClass('is-invalid')
                             .siblings('p')
-                            .addClass('invalid-feedback').html(errors['role']);
+                            .addClass('invalid-feedback').html(errors['roles']);
                         }else{
-                            $("#role").removeClass('is-invalid')
+                            $("#roles").removeClass('is-invalid')
                             .siblings('p')
                             .removeClass('invalid-feedback').html("");
                         }

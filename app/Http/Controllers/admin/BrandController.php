@@ -22,13 +22,13 @@ class BrandController extends Controller
 
     public function create(Request $request)
     {
-        $permissions = data_get($request->all(), 'permissions') ?? [];
+        // $permissions = data_get($request->all(), 'permissions') ?? [];
         
-        if (in_array('create_brand', $permissions, true)) {
+        // if (in_array('create_brand', $permissions, true)) {
             return view('admin.brands.create');
-        } else {
-            abort(401);
-        }
+        // } else {
+        //     abort(401);
+        // }
         
     }
 

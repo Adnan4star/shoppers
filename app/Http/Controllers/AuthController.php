@@ -195,19 +195,18 @@ class AuthController extends Controller
 
     public function orders(Request $request) 
     {
-        $permissions = data_get($request->all(), 'permissions') ?? []; // Getting permissions sent through Rolepermission middleware via request 
+        // $permissions = data_get($request->all(), 'permissions') ?? []; // Getting permissions sent through Rolepermission middleware via request 
         
-        if (in_array('view_orders', $permissions, true)) {
+        // if (in_array('view_orders', $permissions, true)) {
             
             $user = Auth::user(); // Getting logged in user id
             $orders = Order::where('user_id',$user->id)->orderBy('created_at','DESC')->get();
 
             $data['orders'] = $orders;
             return view('front.account.order',$data);
-        } else {
-            abort(401);
-        }
-
+    //     } else {
+    //         abort(401);
+    //     }
     }
 
     public function orderdetail($id)

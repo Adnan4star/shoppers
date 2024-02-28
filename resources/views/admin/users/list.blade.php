@@ -39,11 +39,12 @@
                         <table class="table table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th width="10%">ID</th>
+                                    <th width="5%">ID</th>
                                     <th width="10%">Name</th>
-                                    <th width="20%">Email</th>
+                                    <th width="15%">Email</th>
                                     <th width="10%">Phone</th>
-                                    <th width="10%">Role</th>
+                                    <th width="10%">Roles</th>
+                                    <th width="10%">Permissions</th>
                                     <th width="10%">Status</th>
                                     <th width="30%">Actions</th>
                                 </tr>
@@ -61,7 +62,16 @@
                                             {{ $user->phone }}
                                         </td>
                                         <td class="text-muted">
-                                            {{ $user->role }}
+                                            @foreach($user->roles as $role)
+                                                {{ $role->name }} {{ !$loop->last ? ', ' : '' }}
+                                            @endforeach
+                                        </td>
+                                        <td class="text-muted">
+                                            @foreach($user->roles as $role)
+                                                @foreach($role->permissions as $permission)
+                                                    {{ $permission->name }}{{ $loop->last ? '' : ', ' }}
+                                                @endforeach
+                                            @endforeach
                                         </td>
                                         <td class="text-muted">
                                             @if ($user->status == 1)
@@ -88,6 +98,10 @@
                                 @endif
                             </tbody>
                         </table>
+                    </div>
+                    {{--pagination--}}
+                    <div class="row" data-aos="fade-up">
+                        {{ $users->links() }}
                     </div>
                 </div>
             </div>

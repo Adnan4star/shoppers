@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,21 +14,25 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::latest();
+        $users = User::orderBy('id', 'asc')->paginate(10);
 
         if(!empty($request->get('keyword'))){
             $users = $users->where('name','like','%'.$request->get('keyword').'%'); //search by keyword on list category
             $users = $users->orWhere('email','like','%'.$request->get('keyword').'%');
         }
-        $users = $users->paginate(10);
-
         $data['users'] = $users;
         return view('admin.users.list',$data);
     }
 
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::all();
+        $permissions = Permission::all();
+        
+        $data['roles'] = $roles;
+        $data['permissions'] = $permissions;
+
+        return view('admin.users.create', $data);
     }
 
     public function store(Request $request)
@@ -35,7 +41,8 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:5|confirmed',
-            'role' => 'required',
+            'roles' => 'required|array',
+            'permissions' => 'required|array',
         ]);
 
         if ($validator->passes()) {
@@ -45,9 +52,15 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->phone = $request->phone;
             $user->password = Hash::make($request->passworrd);
-            $user->role = $request->role;
             $user->status = $request->status;
             $user->save();
+            
+            $user->roles()->attach($request->input('roles')); // Defined roles() relation in user model
+            
+            foreach ($request->input('roles') as $role_id) {  // Defined permissions() relation in role model
+                $role = Role::findOrFail($role_id);
+                $role->permissions()->attach($request->input('permissions'));
+            }
             
             $message = 'User created successfully';
             session()->flash('success',$message);
@@ -66,17 +79,19 @@ class UserController extends Controller
     public function edit(Request $request, $id) 
     {
         $user = User::find($id);
-
+        $roles = Role::all();
+        $permissions = Permission::all();
+        
         if (empty($user)) {
             $request->session()->forget('user');
             return redirect()->route('users.index');
         }
 
         $data['user'] = $user;
+        $data['roles'] = $roles;
+        $data['permissions'] = $permissions;
         return view('admin.users.edit',$data); //appending to users.edit view
 
-
-        return view('admin.users.edit');
     }
 
     public function update(Request $request, $id)
@@ -97,11 +112,11 @@ class UserController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id.',id',
-            'role' => 'required',
+            'roles' => 'required|array',
+            'permissions' => 'required|array',
         ]);
 
         if ($validator->passes()) {
-            
             $users->name = $request->name;
             $users->email = $request->email;
             $users->phone = $request->phone;
@@ -110,9 +125,14 @@ class UserController extends Controller
                 $users->password = Hash::make($request->passworrd);
             }
 
-            $users->role = $request->role;
             $users->status = $request->status;
             $users->save();
+
+            // attach = add ids
+            // detach = delete ids
+
+            // sync = detach + attach
+            $users->roles()->sync($request->input('roles')); // Updating roles
             
             $message = 'User details updated successfully';
             session()->flash('success',$message);
@@ -141,6 +161,7 @@ class UserController extends Controller
                 'notFound' => true
             ]);
         }
+        $user->roles()->detach();
         $user->delete();
 
         $message = 'User deleted successfully';
