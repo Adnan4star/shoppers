@@ -194,4 +194,69 @@ class UserController extends Controller
             'message' => $message
         ]);
     }
+
+    public function newPermission()
+    {
+        return view('admin.users.permission');
+    }
+
+    public function permissionStore(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+        ]);
+
+        if ($validator->passes()) {
+
+            $permission = new Permission();
+            $permission->name = $request->name;
+            $permission->description = $request->description;
+            $permission->save();
+
+            $message = 'Permission created successfully';
+            session()->flash('success', $message);
+
+            return response()->json([
+                'status' => true,
+                'message' => $message
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+    }
+
+    public function newRole()
+    {
+        return view('admin.users.role');
+    }
+
+    public function roleStore(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+        ]);
+
+        if ($validator->passes()) {
+
+            $role = new Role();
+            $role->name = $request->name;
+            $role->save();
+
+            $message = 'Role created successfully';
+            session()->flash('success', $message);
+
+            return response()->json([
+                'status' => true,
+                'message' => $message
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+    }
 }

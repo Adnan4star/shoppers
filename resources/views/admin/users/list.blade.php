@@ -10,6 +10,8 @@
                 </h2>
             </div>
             <div class="col-auto">
+                <a href="{{ route('users.newPermission') }}" class="btn btn-primary">Add Permission</a>
+                <a href="{{ route('users.newRole') }}" class="btn btn-primary">Add Role</a>
                 <a href="{{ route('users.create') }}" class="btn btn-primary">New User</a>
             </div>
             <div class="my-2 my-md-2 flex-grow-1 flex-md-grow-0 order-first order-md-last col-lg-12">

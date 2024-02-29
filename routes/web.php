@@ -72,7 +72,7 @@ Route::group(['prefix' => 'account'],function(){
         Route::post('/update/address',[AuthController::class,'updateAddress'])->name('account.updateAddress');
 
         Route::get('/my-orders',[AuthController::class,'orders'])->name('account.orders')->middleware('RolePermission');
-        Route::get('/order-detail/{orderId}',[AuthController::class,'orderdetail'])->name('account.orderdetail');
+        Route::get('/order-detail/{orderId}',[AuthController::class,'orderdetail'])->name('account.orderdetail')->middleware('RolePermission');
         Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
     });
 });
@@ -106,7 +106,7 @@ Route::group(['prefix' => 'admin'],function(){
 
         //Brands route
         Route::get('/brands',[BrandController::class, 'index'])->name('brands.index');
-        Route::get('/brands/create',[BrandController::class, 'create'])->name('brands.create')->middleware('RolePermission');
+        Route::get('/brands/create',[BrandController::class, 'create'])->name('brands.create');
         Route::post('/brands',[BrandController::class, 'store'])->name('brands.store');
         Route::get('/brands/{brand}/edit',[BrandController::class, 'edit'])->name('brands.edit');
         Route::put('/brands/{brand}',[BrandController::class, 'update'])->name('brands.update'); //edit submit
@@ -155,6 +155,12 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('/users/{id}/edit',[UserController::class, 'edit'])->name('users.edit');
         Route::post('/users/{id}/update',[UserController::class, 'update'])->name('users.update'); //edit submit
         Route::delete('/users/{id}',[UserController::class, 'destroy'])->name('users.delete');
+
+        // Users Role and permission
+        Route::get('/new_Permission/create',[UserController::class, 'newPermission'])->name('users.newPermission');
+        Route::post('/new_Permission',[UserController::class, 'permissionStore'])->name('users.permissionStore');
+        Route::get('/new_Role/create',[UserController::class, 'newRole'])->name('users.newRole');
+        Route::post('/new_role',[UserController::class, 'roleStore'])->name('users.roleStore');
 
         //temp-images create route
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');

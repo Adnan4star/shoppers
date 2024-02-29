@@ -195,35 +195,38 @@ class AuthController extends Controller
 
     public function orders(Request $request) 
     {
-        // $permissions = data_get($request->all(), 'permissions') ?? []; // Getting permissions sent through Rolepermission middleware via request 
-        
-        // if (in_array('view_orders', $permissions, true)) {
-            
+        $permission = data_get($request->all(), 'permissions') ?? []; // Retrieving granted permissions from RolePermission Middleware
+
+        if (in_array('view_orders', $permission, true)) {
             $user = Auth::user(); // Getting logged in user id
             $orders = Order::where('user_id',$user->id)->orderBy('created_at','DESC')->get();
-
             $data['orders'] = $orders;
             return view('front.account.order',$data);
-    //     } else {
-    //         abort(401);
-    //     }
+        } else {
+            abort(401);
+        }
     }
 
-    public function orderdetail($id)
+    public function orderdetail(Request $request, $id)
     {
-        $user = Auth::user(); // Getting logged in user id
+        $permission = data_get($request->all(), 'permissions') ?? []; // Retrieving granted permissions from RolePermission Middleware
 
-        $order = Order::where('user_id',$user->id)->where('id',$id)->first();
-        $orderItems = OrderItem::where('order_id', $id)->get();
+        if (in_array('view_orderDetail', $permission, true)) {
 
-        //counting total orders
-        $orderItemsCount = OrderItem::where('order_id', $id)->count();
-    
-
-        $data['order'] = $order;
-        $data['orderItems'] = $orderItems;
-        $data['orderItemsCount'] = $orderItemsCount;
-        return view('front.account.order-detail',$data);
+            $user = Auth::user(); // Getting logged in user id
+            $order = Order::where('user_id',$user->id)->where('id',$id)->first();
+            $orderItems = OrderItem::where('order_id', $id)->get();
+            //counting total orders
+            $orderItemsCount = OrderItem::where('order_id', $id)->count();
+        
+            $data['order'] = $order;
+            $data['orderItems'] = $orderItems;
+            $data['orderItemsCount'] = $orderItemsCount;
+            return view('front.account.order-detail',$data);
+        } else {
+            abort(401);
+        }
+        
     }
     
 }
