@@ -14,14 +14,14 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::orderBy('id', 'asc')->paginate(10);
+        $users = User::latest('id');
 
         if(!empty($request->get('keyword'))){
             $users = $users->where('name','like','%'.$request->get('keyword').'%'); //search by keyword on list category
             $users = $users->orWhere('email','like','%'.$request->get('keyword').'%');
         }
-        $data['users'] = $users;
-        return view('admin.users.list',$data);
+        $users = $users->paginate(4);
+        return view('admin.users.list',compact('users'));
     }
 
     public function create()
@@ -51,17 +51,24 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->phone = $request->phone;
-            $user->password = Hash::make($request->passworrd);
+            $user->password = Hash::make($request->password);
             $user->status = $request->status;
             $user->save();
             
-            $user->roles()->attach($request->input('roles')); // Defined roles() relation in user model
             
-            foreach ($request->input('roles') as $role_id) {  // Defined permissions() relation in role model
+            
+            foreach ($request->input('roles') as $role_id) {
                 $role = Role::findOrFail($role_id);
-                $role->permissions()->attach($request->input('permissions'));
+                
+                // Retrieve permissions selected for the current role
+                $permissionsForRole = $request->input('permissions');
+                
+                // Synchronize permissions for the current role
+                $role->permissions()->sync($permissionsForRole);
             }
-            
+
+            $user->roles()->attach($request->input('roles')); // Defined roles() relation in user model
+
             $message = 'User created successfully';
             session()->flash('success',$message);
             return response()->json([
@@ -113,7 +120,6 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id.',id',
             'roles' => 'required|array',
-            'permissions' => 'required|array',
         ]);
 
         if ($validator->passes()) {
@@ -122,7 +128,7 @@ class UserController extends Controller
             $users->phone = $request->phone;
 
             if ($request->password != ''){
-                $users->password = Hash::make($request->passworrd);
+                $users->password = Hash::make($request->password);
             }
 
             $users->status = $request->status;
@@ -132,8 +138,19 @@ class UserController extends Controller
             // detach = delete ids
 
             // sync = detach + attach
+
+            foreach ($request->input('roles') as $role_id) { // Updating permissions
+                $role = Role::findOrFail($role_id);
+                
+                // Retrieve permissions selected for the current role
+                $permissionsForRole = $request->input('permissions');
+                
+                // Synchronize permissions for the current role
+                $role->permissions()->sync($permissionsForRole);
+            }
+
             $users->roles()->sync($request->input('roles')); // Updating roles
-            
+
             $message = 'User details updated successfully';
             session()->flash('success',$message);
             return response()->json([
@@ -161,6 +178,12 @@ class UserController extends Controller
                 'notFound' => true
             ]);
         }
+
+        // First Delete permissions associated with the user's roles 
+        foreach ($user->roles as $role) {
+            $role->permissions()->detach();
+        }
+
         $user->roles()->detach();
         $user->delete();
 

@@ -20,7 +20,7 @@ class OrderController extends Controller
             $orders = $orders->orWhere('orders.id','like','%'.$request->keyword.'%');
         }
 
-        $orders = $orders->paginate(10);
+        $orders = $orders->paginate(4);
 
         $data['orders'] = $orders;
         return view('admin.orders.list',$data);

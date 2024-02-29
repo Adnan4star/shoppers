@@ -20,7 +20,7 @@ class ProductController extends Controller
             $products = $products->where('title','like','%'.$request->keyword. '%');
         }
         
-        $products = $products->paginate();
+        $products = $products->paginate(4);
         // dd($products);
 
         $data['products'] = $products;

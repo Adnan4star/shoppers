@@ -86,6 +86,10 @@
                         </table>
                     </div>
                 </div>
+                {{--pagination--}}
+                <div class="row mt-2" data-aos="fade-up">
+                    {{ $subCategories->links() }}
+                </div>
             </div>
         </div>
     </div>

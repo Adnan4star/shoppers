@@ -16,7 +16,7 @@ class BrandController extends Controller
         if($request->get('keyword')){
             $brands = $brands->where('name','like','%'.$request->keyword.'%');
         }
-        $brands = $brands->paginate(10);
+        $brands = $brands->paginate(3);
         return view('admin.brands.list',compact('brands'));
     }
 

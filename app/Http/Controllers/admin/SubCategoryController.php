@@ -13,15 +13,15 @@ class SubCategoryController extends Controller
     public function index(Request $request)
     {
         $subCategories = SubCategory::select('sub_categories.*','categories.name as categoryName')
-        ->latest('sub_categories.id')
-        ->leftJoin('categories','categories.id','sub_categories.category_id'); //listing subCategory usig leftJoin to fetch category name from categories table
+                        ->latest('sub_categories.id')
+                        ->leftJoin('categories','categories.id','sub_categories.category_id'); //listing subCategory usig leftJoin to fetch category name from categories table
 
         if(!empty($request->get('keyword'))){
             $subCategories = $subCategories->where('sub_categories.name','like','%'.$request->get('keyword').'%'); //search by keyword on list subcategory
             $subCategories = $subCategories->orWhere('categories.name','like','%'.$request->get('keyword').'%'); //search by keyword on list category
         }
 
-        $subCategories = $subCategories->paginate(10); 
+        $subCategories = $subCategories->paginate(4); 
         return view('admin.sub_category.list',compact('subCategories')); //displaying categories
     }
 

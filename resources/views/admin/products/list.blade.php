@@ -94,6 +94,10 @@
                         </table>
                     </div>
                 </div>
+                {{--pagination--}}
+                <div class="row mt-2" data-aos="fade-up">
+                    {{ $products->links() }}
+                </div>
             </div>
         </div>
     </div>

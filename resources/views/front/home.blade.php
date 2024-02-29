@@ -57,7 +57,7 @@
     <div class="row">
       @if(getCategories()->isNotEmpty())
         @foreach(getCategories() as $category)
-          <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+          <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0 mt-2" data-aos="fade" data-aos-delay="">
             <a class="block-2-item" href="{{ route('front.shop',$category->slug) }}">
 
               @if($category->image != "")

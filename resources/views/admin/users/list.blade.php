@@ -99,10 +99,10 @@
                             </tbody>
                         </table>
                     </div>
-                    {{--pagination--}}
-                    <div class="row" data-aos="fade-up">
-                        {{ $users->links() }}
-                    </div>
+                </div>
+                {{--pagination--}}
+                <div class="row mt-2" data-aos="fade-up">
+                    {{ $users->links() }}
                 </div>
             </div>
         </div>

@@ -19,7 +19,7 @@ class DiscountCodeController extends Controller
             $discountCoupons = $discountCoupons->orWhere('code','like','%'.$request->get('keyword').'%'); //search by keyword on list coupons
         }
 
-        $discountCoupons = $discountCoupons->paginate(10); 
+        $discountCoupons = $discountCoupons->paginate(4); 
         return view('admin.coupon.list',compact('discountCoupons')); //displaying discountCoupons
     }
 

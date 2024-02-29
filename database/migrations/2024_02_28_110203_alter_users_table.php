@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tasks', function(Blueprint $table) {
+        Schema::table('users', function(Blueprint $table) {
             $table->renameColumn('type', 'role');
         });
     }

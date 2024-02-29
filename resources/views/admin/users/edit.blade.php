@@ -63,18 +63,18 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="permissions" class="col-3 col-form-label required">Permissions</label>
+                                        <label for="permissions" class="col-3 col-form-label">Permissions</label>
                                         <div class="col">
                                             <select id="permissions" class="form-control" multiple name="permissions[]">
                                                 @foreach ($permissions as $permission)
-                                                    <option  value="{{$permission->id}}"   > {{$permission->name}} </option>
+                                                    <option  value="{{$permission->id}}" @if($user->roles->pluck('permissions')->flatten()->pluck('id')->contains($permission->id)) selected @endif > {{$permission->name}} </option>
                                                 @endforeach
                                             </select>
                                             <p></p>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="status" class="col-3 col-form-label required">Status</label>
+                                        <label for="status" class="col-3 col-form-label">Status</label>
                                         <div class="col">
                                             <select name="status" id="status" class="form-control">
                                                 <option {{ ($user->status == 1) ? 'selected' : '' }} value="1">Active</option>

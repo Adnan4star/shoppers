@@ -23,15 +23,16 @@ class ShippingController extends Controller
 
     public function index(Request $request)
     {
-        $shippings = Shipping::select('shippings.*','countries.name')
-                            ->leftJoin('countries','countries.id','shippings.country_id')
-                            ->latest();
+        $shippings = Shipping::select('shippings.*', 'countries.name')
+                        ->leftJoin('countries', 'countries.id', '=', 'shippings.country_id')
+                        ->latest();
 
         if(!empty($request->get('keyword'))){
-            //search by keyword on list category
-            $shippings = $shippings->orWhere('amount','like','%'.$request->get('keyword').'%');
+            //search by keyword on list shipping
+            $shippings = $shippings->where('amount','like','%'.$request->get('keyword').'%')
+                                ->orWhere('countries.name', 'like', '%' . $request->get('keyword') . '%');
         }
-        $shippings = $shippings->paginate(10);
+        $shippings = $shippings->paginate(3);
 
         $data['shippings'] = $shippings;
 
