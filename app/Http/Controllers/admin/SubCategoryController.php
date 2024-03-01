@@ -71,10 +71,8 @@ class SubCategoryController extends Controller
     {
         $subCategory = SubCategory::find($id); //fetch clicked id result
         if (empty($subCategory)){
-
             $request->session()->forget('subCategory');
             return redirect()->route('sub-categories.index');
-            
         }
 
         $categories = category::orderBy('name','ASC')->get(); //Getting all categories
@@ -87,15 +85,14 @@ class SubCategoryController extends Controller
     public function update($id, Request $request)
     {
         $subCategory = SubCategory::find($id); //fetch clicked id result
-        if (empty($subCategory)){
 
+        if (empty($subCategory)){
             $request->session()->forget('subCategory');
             return redirect()->route('sub-categories.index');
             return response([
                 'status' => false,
                 'notFound' => true
             ]);
-            
         }
 
         $validator = Validator::make($request->all(),[ //validating form fields

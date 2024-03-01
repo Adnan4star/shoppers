@@ -115,7 +115,6 @@ class DiscountCodeController extends Controller
         $discountCode = DiscountCoupon::find($id);
 
         if ($discountCode == null) {
-
             session()->flash('error','Record not found');
             return response()->json([
                 'status' => true,
@@ -180,7 +179,6 @@ class DiscountCodeController extends Controller
         $discountCode = DiscountCoupon::find($id);
 
         if ($discountCode == null) {
-
             session()->flash('error','Record not found');
             return response()->json([
                 'status' => true,

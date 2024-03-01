@@ -207,8 +207,7 @@ class ProductController extends Controller
             session()->flash('error',$message);
 
             return response([
-                'status' => false,
-                'notFound' => true
+                'status' => true,
             ]);
         }
 

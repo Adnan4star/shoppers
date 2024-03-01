@@ -22,7 +22,7 @@ class CategoryController extends Controller
             $categories = $categories->where('name','like','%'.$request->get('keyword').'%'); //search by keyword on list category
         }
 
-        $categories = $categories->paginate(2); 
+        $categories = $categories->paginate(4); 
         return view('admin.category.list',compact('categories')); //displaying categories
     }
 
@@ -90,15 +90,13 @@ class CategoryController extends Controller
         $category = category::find($categoryId);
 
         if(empty($category))
-            {
-                // $request->session()->forget('category');
-
-                return response()->json([
-                    'status' => false,
-                    'notFound' => true,
-                    'message' => 'category not found'
-                ]);
-            }
+        {
+            $message = 'Category not found!';
+            session()->flash('error',$message);
+            return response()->json([
+                'status' => true,
+            ]);
+        }
 
         $validator = Validator::make($request->all(),[   //validating and inserting data
             'name' => 'required',
@@ -144,8 +142,8 @@ class CategoryController extends Controller
         $category = category::find($categoryId);
         if(empty($category))
         {
-            $message = 'Category not found';
-            session()->flash('success',$message);
+            $message = 'Category not found!';
+            session()->flash('error',$message);
 
             return response()->json([
                 'status' => true,

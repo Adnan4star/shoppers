@@ -13,14 +13,14 @@ class BrandController extends Controller
     {
         $brands = Brand::latest('id');
 
-        if($request->get('keyword')){
+        if($request->get('keyword') != ''){
             $brands = $brands->where('name','like','%'.$request->keyword.'%');
         }
         $brands = $brands->paginate(3);
         return view('admin.brands.list',compact('brands'));
     }
 
-    public function create(Request $request)
+    public function create()
     {
         // $permissions = data_get($request->all(), 'permissions') ?? [];
         
@@ -61,7 +61,7 @@ class BrandController extends Controller
         }
     }
 
-    public function edit($id, Request $request)
+    public function edit($id)
     {
         $brand = Brand::find($id); //Getting all brands
         $data['brand'] = $brand;
@@ -78,12 +78,10 @@ class BrandController extends Controller
         $brand = Brand::find($id);
 
         if(empty($brand)) {
-
             $message = 'Brand not found';
             session()->flash('error',$message);
             return response()->json([
-                'status' => false,
-                'notFound' => true
+                'status' => true,
             ]);
         }
 
@@ -113,7 +111,7 @@ class BrandController extends Controller
         } 
     }
 
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
         $brand = Brand::find($id); //fetch clicked id result
         if(empty($brand)) {
@@ -121,8 +119,7 @@ class BrandController extends Controller
             $message = 'Brand not found';
             session()->flash('error',$message);
             return response([
-                'status' => false,
-                'notFound' => true
+                'status' => true,
             ]);
         }
         $brand->delete();

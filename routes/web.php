@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\OrderController;
+use App\Http\Controllers\admin\PageController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
@@ -161,6 +162,14 @@ Route::group(['prefix' => 'admin'],function(){
         Route::post('/new_Permission',[UserController::class, 'permissionStore'])->name('users.permissionStore');
         Route::get('/new_Role/create',[UserController::class, 'newRole'])->name('users.newRole');
         Route::post('/new_role',[UserController::class, 'roleStore'])->name('users.roleStore');
+
+        // Pages routes
+        Route::get('/pages',[PageController::class, 'index'])->name('pages.index');
+        Route::get('/pages/create',[PageController::class, 'create'])->name('pages.create');
+        Route::post('/pages',[PageController::class, 'store'])->name('pages.store');
+        Route::get('/pages/{id}/edit',[PageController::class, 'edit'])->name('pages.edit');
+        Route::post('/pages/{id}/update',[PageController::class, 'update'])->name('pages.update'); //edit submit
+        Route::delete('/pages/{id}',[PageController::class, 'destroy'])->name('pages.delete');
 
         //temp-images create route
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');
