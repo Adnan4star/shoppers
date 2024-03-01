@@ -211,7 +211,7 @@ class AuthController extends Controller
     {
         $permission = data_get($request->all(), 'permissions') ?? []; // Retrieving granted permissions from RolePermission Middleware
 
-        if (in_array('view_orderDetail', $permission, true)) {
+        if (in_array('view_order_details', $permission, true)) {
 
             $user = Auth::user(); // Getting logged in user id
             $order = Order::where('user_id',$user->id)->where('id',$id)->first();
