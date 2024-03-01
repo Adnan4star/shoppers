@@ -140,7 +140,7 @@
     </div>
     <div class="row align-items-center">
       <div class="col-md-12 col-lg-7 mb-5">
-        <a href="#"><img src="{{ asset('front-assets/images/blog_1.jpg') }}" alt="Image placeholder" class="img-fluid rounded"></a>
+        <a href="{{ route('front.shop') }}"><img src="{{ asset('front-assets/images/blog_1.jpg') }}" alt="Image placeholder" class="img-fluid rounded"></a>
       </div>
       <div class="col-md-12 col-lg-5 text-center pl-md-5">
         <h2><a href="#">50% less in all items</a></h2>

@@ -155,12 +155,18 @@
         $("#profileForm").submit(function(event){
             event.preventDefault();
 
+            // Disabling submit button once clicked
+            $("button[type='submit']").prop('disabled',true);
+
             $.ajax({
                 url: '{{ route("account.updateProfile") }}',
                 type: 'post',
                 data: $(this).serializeArray(),
                 dataType: 'json',
                 success: function(response){
+                    // Disabling submit button once clicked
+                    $("button[type='submit']").prop('disabled',false);
+
                     if (response.status == true){
                         window.location.href = '{{ route("account.profile") }}';
 

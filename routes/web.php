@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\PageController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
+use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
@@ -76,6 +77,8 @@ Route::group(['prefix' => 'account'],function(){
 
         Route::get('/my-orders',[AuthController::class,'orders'])->name('account.orders')->middleware('RolePermission');
         Route::get('/order-detail/{orderId}',[AuthController::class,'orderdetail'])->name('account.orderdetail')->middleware('RolePermission');
+        Route::get('/show-Change-Password-Form',[AuthController::class,'showChangePasswordForm'])->name('account.show-Change-Password-Form');
+        Route::post('/process-change-Password',[AuthController::class,'changePassword'])->name('account.process-change-Password');
         Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
     });
 });
@@ -172,6 +175,10 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('/pages/{id}/edit',[PageController::class, 'edit'])->name('pages.edit');
         Route::post('/pages/{id}/update',[PageController::class, 'update'])->name('pages.update'); //edit submit
         Route::delete('/pages/{id}',[PageController::class, 'destroy'])->name('pages.delete');
+
+        // setting routes
+        Route::get('/show-Change-Password-Form',[SettingController::class, 'showChangePasswordForm'])->name('admin.showChangePasswordForm');
+        Route::post('/process-change-Password',[SettingController::class,'changePassword'])->name('admin.process-change-Password');
 
         //temp-images create route
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');
