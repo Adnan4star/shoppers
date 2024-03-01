@@ -22,7 +22,7 @@ class CategoryController extends Controller
             $categories = $categories->where('name','like','%'.$request->get('keyword').'%'); //search by keyword on list category
         }
 
-        $categories = $categories->paginate(4); 
+        $categories = $categories->paginate(2); 
         return view('admin.category.list',compact('categories')); //displaying categories
     }
 
