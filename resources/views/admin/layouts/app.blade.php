@@ -91,7 +91,6 @@
 
 <!-- Page navbar start--> 
 @include('admin.layouts.navbar')
-<!-- Page navbar end-->
 
 <div class="page-wrapper">
     <!-- Page header -->

@@ -40,7 +40,7 @@
                                     <div class="mb-3 row">
                                         <label for="content" class="col-3 col-form-label ">Content</label>
                                         <div class="col">
-                                            <textarea type="text" name="content" id="content" class="form-control" placeholder="Content goes here.."> </textarea>
+                                            <textarea rows="4" cols="50" type="text" name="content" id="content" class="form-control" placeholder="Content goes here.."> </textarea>
                                             <p></p>
                                         </div>
                                     </div>
