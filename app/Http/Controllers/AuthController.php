@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPasswordEmail;
 use App\Models\Country;
 use App\Models\CustomerAddress;
 use App\Models\Order;
@@ -11,6 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -272,4 +276,94 @@ class AuthController extends Controller
         }
     }
     
+    // Forgot password
+    public function forgotPassword()
+    {
+        return view('front.account.forgot-password');
+    }
+
+    // Submission through route
+    public function processForgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'email' => 'required|email|exists:users,email', //Checking email if exists in users
+        ]);
+
+        if($validator->fails()){
+            return redirect()->route('front.forgotPassword')->withInput()->withErrors($validator); // not returning response through ajax bcs not submited fom through ajax
+        }
+
+        // Using str to generate random string
+        $token = Str::random(60);
+
+        // Deleting old entry stored in password_reset_tokens(Bcs laravel doesnt allow duplicate entry)
+        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+
+        // Using DB table to insert new reset token 
+        DB::table('password_reset_tokens')->insert([
+            'email' => $request->email,
+            'token' => $token,
+            'created_at' => now()
+        ]);
+
+        // Send email here
+        $user = User::where('email', $request->email)->first();
+
+        $formData = [
+            'token' => $token,
+            'user' => $user,
+            'mailSubject' => 'You have requested to reset your password'
+        ];
+
+        Mail::to($request->email)->send(new ResetPasswordEmail($formData));
+
+        // redirecting to forgotPassword with success message to check email inbox
+        return redirect()->route('front.forgotPassword')->with('success','Please check your inbox to reset your password!');
+    }
+
+    // Route for reset password link reset-password.blade
+    public function resetPassword($token)
+    {
+        // First check if token is valid
+        $tokenExist = DB::table('password_reset_tokens')->where('token', $token)->first();
+
+        if ($tokenExist == null) {
+            return redirect()->route('front.forgotPassword')->with('error','Invalid Request!');
+        }
+
+        return view('front.account.reset-password', ['token' => $token]);
+    }
+
+    // Route for process reset-password
+    public function processResetPassword(Request $request)
+    {
+        $token = $request->token;
+        // First check if token is valid
+        $tokenObj = DB::table('password_reset_tokens')->where('token', $token)->first();
+
+        if ($tokenObj == null) {
+            return redirect()->route('front.forgotPassword')->with('error','Invalid Request!');
+        }
+
+        // fetching user id to update user password
+        $user = User::where('email', $tokenObj->email)->first();
+
+        $validator = Validator::make($request->all(),[
+            'new_password' => 'required|min:5',
+            'confirm_password' => 'required|same:new_password'
+        ]);
+
+        if($validator->fails()){
+            return redirect()->route('front.resetPassword', $token)->withErrors($validator);
+        }
+
+        User::where('id', $user->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        // Deleting record after updating password from password_reset_token. so that next time user resets it doesnt throw error regarding password reset token cannot be duplicate
+        DB::table('password_reset_tokens')->where('email', $user->email)->delete();
+
+        return redirect()->route('account.login')->with('success','You have successfully updated your password');
+    }
 }

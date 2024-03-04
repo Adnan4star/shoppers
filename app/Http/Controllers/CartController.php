@@ -342,7 +342,7 @@ class CartController extends Controller
                 
             }
             // Send order Email, function defined in helper.php
-            // orderEmail($order->id,'customer');
+            orderEmail($order->id,'customer');
 
             session()->flash('success','Order placed successfully.');
 

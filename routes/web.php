@@ -59,6 +59,13 @@ Route::post('/get-order-summary',[CartController::class,'getOrderSummary'])->nam
 Route::post('/apply-discount',[CartController::class,'applyDiscount'])->name('front.applyDiscount');
 Route::post('/remove-discount',[CartController::class,'removeCoupon'])->name('front.removeCoupon');
 
+// User reset password routes
+Route::get('/forgot-password',[AuthController::class,'forgotPassword'])->name('front.forgotPassword');
+Route::post('/process-forgot-password',[AuthController::class,'processForgotPassword'])->name('front.processForgotPassword');
+
+Route::get('/reset-password/{token}',[AuthController::class,'resetPassword'])->name('front.resetPassword');
+Route::post('/process-reset-password',[AuthController::class,'processResetPassword'])->name('front.processResetPassword');
+
  // User authentication / routes
 Route::group(['prefix' => 'account'],function(){
     Route::group(['middleware' => 'guest'],function(){
