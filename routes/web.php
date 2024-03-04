@@ -45,6 +45,7 @@ use Illuminate\Support\Str;
  // Shop routes
 Route::get('/',[FrontController::class,'index'])->name('front.home');
 Route::get('/page/{slug}',[FrontController::class,'page'])->name('front.page');
+Route::post('/add-to-wishlist',[FrontController::class,'addToWishlist'])->name('front.addToWishlist');
 
 Route::get('/shop/{categorySlug?}/{subCategorySlug?}',[ShopController::class, 'index'])->name('front.shop');
 Route::get('/product/{slug}',[ShopController::class,'product'])->name('front.product');
@@ -84,8 +85,13 @@ Route::group(['prefix' => 'account'],function(){
 
         Route::get('/my-orders',[AuthController::class,'orders'])->name('account.orders')->middleware('RolePermission');
         Route::get('/order-detail/{orderId}',[AuthController::class,'orderdetail'])->name('account.orderdetail')->middleware('RolePermission');
+
         Route::get('/show-Change-Password-Form',[AuthController::class,'showChangePasswordForm'])->name('account.show-Change-Password-Form');
         Route::post('/process-change-Password',[AuthController::class,'changePassword'])->name('account.process-change-Password');
+
+        Route::get('/wishlist',[AuthController::class,'wishlist'])->name('account.wishlist');
+        Route::post('/remove-product-from-wishlist',[AuthController::class,'removeProductFromWishlist'])->name('account.removeProductFromWishlist');
+
         Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
     });
 });

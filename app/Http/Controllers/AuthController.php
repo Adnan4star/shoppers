@@ -8,6 +8,7 @@ use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -365,5 +366,38 @@ class AuthController extends Controller
         DB::table('password_reset_tokens')->where('email', $user->email)->delete();
 
         return redirect()->route('account.login')->with('success','You have successfully updated your password');
+    }
+
+    // Wishlist
+    public function wishlist()
+    {
+        $wishlists = Wishlist::where('user_id', Auth::user()->id)->with('product')->get(); // Defined product relation in wishlist model
+        
+        $data['wishlists'] = $wishlists;
+        return view('front.account.wishlist',$data);
+    }
+
+    public function removeProductFromWishlist(Request $request)
+    {
+        $wishlist = Wishlist::where('user_id', Auth::user()->id)
+                ->where('product_id', $request->id)->first();
+
+        if ($wishlist == null) {
+
+            session()->flash('error','Product Already Removed!');
+            return response()->json([
+                'status' => true,
+            ]);
+            
+        } else {
+            Wishlist::where('user_id', Auth::user()->id)
+                    ->where('product_id', $request->id)
+                    ->delete();
+
+            session()->flash('success','Product Removed Successfully');
+            return response()->json([
+                'status' => true,
+            ]);
+        }
     }
 }

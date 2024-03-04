@@ -45,6 +45,12 @@
                                             <a href="{{ route("front.product",$product->slug) }}"><img src="{{ asset('front-assets/images/men.jpg') }}" alt="Image placeholder" class="img-fluid"></a>
                                         </figure>
                                     @endif
+
+                                        {{--addToWishlist() function method defined in app.blade--}}
+                                        <div class="overlay">
+                                            <a onclick="addToWishlist({{ $product->id }})" href="javascript:void(0)"><span class="icon icon-heart-o"></span></a>
+                                        </div> 
+                                        
                                         <div class="block-4-text p-4">
                                             <h3><a href="shop-single.html">{{ $product->title }}</a></h3>
                                             <p class="mb-0">{{ $product->description }}</p>
@@ -149,7 +155,7 @@
                     @if($categories->isNotEmpty())
                         <div class="row">
                             @foreach($categories as $category)
-                                <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+                                <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0 mt-2" data-aos="fade" data-aos-delay="">
                                     <a class="block-2-item" href="#">
                                         <figure class="image">
                                             <img src="{{ asset('uploads/'.$category->image) }}" alt="" class="img-fluid">

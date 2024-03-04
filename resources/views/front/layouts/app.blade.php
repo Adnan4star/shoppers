@@ -20,6 +20,8 @@
   <link rel="stylesheet" href="{{ asset('front-assets/css/aos.css') }}">
   
   <link rel="stylesheet" href="{{ asset('front-assets/css/style.css') }}">
+
+  {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
   
 </head>
 <body>
@@ -51,7 +53,7 @@
                   @else
                     <li><a href="{{ route('account.login') }}"><span class="icon icon-person"></span></a></li>
                   @endif
-                    {{-- <li><a href="#"><span class="icon icon-heart-o"></span></a></li> --}}
+                    <li><a href="{{ route('account.wishlist') }}"><span class="icon icon-heart-o"></span></a></li>
                   <li>
                     <a href="{{ route('front.cart') }}" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
@@ -160,6 +162,22 @@
         </div>
       </div>
     </footer>
+    <!--Wishlist Modal -->
+    <div class="modal fade" id="wishlistModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   
   <script src="{{ asset('front-assets/js/jquery-3.3.1.min.js') }}"></script>
@@ -172,6 +190,7 @@
   
   <script src="{{ asset('front-assets/js/main.js') }}"></script>
   <script src="{{ asset('front-assets/js/rangeslider.min.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   
   <script>
       $.ajaxSetup({
@@ -179,6 +198,25 @@
               'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
           }
       });
+
+         // Add to wishlist method
+      function addToWishlist(id){
+        $.ajax({
+          url: '{{ route("front.addToWishlist") }}',
+          type: 'post',
+          data: {id:id},
+          dataType: 'json',
+          success: function(response) {
+            if (response.status == true) {
+              $("#wishlistModal .modal-body").html(response.message);
+
+              $("#wishlistModal").modal('show');
+            }else {
+              window.location.href = "{{ route('account.login') }}";
+            }
+          }
+        });
+      }
   </script>
 
   @yield('customJs');
