@@ -33,7 +33,7 @@
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
               <form action="{{ route('front.shop') }}" method="get" class="site-block-top-search">
                 <span class="icon icon-search2"></span>
-                <input name="search" id="search" value="{{ Request::get('search') }}" type="text" class="form-control border-0" placeholder="Search">
+                <input name="search" id="search" value="{{ Request::get('search') }}" type="text" class="form-control border-0" autocomplete="off" placeholder="Search">
               </form>
             </div>
             
