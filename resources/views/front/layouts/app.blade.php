@@ -21,6 +21,65 @@
   
   <link rel="stylesheet" href="{{ asset('front-assets/css/style.css') }}">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+  .checked {
+    color: orange;
+  }
+  .rating {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    color: #ddd; /* Personal choice */
+      font-size: 8px;
+      margin-left: -15px;
+  }
+  .rating input {
+    display: none;
+  }
+  .rating label:hover,
+  .rating label:hover ~ label,
+  .rating input:checked + label,
+  .rating input:checked + label ~ label {
+    color: #ffc107; /* Personal color choice. Lifted from Bootstrap 4 */
+      font-size: 8px;
+  }
+  
+  .front-stars, .back-stars, .star-rating {
+      display: flex;
+    }
+    
+    .star-rating {
+      align-items: left;
+      font-size: 1.5em;
+      justify-content: left;
+      margin-left: -5px;
+    }
+    
+    .back-stars {
+      color: #CCC;
+      position: relative;
+    }
+    
+    .front-stars {
+      color: #FFBC0B;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      transition: all 0.5s;
+    }
+
+    
+    .percent {
+      color: #bb5252;
+      font-size: 1.5em;
+    }
+
+    .star-rating.product{
+      font-size: 1em;
+    }
+    
+</style>
   {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
   
 </head>
@@ -190,6 +249,8 @@
   
   <script src="{{ asset('front-assets/js/main.js') }}"></script>
   <script src="{{ asset('front-assets/js/rangeslider.min.js') }}"></script>
+
+  <script src="{{ asset('front-assets/js/slick.min.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   
   <script>
