@@ -30,7 +30,7 @@
                                 
                             </span>
                             <span class="nav-link-title">
-                                Sub-Categories
+                                SubCat
                             </span>
                         </a>
                     </li>
@@ -101,6 +101,16 @@
                             </span>
                             <span class="nav-link-title">
                                 Pages
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('products.productRatings') }}" >
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                
+                            </span>
+                            <span class="nav-link-title">
+                                Ratings
                             </span>
                         </a>
                     </li>

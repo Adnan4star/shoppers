@@ -67,7 +67,7 @@ Route::post('/process-forgot-password',[AuthController::class,'processForgotPass
 Route::get('/reset-password/{token}',[AuthController::class,'resetPassword'])->name('front.resetPassword');
 Route::post('/process-reset-password',[AuthController::class,'processResetPassword'])->name('front.processResetPassword');
 
-// product ratings route ShopController
+// save product ratings route ShopController
 Route::post('/save-rating/{productId}',[ShopController::class,'saveRating'])->name('front.saveRating');
 
  // User authentication / routes
@@ -141,6 +141,9 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('/products/{product}/edit',[ProductController::class, 'edit'])->name('products.edit');
         Route::post('/products/{product}',[ProductController::class, 'update'])->name('products.update'); //edit submit
         Route::delete('/products/{product}',[ProductController::class, 'destroy'])->name('products.delete');
+
+        Route::get('/ratings',[ProductController::class, 'productRatings'])->name('products.productRatings');
+        Route::get('/change-rating-status',[ProductController::class, 'changeRatingStatus'])->name('products.changeRatingStatus');
 
         // Selecting subcategory auto when selecting category on create products 
         Route::get('/product-subcategories',[ProductSubCategoryController::class, 'index'])->name('product-subcategories.index'); 

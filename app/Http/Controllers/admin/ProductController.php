@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\category;
 use App\Models\Product;
+use App\Models\ProductRating;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -218,6 +219,36 @@ class ProductController extends Controller
         return response([
             'status' => true,
             'message' => $message
+        ]);
+    }
+
+    // For product ratings backend 
+    public function productRatings(Request $request)
+    {
+        $ratings = ProductRating::select('product_ratings.*','products.title as productTitle')
+                                ->orderBy('product_ratings.created_at','DESC')
+                                ->leftJoin('products','products.id','product_ratings.product_id');
+
+        if($request->has('keyword') && $request->keyword != "") {
+            $ratings->where('products.title','like','%'.$request->keyword. '%')
+                    ->orWhere('product_ratings.username','like','%'.$request->keyword. '%');
+        }
+        
+        $ratings = $ratings->paginate(4);
+        $data['ratings'] = $ratings;
+        return view('admin.products.ratings',$data);
+    }
+
+    // Change rating status backend
+    public function changeRatingStatus(Request $request)
+    {
+        $productRating = ProductRating::find($request->id);
+        $productRating->status = $request->status;
+        $productRating->save();
+
+        session()->flash('success','Status changed successfully');
+        return response()->json([
+            'status' => true,
         ]);
     }
 }

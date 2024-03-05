@@ -104,7 +104,7 @@
                         <div class="form-group mb-3 col-md-6">
                           <label for="rating">Rating</label>
                           <br>
-                          <div class="rating" style="width: 10rem margin-left:10px">
+                          <div class="rating" style="width: 10rem ">
                               <input id="rating-5" type="radio" name="rating" value="5"/><label for="rating-5"><i class="fas fa-3x fa-star"></i></label>
                               <input id="rating-4" type="radio" name="rating" value="4"  /><label for="rating-4"><i class="fas fa-3x fa-star"></i></label>
                               <input id="rating-3" type="radio" name="rating" value="3"/><label for="rating-3"><i class="fas fa-3x fa-star"></i></label>
