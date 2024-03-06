@@ -22,14 +22,11 @@
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-5">
-                
-                
                     <div class="site-section-heading pt-3 mb-4">
                         <h2 class="text-black">{{ $page->name }}</h2>
                     </div>
                     <p>{!! $page->content !!}</p>
                     <p></p>
-                    
                 </div>
             </div>
         </div>

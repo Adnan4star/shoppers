@@ -173,9 +173,9 @@
               </div>
               <div class="col-md-6 col-lg-4">
                 <ul class="list-unstyled">
-                  <li><a href="#">Mobile commerce</a></li>
-                  <li><a href="#">Dropshipping</a></li>
-                  <li><a href="#">Website development</a></li>
+                  <li>Mobile commerce</li>
+                  <li>Dropshipping</li>
+                  <li>Website development</li>
                 </ul>
               </div>
             </div>
