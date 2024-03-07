@@ -7,6 +7,7 @@ use App\Models\category;
 use App\Models\Product;
 use App\Models\ProductRating;
 use App\Models\SubCategory;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,6 +15,7 @@ class ShopController extends Controller
 {
     public function index(Request $request, $categorySlug = null, $subCategorySlug = null)
     {
+        
         $categorySelected = '';
         $subCategorySelected = '';
 
@@ -66,6 +68,10 @@ class ShopController extends Controller
     }
 
     public function product($slug){
+
+        // $cartContents = Cart::content();
+        
+
         $product = Product::where('slug',$slug)  // defined relation in product model
                 ->withCount('product_ratings') // defined relation in product model
                 ->withSum('product_ratings','rating') // defined relation in product model
@@ -91,7 +97,8 @@ class ShopController extends Controller
         $data['featuredProducts'] = $featuredProducts;
         $data['product'] = $product;
         $data['avgRating'] = $avgRating;
-        $data['avgRatingPercent'] = $avgRatingPercent;
+        $data['avgRatingPercent'] = $avgRatingPercent; 
+        // $data['cartContents'] = $cartContents;
 
         return view('front.product',$data);
     }

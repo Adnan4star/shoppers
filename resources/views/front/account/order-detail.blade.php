@@ -7,7 +7,7 @@
                 <div class="light-font">
                     <ol class="breadcrumb primary-color mb-0">
                         <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">My Account</a></li>
-                        <li class="breadcrumb-item">My Order Details</li>
+                        <li class="breadcrumb-item"><strong>My Order Details</strong></li>
                     </ol>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     <div class="col-md-9">
                         <div class="card" style="margin-top: 20px">
                             <div class="card-header">
-                                <h2 class="h5 mb-0 pt-2 pb-2">Order ID: {{ $order->id }}</h2>
+                                <h2 class="h5 mb-0 pt-2 pb-2"><strong>Order ID: {{ $order->id }}</strong></h2>
                             </div>
                             <div class="card-body pb-3">
                                 <!-- Info -->
@@ -83,7 +83,7 @@
                             <div class="card-footer p-3">
     
                                 <!-- Heading -->
-                                <h6 class="mb-7 h5 mt-4">Order Items ({{ $orderItemsCount }})</h6>
+                                <h6 class="mb-7 h5 mt-4"><strong>Order Items ({{ $orderItemsCount }})</strong></h6>
     
                                 <!-- Divider -->
                                 <hr class="my-3">
@@ -123,24 +123,24 @@
                             <div class="card card-lg mb-5 mt-3">
                                 <div class="card-body">
                                     <!-- Heading -->
-                                    <h6 class="mt-0 mb-3 h5">Order Total</h6>
+                                    <h6 class="mt-0 mb-3 h5"><strong>Order Total</strong></h6>
     
                                     <!-- List group -->
                                     <ul>
                                         <li class="list-group-item d-flex">
-                                            <span>Subtotal:&nbsp;</span>
+                                            <span><strong>Subtotal:&nbsp;</strong></span>
                                             <span class="ms-auto">${{ number_format($order->subtotal,2) }}</span>
                                         </li>
                                         <li class="list-group-item d-flex">
-                                            <span>Discount:&nbsp;{{ (!empty($order->coupon_code)) ? '('. $order->coupon_code .')' : '' }}</span>
+                                            <span><strong>Discount:&nbsp;{{ (!empty($order->coupon_code)) ? '('. $order->coupon_code .')' : '' }}</strong></span>
                                             <span class="ms-auto">&nbsp; ${{ number_format($order->discount,2) }}</span>
                                         </li>
                                         <li class="list-group-item d-flex">
-                                            <span>Shipping:&nbsp;</span>
+                                            <span><strong>Shipping:&nbsp;</strong></span>
                                             <span class="ms-auto">${{ number_format($order->shipping,2) }}</span>
                                         </li>
                                         <li class="list-group-item d-flex fs-lg fw-bold">
-                                            <span>Grand Total:&nbsp;</span>
+                                            <span><strong>Grand Total:&nbsp;</strong></span>
                                             <span class="ms-auto">${{ number_format($order->grand_total,2) }}</span>
                                         </li>
                                     </ul>

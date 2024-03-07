@@ -7,7 +7,7 @@
                 <div class="light-font">
                     <ol class="breadcrumb primary-color mb-0">
                         <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">My Account</a></li>
-                        <li class="breadcrumb-item">Change Password</li>
+                        <li class="breadcrumb-item"><strong>Change Password</strong></li>
                     </ol>
                 </div>
             </div>
@@ -21,38 +21,45 @@
                     </div>
                     <div>
                         @include('admin.message')
-                        <form action="" method="POST" id="change_password" name="change_password">
-                            <div class="col-md-12 mt-3">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h2 class="h5 mb-0 pt-2 pb-2">Change Password</h2>
-                                    </div>
-                                    <div class="card-body p-4">
-                                        <div class="row">
-                                            <div class="mb-3">               
-                                                <label for="name">Old Password</label>
-                                                <input type="password" name="old_password" id="old_password" placeholder="Old Password" class="form-control">
-                                                <p></p>
+                        <div class="mb-5">
+                            <form action="" method="POST" id="change_password" name="change_password">
+                                <div class="col-md-12 mt-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h2 class="h5 mb-0 pt-2 pb-2"><strong>Change Password</strong></h2>
+                                        </div>
+                                        <div class="card-body p-3">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="mb-1">               
+                                                        <label for="name">Old Password</label>
+                                                        <input type="password" name="old_password" id="old_password" placeholder="Old Password" class="form-control">
+                                                        <p></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="mb-1">               
+                                                        <label for="name">New Password</label>
+                                                        <input type="password" name="new_password" id="new_password" placeholder="New Password" class="form-control">
+                                                        <p></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="mb-1">               
+                                                        <label for="name">Confirm Password</label>
+                                                        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm New Password" class="form-control">
+                                                        <p></p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="mb-3">               
-                                                <label for="name">New Password</label>
-                                                <input type="password" name="new_password" id="new_password" placeholder="New Password" class="form-control">
-                                                <p></p>
-                                            </div>
-                                            <div class="mb-3">               
-                                                <label for="name">Confirm Password</label>
-                                                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm New Password" class="form-control">
-                                                <p></p>
-                                            </div>
-                                            
+                                        </div>
+                                        <div class="col-lg-12 mb-2">
+                                            <button type="submit" id="submit" class="btn btn-primary btn-lg btn-block">Update</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 mb-2">
-                                        <button type="submit" id="submit" class="btn btn-primary btn-lg btn-block">Update</button>
-                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
                     <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">My Account</a></li>
-                    <li class="breadcrumb-item">My Orders</li>
+                    <li class="breadcrumb-item"><strong>My Orders</strong></li>
                 </ol>
             </div>
         </div>
@@ -23,7 +23,7 @@
                     <div class="card" style="margin-top: 20px">
                         
                             <div class="card-header">
-                                <h2 class="h5 mb-0 pt-2 pb-2">My Orders</h2>
+                                <h2 class="h5 mb-0 pt-2 pb-2"><strong>My Orders</strong></h2>
                             </div>
                             <div class="card-body p-4">
                                 <div class="table-responsive">

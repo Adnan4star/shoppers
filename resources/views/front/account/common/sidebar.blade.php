@@ -2,15 +2,15 @@
 <div class="d-md-block border-end">
     <div class="card-body">
         <div class="list-group list-group-transparent">
-            <a href="{{ route('account.profile') }}" class="list-group-item list-group-item-action d-flex align-items-center">My Profile</a>
-            <a href="{{ route('account.orders') }}" class="list-group-item list-group-item-action d-flex align-items-center">My Orders</a>
-            <a href="{{ route('account.wishlist') }}" class="list-group-item list-group-item-action d-flex align-items-center">Wishlist</a>
-            <a href="{{ route('account.show-Change-Password-Form') }}" class="list-group-item list-group-item-action d-flex align-items-center">Change Password</a>
-            <a href="{{ route('account.logout') }}" class="list-group-item list-group-item-action d-flex align-items-center">Logout</a>
+            <a href="{{ route('account.profile') }}" class="list-group-item list-group-item-action d-flex align-items-center"><strong>My Profile</strong></a>
+            <a href="{{ route('account.orders') }}" class="list-group-item list-group-item-action d-flex align-items-center"><strong>My Orders</strong></a>
+            <a href="{{ route('account.wishlist') }}" class="list-group-item list-group-item-action d-flex align-items-center"><strong>Wishlist</strong></a>
+            <a href="{{ route('account.show-Change-Password-Form') }}" class="list-group-item list-group-item-action d-flex align-items-center"><strong>Change Password</strong></a>
+            <a href="{{ route('account.logout') }}" class="list-group-item list-group-item-action d-flex align-items-center"><strong>Logout</strong></a>
         </div>
-        <h4 class="subheader mt-4">Experience</h4>
+        <h4 class="subheader mt-4"><strong>Experience</strong></h4>
         <div class="list-group list-group-transparent">
-            <a href="#" class="list-group-item list-group-item-action">Give Feedback</a>
+            <a href="#" class="list-group-item list-group-item-action"><strong>Give Feedback</strong></a>
         </div>
     </div>
 </div>

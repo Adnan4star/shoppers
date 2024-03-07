@@ -7,7 +7,7 @@
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
                     <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile') }}">My Account</a></li>
-                    <li class="breadcrumb-item">My Wishlist</li>
+                    <li class="breadcrumb-item"><strong>My Wishlist</strong></li>
                 </ol>
             </div>
         </div>
@@ -22,11 +22,11 @@
                 </div>
                 <div class="col-md-9 mb-2">
                     <div class="card-body">
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 pt-2 pb-2"><strong>Wishlist</strong></h2>
+                        </div>
                         @if ($wishlists->isNotEmpty())
                             @foreach ($wishlists as $wishlist)
-                                <div class="card-header">
-                                    <h2 class="h5 mb-0 pt-2 pb-2">Wishlist</h2>
-                                </div>
                                 <div class="d-sm-flex justify-content-between mt-lg-4 mb-4 pb-3 pb-sm-2 border-bottom">
                                     <div class="d-block d-sm-flex align-items-start text-center text-sm-start">
                                         <a class="d-block flex-shrink-0 mx-auto me-sm-4" href="{{ route("front.product",$wishlist->product->slug) }}" style="width: 10rem;">
@@ -54,9 +54,6 @@
                                 </div>
                             @endforeach
                         @else
-                            <div class="card-header">
-                                <h2 class="h5 mb-0 pt-2 pb-2">Wishlist</h2>
-                            </div>
                             <div class="mt-3">
                                 <h3 class="h5">Your Wishlist is empty!!</h3>
                             </div>

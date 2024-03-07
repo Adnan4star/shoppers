@@ -62,13 +62,13 @@
                                             <td>${{ $items->price }}</td>
                                             <td>
                                                 <div class="input-group mb-3" style="max-width: 120px;">
-                                                <div class="input-group-prepend">
-                                                    <button class="btn btn-outline-primary sub" data-id="{{$items->rowId}}" type="button">&minus;</button>
-                                                </div>
-                                                <input type="text" class="form-control text-center" value="{{ $items->qty }}" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-outline-primary add" data-id="{{$items->rowId}}" type="button">&plus;</button>
-                                                </div>
+                                                    <div class="input-group-prepend">
+                                                        <button class="btn btn-outline-primary sub" data-id="{{$items->rowId}}" type="button">&minus;</button>
+                                                    </div>
+                                                    <input type="text" class="form-control text-center" value="{{ $items->qty }}" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-primary add" data-id="{{$items->rowId}}" type="button">&plus;</button>
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td>${{ $items->price * $items->qty }}</td>
