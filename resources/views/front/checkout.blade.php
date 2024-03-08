@@ -165,14 +165,14 @@
                                         </div>
 
                                         <div>
-                                            <input type="radio" name="payment_method" value="cod" id="payment_method_two">
-                                            <label for="payment_method_two" class="form-check-label">Direct Bank Transfer</label>
+                                            <input type="radio" name="payment_method" value="stripe" id="payment_method_two">
+                                            <label for="payment_method_two" class="form-check-label">Stripe</label>
                                         </div>
 
-                                        <div class="card-body p-0 d-none mt-3" id="card-payment-form">
+                                        <div class="card-body p-0 d-none mt-3" id="stripe-payment-form">
                                             <div class="mb-3">
-                                                <label for="card_number" class="mb-2">Card Number</label>
-                                                <input type="text" name="card_number" id="card_number" placeholder="Valid Card Number" class="form-control">
+                                                <label for="stripe_number" class="mb-2">Stripe Number</label>
+                                                <input type="text" name="stripe_number" id="stripe_number" placeholder="Valid stripe Number" class="form-control">
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -185,9 +185,10 @@
                                                 </div>
                                             </div>
                                         </div> 
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-lg py-3 btn-block" >Place Order</button>
-                                        </div>
+                                        
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <button type="submit" class="btn btn-primary btn-lg py-3 btn-block" >Place Order</button>
                                     </div>
                                 </div>
                             </div>
@@ -204,13 +205,13 @@
         // Payment methods rendering
         $("#payment_method_one").click(function(){
             if ($(this).is(":checked") == true) {
-                $("#card-payment-form").addClass('d-none');
+                $("#stripe-payment-form").addClass('d-none');
             }
         });
 
         $("#payment_method_two").click(function(){
             if ($(this).is(":checked") == true) {
-                $("#card-payment-form").removeClass('d-none');
+                $("#stripe-payment-form").removeClass('d-none');
             }
         });
 

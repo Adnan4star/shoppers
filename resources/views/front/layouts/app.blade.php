@@ -44,23 +44,19 @@
     color: #ffc107; /* Personal color choice. Lifted from Bootstrap 4 */
       font-size: 8px;
   }
-  
   .front-stars, .back-stars, .star-rating {
       display: flex;
     }
-    
     .star-rating {
       align-items: left;
       font-size: 1.5em;
       justify-content: left;
       margin-left: -5px;
     }
-    
     .back-stars {
       color: #CCC;
       position: relative;
     }
-    
     .front-stars {
       color: #FFBC0B;
       overflow: hidden;
@@ -68,13 +64,10 @@
       top: 0;
       transition: all 0.5s;
     }
-
-    
     .percent {
       color: #bb5252;
       font-size: 1.5em;
     }
-
     .star-rating.product{
       font-size: 1em;
     }

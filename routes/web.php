@@ -60,6 +60,7 @@ Route::post('/get-order-summary',[CartController::class,'getOrderSummary'])->nam
 Route::post('/apply-discount',[CartController::class,'applyDiscount'])->name('front.applyDiscount');
 Route::post('/remove-discount',[CartController::class,'removeCoupon'])->name('front.removeCoupon');
 
+
 // User reset password routes
 Route::get('/forgot-password',[AuthController::class,'forgotPassword'])->name('front.forgotPassword');
 Route::post('/process-forgot-password',[AuthController::class,'processForgotPassword'])->name('front.processForgotPassword');

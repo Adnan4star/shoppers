@@ -357,7 +357,7 @@ class CartController extends Controller
             ]);
             
         } else {
-            // Banking
+            //stripe
         }
 
     }
