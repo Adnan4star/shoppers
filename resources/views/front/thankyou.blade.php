@@ -24,6 +24,7 @@
                     <span class="icon-check_circle display-3 text-success"></span>
                     <h2 class="display-3 text-black">Thank you!</h2>
                     <p class="lead mb-5">You order id is {{ $id }} </p>
+                    <p><a href="{{ route('account.profile') }}" class="btn btn-sm btn-secondary">Visit My Profile</a></p>
                     <p><a href="{{ route('front.shop') }}" class="btn btn-sm btn-primary">Back to shop</a></p>
                 </div>
             </div>
