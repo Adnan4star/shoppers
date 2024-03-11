@@ -157,36 +157,36 @@
                                         </tbody>
                                     </table>
 
-                                    <div class="">
-                                        <h3 class="card-title h5 mb-3">Payment Method</h3>
-                                        <div>
-                                            <input checked type="radio" name="payment_method" value="cod" id="payment_method_one">
-                                            <label for="payment_method_one" class="form-check-label">COD</label>
-                                        </div>
-
-                                        <div>
-                                            <input type="radio" name="payment_method" value="stripe" id="payment_method_two">
-                                            <label for="payment_method_two" class="form-check-label">Stripe</label>
-                                        </div>
-
-                                        <div class="card-body p-0 d-none mt-3" id="stripe-payment-form">
-                                            <div class="mb-3">
-                                                <label for="stripe_number" class="mb-2">Stripe Number</label>
-                                                <input type="text" name="stripe_number" id="stripe_number" placeholder="Valid stripe Number" class="form-control">
+                                        <div class="">
+                                            <h3 class="card-title h5 mb-3">Payment Method</h3>
+                                            <div>
+                                                <input checked type="radio" name="payment_method" value="cod" id="payment_method_one">
+                                                <label for="payment_method_one" class="form-check-label">COD</label>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label for="expiry_date" class="mb-2">Expiry Date</label>
-                                                    <input type="text" name="expiry_date" id="expiry_date" placeholder="MM/YYYY" class="form-control">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="cvv" class="mb-2">CVV Code</label>
-                                                    <input type="text" name="cvv" id="cvv" placeholder="123" class="form-control">
-                                                </div>
+
+                                            <div>
+                                                <input type="radio" name="payment_method" value="stripe" id="payment_method_two">
+                                                <label for="payment_method_two" class="form-check-label">Stripe</label>
                                             </div>
-                                        </div> 
-                                        
-                                    </div>
+
+                                            <div class="card-body p-0 d-none mt-3" id="stripe-payment-form">
+                                                <div class="mb-3">
+                                                    <label for="stripe_number" class="mb-2">Card Number</label>
+                                                    <input type="text" name="stripe_number" id="stripe_number" placeholder="Valid Card Number" class="form-control">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="expiry_date" class="mb-2">Expiry Date</label>
+                                                        <input type="text" name="expiry_date" id="expiry_date" placeholder="MM/YYYY" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="cvv" class="mb-2">CVV Code</label>
+                                                        <input type="text" name="cvv" id="cvv" placeholder="123" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                
                                     <div class="form-group mt-2">
                                         <button type="submit" class="btn btn-primary btn-lg py-3 btn-block" >Place Order</button>
                                     </div>
@@ -215,7 +215,7 @@
             }
         });
 
-        // Form submission
+        // All Forms submission
         $("#orderForm").submit(function(event){
             event.preventDefault();
 
@@ -346,6 +346,7 @@
                 }
             });
         });
+
 
         // If User Changes Country on checkout then shipping charges should calculate
         $("#country").change(function(){

@@ -71,8 +71,8 @@ class CartController extends Controller
     public function cart()
     {
         $cartContents = Cart::content();
-        // dd($cartContents);
         $data['cartContents'] = $cartContents;
+        // dd($data['cartContents']);
 
         return view('front.cart',$data);
     }
@@ -356,8 +356,16 @@ class CartController extends Controller
                 'message' => 'Order placed successfully.'
             ]);
             
-        } else {
-            //stripe
+        } elseif ($request->payment_method == 'stripe') {
+                //stripe
+                // foreach (session('cart') as $id => $details) {
+                //     // Decode the JSON response into an associative array
+                //     $data = json_decode($details, true);
+                //     foreach ($data as $product) {
+                //         echo $product['name'] . "\n";
+                //     }
+                // }
+                // return "success";
         }
 
     }
@@ -523,4 +531,6 @@ class CartController extends Controller
         session()->forget('code');
         return $this->getOrderSummary($request);
     }
+
+    // stripe
 }
