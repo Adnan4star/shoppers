@@ -133,8 +133,8 @@
                                         </thead>
                                         <tbody>
                                             @foreach (Cart::content() as $item)
-                                                <tr>
-                                                    <td>{{ $item->name }} <strong class="mx-2">x</strong> {{ $item->qty }}</td>
+                                                <tr class="product-row">
+                                                    <td>{{ $item->name }} <strong class="mx-2">x</strong> {{ $item->qty }} </td>
                                                     <td>${{ $item->price * $item->qty }}</td>
                                                 </tr>
                                             @endforeach
@@ -168,23 +168,6 @@
                                                 <input type="radio" name="payment_method" value="stripe" id="payment_method_two">
                                                 <label for="payment_method_two" class="form-check-label">Stripe</label>
                                             </div>
-
-                                            <div class="card-body p-0 d-none mt-3" id="stripe-payment-form">
-                                                <div class="mb-3">
-                                                    <label for="stripe_number" class="mb-2">Card Number</label>
-                                                    <input type="text" name="stripe_number" id="stripe_number" placeholder="Valid Card Number" class="form-control">
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label for="expiry_date" class="mb-2">Expiry Date</label>
-                                                        <input type="text" name="expiry_date" id="expiry_date" placeholder="MM/YYYY" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="cvv" class="mb-2">CVV Code</label>
-                                                        <input type="text" name="cvv" id="cvv" placeholder="123" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div> 
                                         </div>
                                 
                                     <div class="form-group mt-2">
@@ -202,150 +185,445 @@
 
 @section('customJs')
     <script>
-        // Payment methods rendering
-        $("#payment_method_one").click(function(){
-            if ($(this).is(":checked") == true) {
-                $("#stripe-payment-form").addClass('d-none');
-            }
-        });
+        // // Payment methods rendering
+        // $("#payment_method_one").click(function(){
+        //     if ($(this).is(":checked") == true) {
+        //         $("#stripe-payment-form").addClass('d-none');
+        //     }
+        // });
 
-        $("#payment_method_two").click(function(){
-            if ($(this).is(":checked") == true) {
-                $("#stripe-payment-form").removeClass('d-none');
-            }
-        });
+        // $("#payment_method_two").click(function(){
+        //     if ($(this).is(":checked") == true) {
+        //         $("#stripe-payment-form").removeClass('d-none');
+        //     }
+        // });
 
         // All Forms submission
+        // $("#orderForm").submit(function(event){
+        //     event.preventDefault();
+
+        //     $('button[type="submit"]').prop('disabled',true);
+
+        //     $.ajax({
+        //         url: '{{ route("front.processCheckout") }}',
+        //         type: 'post',
+        //         data: $(this).serializeArray(),
+        //         dataType: 'json',
+        //         success: function(response){
+        //             // Displaying errors return in response
+        //             var errors = response.errors;
+        //             $('button[type="submit"]').prop('disabled',false);
+
+        //             if (response.status == false) {
+        //                 if (errors.fname) {
+        //                     $("#fname").addClass('is-invalid')
+        //                     .siblings("p")
+        //                     .addClass('invalid-feedback')
+        //                     .html(errors.fname);
+        //                 } else {
+        //                     $("#fname").removeClass('is-invalid')
+        //                     .siblings("p")
+        //                     .removeClass('invalid-feedback')
+        //                     .html('');
+        //                 }
+
+        //                 if (errors.lname) {
+        //                     $("#lname").addClass('is-invalid')
+        //                     .siblings("p")
+        //                     .addClass('invalid-feedback')
+        //                     .html(errors.lname);
+        //                 } else {
+        //                     $("#lname").removeClass('is-invalid')
+        //                     .siblings("p")
+        //                     .removeClass('invalid-feedback')
+        //                     .html('');
+        //                 }
+
+        //                 if (errors.country) {
+        //                     $("#country").addClass('is-invalid')
+        //                     .siblings("p")
+        //                     .addClass('invalid-feedback')
+        //                     .html(errors.country);
+        //                 } else {
+        //                     $("#country").removeClass('is-invalid')
+        //                     .siblings("p")
+        //                     .removeClass('invalid-feedback')
+        //                     .html('');
+        //                 }
+
+        //                 if (errors.address) {
+        //                     $("#address").addClass('is-invalid')
+        //                     .siblings("p")
+        //                     .addClass('invalid-feedback')
+        //                     .html(errors.address);
+        //                 } else {
+        //                     $("#address").removeClass('is-invalid')
+        //                     .siblings("p")
+        //                     .removeClass('invalid-feedback')
+        //                     .html('');
+        //                 }
+
+        //                 if (errors.city) {
+        //                     $("#city").addClass('is-invalid')
+        //                     .siblings("p")
+        //                     .addClass('invalid-feedback')
+        //                     .html(errors.city);
+        //                 } else {
+        //                     $("#city").removeClass('is-invalid')
+        //                     .siblings("p")
+        //                     .removeClass('invalid-feedback')
+        //                     .html('');
+        //                 }
+
+        //                 if (errors.state) {
+        //                     $("#state").addClass('is-invalid')
+        //                     .siblings("p")
+        //                     .addClass('invalid-feedback')
+        //                     .html(errors.state);
+        //                 } else {
+        //                     $("#state").removeClass('is-invalid')
+        //                     .siblings("p")
+        //                     .removeClass('invalid-feedback')
+        //                     .html('');
+        //                 }
+
+        //                 if (errors.zip) {
+        //                     $("#zip").addClass('is-invalid')
+        //                     .siblings("p")
+        //                     .addClass('invalid-feedback')
+        //                     .html(errors.zip);
+        //                 } else {
+        //                     $("#zip").removeClass('is-invalid')
+        //                     .siblings("p")
+        //                     .removeClass('invalid-feedback')
+        //                     .html('');
+        //                 }
+
+        //                 if (errors.email) {
+        //                     $("#email").addClass('is-invalid')
+        //                     .siblings("p")
+        //                     .addClass('invalid-feedback')
+        //                     .html(errors.email);
+        //                 } else {
+        //                     $("#email").removeClass('is-invalid')
+        //                     .siblings("p")
+        //                     .removeClass('invalid-feedback')
+        //                     .html('');
+        //                 }
+                        
+        //                 if (errors.phone) {
+        //                     $("#phone").addClass('is-invalid')
+        //                     .siblings("p")
+        //                     .addClass('invalid-feedback')
+        //                     .html(errors.phone);
+        //                 } else {
+        //                     $("#phone").removeClass('is-invalid')
+        //                     .siblings("p")
+        //                     .removeClass('invalid-feedback')
+        //                     .html('');
+        //                 }
+        //             } else {
+        //                 window.location.href = "{{ url('thankyou/') }}/"+response.orderId;
+        //             }
+
+        //         }
+        //     });
+        // });
+
+        var grandTotal = {{$grandTotal}};
+        // var productData = [];
+
+        // $("tbody .product-row").each(function() {
+        //     var productInfo = $(this).find("td:first-child").text().trim(); // Get the text content of the first <td> within the product row
+        //     var productName = productInfo.split(' x ')[0].trim(); // Extract product name before 'x'
+        //     var qty = productInfo.split(' x ')[1].trim(); // Extract quantity after 'x'
+            
+        //     // Push product name and quantity as an object to the productData array
+        //     productData.push({ name: productName, quantity: qty });
+        // });
+
         $("#orderForm").submit(function(event){
             event.preventDefault();
 
-            $('button[type="submit"]').prop('disabled',true);
+            $('button[type="submit"]').prop('disabled', true);
 
-            $.ajax({
-                url: '{{ route("front.processCheckout") }}',
-                type: 'post',
-                data: $(this).serializeArray(),
-                dataType: 'json',
-                success: function(response){
-                    // Displaying errors return in response
-                    var errors = response.errors;
-                    $('button[type="submit"]').prop('disabled',false);
+            var paymentMethod = $('input[name="payment_method"]:checked').val();
 
-                    if (response.status == false) {
-                        if (errors.fname) {
-                            $("#fname").addClass('is-invalid')
-                            .siblings("p")
-                            .addClass('invalid-feedback')
-                            .html(errors.fname);
-                        } else {
-                            $("#fname").removeClass('is-invalid')
-                            .siblings("p")
-                            .removeClass('invalid-feedback')
-                            .html('');
-                        }
+            // If payment method is COD, proceed with order placement
+            if (paymentMethod === 'cod') {
+                codOrder();
+            } else if (paymentMethod === 'stripe') {
+                // passing grandTotal
+                var grandTotalInput = $('<input>').attr({
+                type: 'hidden',
+                name: 'grand_total',
+                value: grandTotal
+                });
 
-                        if (errors.lname) {
-                            $("#lname").addClass('is-invalid')
-                            .siblings("p")
-                            .addClass('invalid-feedback')
-                            .html(errors.lname);
-                        } else {
-                            $("#lname").removeClass('is-invalid')
-                            .siblings("p")
-                            .removeClass('invalid-feedback')
-                            .html('');
-                        }
+                // Convert productData array to JSON string and append as hidden input
+                // var productDataInput = $('<input>').attr({
+                //     type: 'hidden',
+                //     name: 'product_data',
+                //     value: JSON.stringify(productData)
+                // });
 
-                        if (errors.country) {
-                            $("#country").addClass('is-invalid')
-                            .siblings("p")
-                            .addClass('invalid-feedback')
-                            .html(errors.country);
-                        } else {
-                            $("#country").removeClass('is-invalid')
-                            .siblings("p")
-                            .removeClass('invalid-feedback')
-                            .html('');
-                        }
+                $('#orderForm').append(grandTotalInput);
 
-                        if (errors.address) {
-                            $("#address").addClass('is-invalid')
-                            .siblings("p")
-                            .addClass('invalid-feedback')
-                            .html(errors.address);
-                        } else {
-                            $("#address").removeClass('is-invalid')
-                            .siblings("p")
-                            .removeClass('invalid-feedback')
-                            .html('');
-                        }
+                if (confirm('Are you sure you want to proceed with Stripe payment?')) {
+                    stripeOrder();
+                } else {
+                    $('button[type="submit"]').prop('disabled', false);
+                }
+            }
+        });
 
-                        if (errors.city) {
-                            $("#city").addClass('is-invalid')
-                            .siblings("p")
-                            .addClass('invalid-feedback')
-                            .html(errors.city);
-                        } else {
-                            $("#city").removeClass('is-invalid')
-                            .siblings("p")
-                            .removeClass('invalid-feedback')
-                            .html('');
-                        }
-
-                        if (errors.state) {
-                            $("#state").addClass('is-invalid')
-                            .siblings("p")
-                            .addClass('invalid-feedback')
-                            .html(errors.state);
-                        } else {
-                            $("#state").removeClass('is-invalid')
-                            .siblings("p")
-                            .removeClass('invalid-feedback')
-                            .html('');
-                        }
-
-                        if (errors.zip) {
-                            $("#zip").addClass('is-invalid')
-                            .siblings("p")
-                            .addClass('invalid-feedback')
-                            .html(errors.zip);
-                        } else {
-                            $("#zip").removeClass('is-invalid')
-                            .siblings("p")
-                            .removeClass('invalid-feedback')
-                            .html('');
-                        }
-
-                        if (errors.email) {
-                            $("#email").addClass('is-invalid')
-                            .siblings("p")
-                            .addClass('invalid-feedback')
-                            .html(errors.email);
-                        } else {
-                            $("#email").removeClass('is-invalid')
-                            .siblings("p")
-                            .removeClass('invalid-feedback')
-                            .html('');
-                        }
-                        
-                        if (errors.phone) {
-                            $("#phone").addClass('is-invalid')
-                            .siblings("p")
-                            .addClass('invalid-feedback')
-                            .html(errors.phone);
-                        } else {
-                            $("#phone").removeClass('is-invalid')
-                            .siblings("p")
-                            .removeClass('invalid-feedback')
-                            .html('');
-                        }
+    // for cod
+    function codOrder() {
+        $.ajax({
+            url: '{{ route("front.processCheckout") }}',
+            type: 'post',
+            data: $("#orderForm").serializeArray(),
+            dataType: 'json',
+            success: function(response){
+                var errors = response.errors;
+                if (response.status === false) {
+                    if (errors.fname) {
+                        $("#fname").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.fname);
                     } else {
-                        window.location.href = "{{ url('thankyou/') }}/"+response.orderId;
+                        $("#fname").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
                     }
 
+                    if (errors.lname) {
+                        $("#lname").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.lname);
+                    } else {
+                        $("#lname").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.country) {
+                        $("#country").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.country);
+                    } else {
+                        $("#country").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.address) {
+                        $("#address").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.address);
+                    } else {
+                        $("#address").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.city) {
+                        $("#city").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.city);
+                    } else {
+                        $("#city").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.state) {
+                        $("#state").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.state);
+                    } else {
+                        $("#state").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.zip) {
+                        $("#zip").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.zip);
+                    } else {
+                        $("#zip").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.email) {
+                        $("#email").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.email);
+                    } else {
+                        $("#email").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+                    
+                    if (errors.phone) {
+                        $("#phone").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.phone);
+                    } else {
+                        $("#phone").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+                } else {
+                    window.location.href = "{{ url('thankyou/') }}/"+response.orderId;
                 }
-            });
+            }
         });
+    }
+
+    // for stripe
+    function stripeOrder() {
+        $.ajax({
+            url: '{{ route("stripe") }}',
+            type: 'post',
+            data: $("#orderForm").serializeArray(),
+            dataType: 'json',
+            success: function(response){
+                var errors = response.errors;
+                if (response.status === false) {
+                    if (errors.fname) {
+                        $("#fname").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.fname);
+                    } else {
+                        $("#fname").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.lname) {
+                        $("#lname").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.lname);
+                    } else {
+                        $("#lname").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.country) {
+                        $("#country").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.country);
+                    } else {
+                        $("#country").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.address) {
+                        $("#address").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.address);
+                    } else {
+                        $("#address").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.city) {
+                        $("#city").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.city);
+                    } else {
+                        $("#city").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.state) {
+                        $("#state").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.state);
+                    } else {
+                        $("#state").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.zip) {
+                        $("#zip").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.zip);
+                    } else {
+                        $("#zip").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+
+                    if (errors.email) {
+                        $("#email").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.email);
+                    } else {
+                        $("#email").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+                    
+                    if (errors.phone) {
+                        $("#phone").addClass('is-invalid')
+                        .siblings("p")
+                        .addClass('invalid-feedback')
+                        .html(errors.phone);
+                    } else {
+                        $("#phone").removeClass('is-invalid')
+                        .siblings("p")
+                        .removeClass('invalid-feedback')
+                        .html('');
+                    }
+                } else {
+                    // window.location.href = "{{ url('thankyou/') }}/"+response.orderId;
+                }
+            }
+        });
+    }
 
 
         // If User Changes Country on checkout then shipping charges should calculate
