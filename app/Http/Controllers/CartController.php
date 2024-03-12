@@ -199,11 +199,11 @@ class CartController extends Controller
             $grandTotal = Cart::Subtotal(2,'.','');
             $totalShippingCharges = 0;
         }
-        
+
+        $data['grandTotal'] = number_format($grandTotal,2);
         $data['countries'] = $countries;
         $data['customerAddress'] = $customerAddress;
         $data['totalShippingCharges'] = number_format($totalShippingCharges,2);
-        $data['grandTotal'] = number_format($grandTotal,2);
         $data['discount'] = number_format($discount,2);
 
         return view('front.checkout', $data);
