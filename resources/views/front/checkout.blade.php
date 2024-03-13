@@ -185,7 +185,7 @@
 
 @section('customJs')
     <script>
-        // // Payment methods rendering
+        // Payment methods rendering
         // $("#payment_method_one").click(function(){
         //     if ($(this).is(":checked") == true) {
         //         $("#stripe-payment-form").addClass('d-none');
@@ -198,7 +198,7 @@
         //     }
         // });
 
-        // All Forms submission
+        // // All Forms submission
         // $("#orderForm").submit(function(event){
         //     event.preventDefault();
 
@@ -506,118 +506,124 @@
         $.ajax({
             url: '{{ route("stripe") }}',
             type: 'post',
+            headers: {
+                'Content-Type':'application/json',
+                'Accept':'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            
             data: $("#orderForm").serializeArray(),
             dataType: 'json',
             success: function(response){
                 var errors = response.errors;
                 if (response.status === false) {
-                    if (errors.fname) {
-                        $("#fname").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.fname);
-                    } else {
-                        $("#fname").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
+                    // if (errors.fname) {
+                    //     $("#fname").addClass('is-invalid')
+                    //     .siblings("p")
+                    //     .addClass('invalid-feedback')
+                    //     .html(errors.fname);
+                    // } else {
+                    //     $("#fname").removeClass('is-invalid')
+                    //     .siblings("p")
+                    //     .removeClass('invalid-feedback')
+                    //     .html('');
+                    // }
 
-                    if (errors.lname) {
-                        $("#lname").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.lname);
-                    } else {
-                        $("#lname").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
+                    // if (errors.lname) {
+                    //     $("#lname").addClass('is-invalid')
+                    //     .siblings("p")
+                    //     .addClass('invalid-feedback')
+                    //     .html(errors.lname);
+                    // } else {
+                    //     $("#lname").removeClass('is-invalid')
+                    //     .siblings("p")
+                    //     .removeClass('invalid-feedback')
+                    //     .html('');
+                    // }
 
-                    if (errors.country) {
-                        $("#country").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.country);
-                    } else {
-                        $("#country").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
+                    // if (errors.country) {
+                    //     $("#country").addClass('is-invalid')
+                    //     .siblings("p")
+                    //     .addClass('invalid-feedback')
+                    //     .html(errors.country);
+                    // } else {
+                    //     $("#country").removeClass('is-invalid')
+                    //     .siblings("p")
+                    //     .removeClass('invalid-feedback')
+                    //     .html('');
+                    // }
 
-                    if (errors.address) {
-                        $("#address").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.address);
-                    } else {
-                        $("#address").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
+                    // if (errors.address) {
+                    //     $("#address").addClass('is-invalid')
+                    //     .siblings("p")
+                    //     .addClass('invalid-feedback')
+                    //     .html(errors.address);
+                    // } else {
+                    //     $("#address").removeClass('is-invalid')
+                    //     .siblings("p")
+                    //     .removeClass('invalid-feedback')
+                    //     .html('');
+                    // }
 
-                    if (errors.city) {
-                        $("#city").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.city);
-                    } else {
-                        $("#city").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
+                    // if (errors.city) {
+                    //     $("#city").addClass('is-invalid')
+                    //     .siblings("p")
+                    //     .addClass('invalid-feedback')
+                    //     .html(errors.city);
+                    // } else {
+                    //     $("#city").removeClass('is-invalid')
+                    //     .siblings("p")
+                    //     .removeClass('invalid-feedback')
+                    //     .html('');
+                    // }
 
-                    if (errors.state) {
-                        $("#state").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.state);
-                    } else {
-                        $("#state").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
+                    // if (errors.state) {
+                    //     $("#state").addClass('is-invalid')
+                    //     .siblings("p")
+                    //     .addClass('invalid-feedback')
+                    //     .html(errors.state);
+                    // } else {
+                    //     $("#state").removeClass('is-invalid')
+                    //     .siblings("p")
+                    //     .removeClass('invalid-feedback')
+                    //     .html('');
+                    // }
 
-                    if (errors.zip) {
-                        $("#zip").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.zip);
-                    } else {
-                        $("#zip").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
+                    // if (errors.zip) {
+                    //     $("#zip").addClass('is-invalid')
+                    //     .siblings("p")
+                    //     .addClass('invalid-feedback')
+                    //     .html(errors.zip);
+                    // } else {
+                    //     $("#zip").removeClass('is-invalid')
+                    //     .siblings("p")
+                    //     .removeClass('invalid-feedback')
+                    //     .html('');
+                    // }
 
-                    if (errors.email) {
-                        $("#email").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.email);
-                    } else {
-                        $("#email").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
+                    // if (errors.email) {
+                    //     $("#email").addClass('is-invalid')
+                    //     .siblings("p")
+                    //     .addClass('invalid-feedback')
+                    //     .html(errors.email);
+                    // } else {
+                    //     $("#email").removeClass('is-invalid')
+                    //     .siblings("p")
+                    //     .removeClass('invalid-feedback')
+                    //     .html('');
+                    // }
                     
-                    if (errors.phone) {
-                        $("#phone").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.phone);
-                    } else {
-                        $("#phone").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
+                    // if (errors.phone) {
+                    //     $("#phone").addClass('is-invalid')
+                    //     .siblings("p")
+                    //     .addClass('invalid-feedback')
+                    //     .html(errors.phone);
+                    // } else {
+                    //     $("#phone").removeClass('is-invalid')
+                    //     .siblings("p")
+                    //     .removeClass('invalid-feedback')
+                    //     .html('');
+                    // }
                 } else {
                     // window.location.href = "{{ url('thankyou/') }}/"+response.orderId;
                 }
