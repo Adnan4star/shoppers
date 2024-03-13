@@ -517,14 +517,14 @@
             url: '{{ route("stripe.index") }}',
             type: 'get',
             data: $("#orderForm").serializeArray(),
-            dataType: 'json',
             success: function(response){
-                var errors = response.errors;
-                if (response.status === false) {
-                    
-                } else {
-                    // window.location.href = "{{ url('thankyou/') }}/"+response.orderId;
-                }
+                console.log("here");
+                var newWindow = window.open("", "_blank");
+                newWindow.document.write(response);
+                newWindow.document.close();
+            },
+            error: function(xhr, status, error){
+                console.log("error console", error, status);
             }
         });
     }

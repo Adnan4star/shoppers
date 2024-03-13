@@ -355,53 +355,13 @@ class CartController extends Controller
                 'orderId' => $order->id,
                 'message' => 'Order placed successfully.'
             ]);
-            
-<<<<<<< HEAD
-        } elseif ($request->payment_method == 'stripe') {
-                //stripe
-                // dd($request->all());
-                // $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
-                // $response = $stripe->checkout->sessions->create([
-                //     'line_items' => [
-                //         [
-                //             'price_data' => [
-                //                 'currency' => 'usd',
-                //                 'product_data' => [
-                //                     'name' => 'Tshirt',
-                //                 ],
-                //                 'unit_amount' => $request->grand_total * 100,
-                //             ],
-                //             'quantity' => 1,
-                //         ],
-                //     ],
-                //     'mode' => 'payment',
-                //     'success_url' => route('success').'?session_id={CHECKOUT_SESSION_ID}', //Passing data using sessionId
-                //     'cancel_url' => route('cancel'),
-                // ]);
-                // dd($response);
-                // if (isset($response->id) && $response->id != '') {
-                //     return redirect($response->url);
-                // } else {
-                //     return redirect()->route('cancel');
-                // }
 
+        } else {
+            //stripe
         }
-=======
-        } 
-        // elseif ($request->payment_method == 'stripe') {
-        //         //stripe
-        //         foreach (session('cart') as $id => $details) {
-        //             // Decode the JSON response into an associative array
-        //             $data = json_decode($details, true);
-        //             foreach ($data as $product) {
-        //                 echo $product['name'] . "\n";
-        //             }
-        //         }
-        //         return "success";
-        // }
->>>>>>> b805f25111ae6e902ef28f2be3b8a39a51bf722e
 
     }
+
 
     public function thankyou($id)
     {

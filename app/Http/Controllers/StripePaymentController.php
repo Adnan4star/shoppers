@@ -16,6 +16,7 @@ class StripePaymentController extends Controller
     public function stripe(Request $request)
     {
         $data['grand_total'] = $request->grand_total;
+        // customer, address, order 
         return view('front.stripe',$data);
     }
     
@@ -28,13 +29,16 @@ class StripePaymentController extends Controller
     {
         Stripe\Stripe::setApiKey(config('stripe.stripe_sk'));
         
-            Stripe\Charge::create ([
+        $response = Stripe\Charge::create ([
                     "amount" => 393 * 100,
                     "currency" => "usd",
                     "source" => $request->stripeToken,
                     "description" => "Test payment from itsolutionstuff.com." 
             ]);
-        
+            // if(){
+
+            // }
+            // return $response;
             session()->flash('success', 'Payment successful!');  
             return back();
         
