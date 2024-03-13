@@ -10,6 +10,12 @@
                     </div>
                 </div>
             </div>
+            @if (Session::has('success'))
+                        <div class="alert alert-success text-center">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            <p>{{ Session::get('success') }}</p>
+                        </div>
+            @endif
             <form action="" method="POST" id="orderForm">
                 <div class="row">
                     <div class="col-md-6 mb-5 mb-md-0">
@@ -168,7 +174,10 @@
                                                 <input type="radio" name="payment_method" value="stripe" id="payment_method_two">
                                                 <label for="payment_method_two" class="form-check-label">Stripe</label>
                                             </div>
+
+                                            
                                         </div>
+                                        
                                 
                                     <div class="form-group mt-2">
                                         <button type="submit" class="btn btn-primary btn-lg py-3 btn-block" >Place Order</button>
@@ -184,19 +193,20 @@
 @endsection
 
 @section('customJs')
-    <script>
-        // // Payment methods rendering
-        // $("#payment_method_one").click(function(){
-        //     if ($(this).is(":checked") == true) {
-        //         $("#stripe-payment-form").addClass('d-none');
-        //     }
-        // });
 
-        // $("#payment_method_two").click(function(){
-        //     if ($(this).is(":checked") == true) {
-        //         $("#stripe-payment-form").removeClass('d-none');
-        //     }
-        // });
+    <script type="text/javascript">
+        // Payment methods rendering
+        $("#payment_method_one").click(function(){
+            if ($(this).is(":checked") == true) {
+                $("#stripe-payment-form-render").addClass('d-none');
+            }
+        });
+
+        $("#payment_method_two").click(function(){
+            if ($(this).is(":checked") == true) {
+                $("#stripe-payment-form-render").removeClass('d-none');
+            }
+        });
 
         // All Forms submission
         // $("#orderForm").submit(function(event){
@@ -331,16 +341,16 @@
         // });
 
         var grandTotal = {{$grandTotal}};
-        // var productData = [];
+        var productData = [];
 
-        // $("tbody .product-row").each(function() {
-        //     var productInfo = $(this).find("td:first-child").text().trim(); // Get the text content of the first <td> within the product row
-        //     var productName = productInfo.split(' x ')[0].trim(); // Extract product name before 'x'
-        //     var qty = productInfo.split(' x ')[1].trim(); // Extract quantity after 'x'
+        $("tbody .product-row").each(function() {
+            var productInfo = $(this).find("td:first-child").text().trim(); // Get the text content of the first <td> within the product row
+            var productName = productInfo.split(' x ')[0].trim(); // Extract product name before 'x'
+            var qty = productInfo.split(' x ')[1].trim(); // Extract quantity after 'x'
             
-        //     // Push product name and quantity as an object to the productData array
-        //     productData.push({ name: productName, quantity: qty });
-        // });
+            // Push product name and quantity as an object to the productData array
+            productData.push({ name: productName, quantity: qty });
+        });
 
         $("#orderForm").submit(function(event){
             event.preventDefault();
@@ -361,13 +371,13 @@
                 });
 
                 // Convert productData array to JSON string and append as hidden input
-                // var productDataInput = $('<input>').attr({
-                //     type: 'hidden',
-                //     name: 'product_data',
-                //     value: JSON.stringify(productData)
-                // });
+                var productDataInput = $('<input>').attr({
+                    type: 'hidden',
+                    name: 'product_data',
+                    value: JSON.stringify(productData)
+                });
 
-                $('#orderForm').append(grandTotalInput);
+                $('#orderForm').append(grandTotalInput,productDataInput);
 
                 if (confirm('Are you sure you want to proceed with Stripe payment?')) {
                     stripeOrder();
@@ -504,120 +514,14 @@
     // for stripe
     function stripeOrder() {
         $.ajax({
-            url: '{{ route("stripe") }}',
-            type: 'post',
+            url: '{{ route("stripe.index") }}',
+            type: 'get',
             data: $("#orderForm").serializeArray(),
             dataType: 'json',
             success: function(response){
                 var errors = response.errors;
                 if (response.status === false) {
-                    if (errors.fname) {
-                        $("#fname").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.fname);
-                    } else {
-                        $("#fname").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.lname) {
-                        $("#lname").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.lname);
-                    } else {
-                        $("#lname").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.country) {
-                        $("#country").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.country);
-                    } else {
-                        $("#country").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.address) {
-                        $("#address").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.address);
-                    } else {
-                        $("#address").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.city) {
-                        $("#city").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.city);
-                    } else {
-                        $("#city").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.state) {
-                        $("#state").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.state);
-                    } else {
-                        $("#state").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.zip) {
-                        $("#zip").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.zip);
-                    } else {
-                        $("#zip").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.email) {
-                        $("#email").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.email);
-                    } else {
-                        $("#email").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
                     
-                    if (errors.phone) {
-                        $("#phone").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.phone);
-                    } else {
-                        $("#phone").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
                 } else {
                     // window.location.href = "{{ url('thankyou/') }}/"+response.orderId;
                 }
