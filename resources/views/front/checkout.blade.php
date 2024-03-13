@@ -508,8 +508,7 @@
             type: 'post',
             headers: {
                 'Content-Type':'application/json',
-                'Accept':'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Accept':'application/json'
             },
             
             data: $("#orderForm").serializeArray(),
