@@ -20,6 +20,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\StripePaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -62,9 +63,10 @@ Route::post('/apply-discount',[CartController::class,'applyDiscount'])->name('fr
 Route::post('/remove-discount',[CartController::class,'removeCoupon'])->name('front.removeCoupon');
 
 // stripe routes
-Route::post('/stripe',[StripeController::class,'stripe'])->name('stripe');
-Route::get('/success',[StripeController::class,'success'])->name('success');
-Route::get('/cancel',[StripeController::class,'cancel'])->name('cancel');
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::get('stripe', 'stripe')->name('stripe.index');
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+});
 
 // User reset password routes
 Route::get('/forgot-password',[AuthController::class,'forgotPassword'])->name('front.forgotPassword');
