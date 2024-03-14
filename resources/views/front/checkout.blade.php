@@ -340,18 +340,6 @@
         //     });
         // });
 
-        var grandTotal = {{$grandTotal}};
-        var productData = [];
-
-        $("tbody .product-row").each(function() {
-            var productInfo = $(this).find("td:first-child").text().trim(); // Get the text content of the first <td> within the product row
-            var productName = productInfo.split(' x ')[0].trim(); // Extract product name before 'x'
-            var qty = productInfo.split(' x ')[1].trim(); // Extract quantity after 'x'
-            
-            // Push product name and quantity as an object to the productData array
-            productData.push({ name: productName, quantity: qty });
-        });
-
         $("#orderForm").submit(function(event){
             event.preventDefault();
 
@@ -359,25 +347,9 @@
 
             var paymentMethod = $('input[name="payment_method"]:checked').val();
 
-            // If payment method is COD, proceed with order placement
             if (paymentMethod === 'cod') {
                 codOrder();
             } else if (paymentMethod === 'stripe') {
-                // passing grandTotal
-                var grandTotalInput = $('<input>').attr({
-                type: 'hidden',
-                name: 'grand_total',
-                value: grandTotal
-                });
-
-                // Convert productData array to JSON string and append as hidden input
-                var productDataInput = $('<input>').attr({
-                    type: 'hidden',
-                    name: 'product_data',
-                    value: JSON.stringify(productData)
-                });
-
-                $('#orderForm').append(grandTotalInput,productDataInput);
 
                 if (confirm('Are you sure you want to proceed with Stripe payment?')) {
                     stripeOrder();
@@ -517,15 +489,18 @@
             url: '{{ route("stripe.index") }}',
             type: 'get',
             data: $("#orderForm").serializeArray(),
-            success: function(response){
-                console.log("here");
-                var newWindow = window.open("", "_blank");
-                newWindow.document.write(response);
-                newWindow.document.close();
-            },
-            error: function(xhr, status, error){
-                console.log("error console", error, status);
-            }
+                success: function(response){
+                    // Open a new window and write the HTML response to it
+                    var newWindow = window.open("", "_blank");
+                    newWindow.document.write(response);
+                    newWindow.document.close();
+                    
+                },
+                error: function(xhr, status, error){
+                    console.log("Error:", error, status);
+                    // Handle AJAX error
+                    alert("An error occurred while processing your request. Please try again later.");
+                }
         });
     }
 
