@@ -78,6 +78,7 @@
     
                         <div class="row">
                             <div class="col-xs-12">
+                                <input type="hidden" id="orderId" name="orderId" value="{{$orderId}}">
                                 <input type="hidden" id="grandTotal" name="grandTotal" value="{{$grandTotal}}">
                                 <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now (${{$grandTotal}})</button>
                             </div>
@@ -154,9 +155,13 @@
             } else {
                 /* token contains id, last4, and card type */
                 var token = response['id'];
+                var grandTotal = $("#grandTotal").val(); 
+                var orderId = $("#orderId").val();
 
                 $form.find('input[type=text]').empty();
                 $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+                $form.append("<input type='hidden' name='grandTotal' value='" + grandTotal + "'/>");
+                $form.append("<input type='hidden' name='orderId' value='" + orderId + "'/>");
                 $form.get(0).submit();
             }
         }

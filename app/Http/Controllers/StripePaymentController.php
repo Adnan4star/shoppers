@@ -163,6 +163,8 @@ class StripePaymentController extends Controller
 
         
         $data['grandTotal'] = $grandTotal;
+        $data['orderId'] = $order->id;
+        //append order id with view
         
         return view('front.stripe',$data);
     }
@@ -174,16 +176,33 @@ class StripePaymentController extends Controller
      */
     public function stripePost(Request $request)
     {
-        
+        //get order id
+        //in if response is 200 condition ---> start
+        //update order against id
+        // return thank you blade ---> end
+        $orderId = $request->orderId;
+
         Stripe\Stripe::setApiKey(config('stripe.stripe_sk'));
         
-        Stripe\Charge::create ([
-                    "amount" => 199 * 100,
+        $response = Stripe\Charge::create ([
+                    "amount" => $request->grandTotal * 100,
                     "currency" => "usd",
                     "source" => $request->stripeToken,
                     "description" => "Test payment from Shoppers.com." 
             ]);
+
             
+
+            if ($response->paid == true) {
+                Order::where('id', $orderId)->update(
+                    [                         
+                        'payment_status' => 'paid',
+                    ]
+                );
+                
+                return redirect(url('thankyou/' . $orderId));
+            }
+
             session()->flash('success', 'Payment successful!');  
             return back();
         
