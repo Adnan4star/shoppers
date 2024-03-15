@@ -18,6 +18,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\StripePaymentController;
@@ -62,11 +63,7 @@ Route::post('/get-order-summary',[CartController::class,'getOrderSummary'])->nam
 Route::post('/apply-discount',[CartController::class,'applyDiscount'])->name('front.applyDiscount');
 Route::post('/remove-discount',[CartController::class,'removeCoupon'])->name('front.removeCoupon');
 
-// stripe routes
-Route::controller(StripePaymentController::class)->group(function(){
-    Route::get('stripe', 'stripe')->name('stripe.index');
-    Route::post('stripe', 'stripePost')->name('stripe.post');
-});
+
 
 // User reset password routes
 Route::get('/forgot-password',[AuthController::class,'forgotPassword'])->name('front.forgotPassword');
@@ -102,6 +99,12 @@ Route::group(['prefix' => 'account'],function(){
 
         Route::get('/wishlist',[AuthController::class,'wishlist'])->name('account.wishlist');
         Route::post('/remove-product-from-wishlist',[AuthController::class,'removeProductFromWishlist'])->name('account.removeProductFromWishlist');
+
+        // stripe routes
+        Route::controller(StripePaymentController::class)->group(function(){
+            Route::get('stripe', 'stripe')->name('stripe.index');
+            Route::post('stripe', 'stripePost')->name('stripe.post');
+        });
 
         Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
     });
