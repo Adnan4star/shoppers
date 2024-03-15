@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Shipping;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -177,10 +178,11 @@ class StripePaymentController extends Controller
     public function stripePost(Request $request)
     {
         //get order id
-        //in if response is 200 condition ---> start
+        //in if response paid true condition ---> start
         //update order against id
         // return thank you blade ---> end
         $orderId = $request->orderId;
+        $userId = Auth::id();
 
         Stripe\Stripe::setApiKey(config('stripe.stripe_sk'));
         
@@ -191,16 +193,34 @@ class StripePaymentController extends Controller
                     "description" => "Test payment from Shoppers.com." 
             ]);
 
-            
-
             if ($response->paid == true) {
                 Order::where('id', $orderId)->update(
                     [                         
                         'payment_status' => 'paid',
                     ]
                 );
-                
+
+                $payment = new Payment();
+                $payment->user_id = $userId;
+                $payment->transaction_id = $response->id;
+                $payment->amount = $response->amount;
+                $payment->currency = $response->currency;
+
+                if ($response->status == 'succeeded') {
+                    $payment->payment_status = 'success';
+                } elseif ($response->status == 'failed') {
+                    $payment->payment_status = 'failure';
+                } else {
+                    $payment->payment_status = 'pending';
+                }
+
+                $payment->payment_gateway = "Stripe";
+                $payment->save();
+
                 return redirect(url('thankyou/' . $orderId));
+            } else {
+                session()->flash('error', 'Payment was not successful!');  
+                return back();
             }
 
             session()->flash('success', 'Payment successful!');  
