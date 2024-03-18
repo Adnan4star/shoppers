@@ -20,6 +20,7 @@ class PaypalController extends Controller
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal')); // Calling paypal.php to user its data
         $paypal_token = $provider->getAccessToken();
+
         $response = $provider->createOrder([  // enter Data which need to create
             "intent" => "CAPTURE",
             "application_context" => [
