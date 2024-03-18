@@ -171,10 +171,14 @@
                                             </div>
 
                                             <div>
-                                                <input type="radio" name="payment_method" value="stripe" id="payment_method_two">
+                                                <input type="radio" name="payment_method" value="stripe" id="">
                                                 <label for="payment_method_two" class="form-check-label">Stripe</label>
                                             </div>
 
+                                            <div>
+                                                <input type="radio" name="payment_method" value="paypal" id="payment_method_three">
+                                                <label for="payment_method_three" class="form-check-label">Paypal</label>
+                                            </div>
                                             
                                         </div>
                                         
@@ -196,17 +200,17 @@
 
     <script type="text/javascript">
         // Payment methods rendering
-        $("#payment_method_one").click(function(){
-            if ($(this).is(":checked") == true) {
-                $("#stripe-payment-form-render").addClass('d-none');
-            }
-        });
+        // $("#payment_method_one").click(function(){
+        //     if ($(this).is(":checked") == true) {
+        //         $("#stripe-payment-form-render").addClass('d-none');
+        //     }
+        // });
 
-        $("#payment_method_two").click(function(){
-            if ($(this).is(":checked") == true) {
-                $("#stripe-payment-form-render").removeClass('d-none');
-            }
-        });
+        // $("#payment_method_two").click(function(){
+        //     if ($(this).is(":checked") == true) {
+        //         $("#stripe-payment-form-render").removeClass('d-none');
+        //     }
+        // });
 
         // // All Forms submission
         // $("#orderForm").submit(function(event){
@@ -345,14 +349,25 @@
 
             $('button[type="submit"]').prop('disabled', true);
 
+            var grandTotal = parseFloat($("#grandTotal").text().replace('$', ''));
+            // Serialize form data including the $grandTotal variable
+            var formData = $("#orderForm").serializeArray();
+            formData.push({ name: "grandTotal", value: grandTotal });
+
             var paymentMethod = $('input[name="payment_method"]:checked').val();
 
-            if (paymentMethod === 'cod') {
+            if (paymentMethod == 'cod') {
                 codOrder();
-            } else if (paymentMethod === 'stripe') {
+            } else if (paymentMethod == 'stripe') {
 
                 if (confirm('Are you sure you want to proceed with Stripe payment?')) {
                     stripeOrder();
+                } else {
+                    $('button[type="submit"]').prop('disabled', false);
+                }
+            } else if (paymentMethod == 'paypal') {
+                if (confirm('Are you sure you want to proceed with Paypal payment method?')) {
+                    paypalOrder(formData);
                 } else {
                     $('button[type="submit"]').prop('disabled', false);
                 }
@@ -501,6 +516,24 @@
                     // Handle AJAX error
                     alert("An error occurred while processing your request. Please try again later.");
                 }
+        });
+    }
+
+    // for Paypal
+    function paypalOrder(formData) {
+        $.ajax({
+            url: '{{ route("paypal") }}',
+            type: 'post',
+            data: formData,
+                success: function(response){
+                    window.location.href = response;
+                },
+                error: function(xhr, status, error) {
+                console.log("Error:", error, status);
+                // Handle AJAX error
+                alert("An error occurred while processing your request. Please try again later.");
+                $('button[type="submit"]').prop('disabled', false);
+            }
         });
     }
 
