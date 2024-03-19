@@ -112,7 +112,7 @@
                   <li>
                     <a href="{{ route('front.cart') }}" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
-                      <span class="count">0</span>
+                      <span class="count"> {{ Cart::count() }} </span>
                     </a>
                   </li> 
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
