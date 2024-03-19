@@ -69,6 +69,9 @@ class PaypalController extends Controller
             $payment->payment_status = 'success'; // Response values are different, need to alter payments column names
             $payment->save();
 
+            Cart::destroy();
+            session()->forget('code');
+            
             return "Payment is successfull.";
         } else {
             return redirect()->route('cancel');
