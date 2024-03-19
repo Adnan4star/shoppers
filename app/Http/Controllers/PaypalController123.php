@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CustomerAddress;
-use App\Models\Order;
-use App\Models\OrderItem;
 use App\Models\Payment;
-use App\Models\Product;
-use App\Models\Shipping;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
-class PaypalController extends Controller
+class PaypalController123 extends Controller
 {
     public function paypal(Request $request)
     {
