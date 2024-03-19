@@ -102,7 +102,7 @@
                     </div>
                     <div class="col-md-6">
 
-                        <div class="row mb-5">
+                        <div class="row mb-4">
                             <div class="col-md-12">
                                 <h2 class="h3 mb-3 text-black">Coupon Code</h2>
                                 <div class="p-3 p-lg-5 border">
@@ -128,7 +128,7 @@
                             </div>
                         </div>
                     
-                        <div class="row mb-5">
+                        <div class="row mb-4">
                             <div class="col-md-12">
                                 <h2 class="h3 mb-3 text-black">Your Order</h2>
                                 <div class="p-3 p-lg-5 border">
@@ -161,28 +161,29 @@
                                                 <td class="text-black font-weight-bold" id="grandTotal"><strong>${{ $grandTotal }}</strong></td>
                                             </tr>
                                         </tbody>
-                                    </table>
+                                    </table> 
+                                </div>
+                            </div>
+                        </div>
 
-                                        <div class="">
-                                            <h3 class="card-title h5 mb-3">Payment Method</h3>
-                                            <div>
-                                                <input checked type="radio" name="payment_method" value="cod" id="payment_method_one">
-                                                <label for="payment_method_one" class="form-check-label">COD</label>
-                                            </div>
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <h2 class="h3 mb-3 text-black">Payment Methods</h2>
+                                <div class="p-3 p-lg-5 border">
+                                    <div>
+                                        <input checked type="radio" name="payment_method" value="cod" id="payment_method_one">
+                                        <label for="payment_method_one" class="form-check-label">COD</label>
+                                    </div>
 
-                                            <div>
-                                                <input type="radio" name="payment_method" value="stripe" id="">
-                                                <label for="payment_method_two" class="form-check-label">Stripe</label>
-                                            </div>
+                                    <div>
+                                        <input type="radio" name="payment_method" value="stripe" id="payment_method_two">
+                                        <label for="payment_method_two" class="form-check-label">Stripe</label>
+                                    </div>
 
-                                            <div>
-                                                <input type="radio" name="payment_method" value="paypal" id="payment_method_three">
-                                                <label for="payment_method_three" class="form-check-label">Paypal</label>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                
+                                    <div>
+                                        <input type="radio" name="payment_method" value="paypal" id="payment_method_three">
+                                        <label for="payment_method_three" class="form-check-label">Paypal</label>
+                                    </div>
                                     <div class="form-group mt-2">
                                         <button type="submit" class="btn btn-primary btn-lg py-3 btn-block" >Place Order</button>
                                     </div>
@@ -374,168 +375,168 @@
             }
         });
 
-    // for cod
-    function codOrder() {
-        $.ajax({
-            url: '{{ route("front.processCheckout") }}',
-            type: 'post',
-            data: $("#orderForm").serializeArray(),
-            dataType: 'json',
-            success: function(response){
-                var errors = response.errors;
-                if (response.status === false) {
-                    if (errors.fname) {
-                        $("#fname").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.fname);
-                    } else {
-                        $("#fname").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.lname) {
-                        $("#lname").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.lname);
-                    } else {
-                        $("#lname").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.country) {
-                        $("#country").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.country);
-                    } else {
-                        $("#country").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.address) {
-                        $("#address").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.address);
-                    } else {
-                        $("#address").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.city) {
-                        $("#city").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.city);
-                    } else {
-                        $("#city").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.state) {
-                        $("#state").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.state);
-                    } else {
-                        $("#state").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.zip) {
-                        $("#zip").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.zip);
-                    } else {
-                        $("#zip").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-
-                    if (errors.email) {
-                        $("#email").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.email);
-                    } else {
-                        $("#email").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-                    
-                    if (errors.phone) {
-                        $("#phone").addClass('is-invalid')
-                        .siblings("p")
-                        .addClass('invalid-feedback')
-                        .html(errors.phone);
-                    } else {
-                        $("#phone").removeClass('is-invalid')
-                        .siblings("p")
-                        .removeClass('invalid-feedback')
-                        .html('');
-                    }
-                } else {
-                    window.location.href = "{{ url('thankyou/') }}/"+response.orderId;
-                }
-            }
-        });
-    }
-
-    // for stripe
-    function stripeOrder() {
-        $.ajax({
-            url: '{{ route("stripe.index") }}',
-            type: 'get',
-            data: $("#orderForm").serializeArray(),
+        // for cod
+        function codOrder() {
+            $.ajax({
+                url: '{{ route("front.processCheckout") }}',
+                type: 'post',
+                data: $("#orderForm").serializeArray(),
+                dataType: 'json',
                 success: function(response){
-                    // Open a new window and write the HTML response to it
-                    var newWindow = window.open("", "_blank");
-                    newWindow.document.write(response);
-                    newWindow.document.close();
-                    
-                },
-                error: function(xhr, status, error){
+                    var errors = response.errors;
+                    if (response.status === false) {
+                        if (errors.fname) {
+                            $("#fname").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.fname);
+                        } else {
+                            $("#fname").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html('');
+                        }
+
+                        if (errors.lname) {
+                            $("#lname").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.lname);
+                        } else {
+                            $("#lname").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html('');
+                        }
+
+                        if (errors.country) {
+                            $("#country").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.country);
+                        } else {
+                            $("#country").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html('');
+                        }
+
+                        if (errors.address) {
+                            $("#address").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.address);
+                        } else {
+                            $("#address").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html('');
+                        }
+
+                        if (errors.city) {
+                            $("#city").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.city);
+                        } else {
+                            $("#city").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html('');
+                        }
+
+                        if (errors.state) {
+                            $("#state").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.state);
+                        } else {
+                            $("#state").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html('');
+                        }
+
+                        if (errors.zip) {
+                            $("#zip").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.zip);
+                        } else {
+                            $("#zip").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html('');
+                        }
+
+                        if (errors.email) {
+                            $("#email").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.email);
+                        } else {
+                            $("#email").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html('');
+                        }
+                        
+                        if (errors.phone) {
+                            $("#phone").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.phone);
+                        } else {
+                            $("#phone").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html('');
+                        }
+                    } else {
+                        window.location.href = "{{ url('thankyou/') }}/"+response.orderId;
+                    }
+                }
+            });
+        }
+
+        // for stripe
+        function stripeOrder() {
+            $.ajax({
+                url: '{{ route("stripe.index") }}',
+                type: 'get',
+                data: $("#orderForm").serializeArray(),
+                    success: function(response){
+                        // Open a new window and write the HTML response to it
+                        var newWindow = window.open("", "_blank");
+                        newWindow.document.write(response);
+                        newWindow.document.close();
+                        
+                    },
+                    error: function(xhr, status, error){
+                        console.log("Error:", error, status);
+                        // Handle AJAX error
+                        alert("An error occurred while processing your request. Please try again later.");
+                    }
+            });
+        }
+
+        // for Paypal
+        function paypalOrder(formData) {
+            $.ajax({
+                url: '{{ route("paypal") }}',
+                type: 'post',
+                data: formData,
+                    success: function(response){
+                        window.location.href = response;
+                    },
+                    error: function(xhr, status, error) {
                     console.log("Error:", error, status);
                     // Handle AJAX error
                     alert("An error occurred while processing your request. Please try again later.");
+                    $('button[type="submit"]').prop('disabled', false);
                 }
-        });
-    }
-
-    // for Paypal
-    function paypalOrder(formData) {
-        $.ajax({
-            url: '{{ route("paypal") }}',
-            type: 'post',
-            data: formData,
-                success: function(response){
-                    window.location.href = response;
-                },
-                error: function(xhr, status, error) {
-                console.log("Error:", error, status);
-                // Handle AJAX error
-                alert("An error occurred while processing your request. Please try again later.");
-                $('button[type="submit"]').prop('disabled', false);
-            }
-        });
-    }
+            });
+        }
 
 
         // If User Changes Country on checkout then shipping charges should calculate

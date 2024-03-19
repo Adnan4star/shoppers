@@ -64,9 +64,10 @@ Route::post('/apply-discount',[CartController::class,'applyDiscount'])->name('fr
 Route::post('/remove-discount',[CartController::class,'removeCoupon'])->name('front.removeCoupon');
 
 // Paypal routes
-Route::post('paypal',[PaypalController123::class, 'paypal'])->name('paypal');
-Route::get('success',[PaypalController123::class, 'success'])->name('success');
-Route::get('cancel',[PaypalController123::class, 'cancel'])->name('cancel');
+Route::post('/paypal',[PaypalController123::class, 'paypal'])->name('paypal');
+Route::get('/success',[PaypalController123::class, 'success'])->name('success');
+Route::get('/cancel',[PaypalController123::class, 'cancel'])->name('cancel');
+
 
 // User reset password routes
 Route::get('/forgot-password',[AuthController::class,'forgotPassword'])->name('front.forgotPassword');
@@ -107,9 +108,9 @@ Route::group(['prefix' => 'account'],function(){
         Route::controller(StripePaymentController::class)->group(function(){
             Route::get('stripe', 'stripe')->name('stripe.index');
             Route::post('stripe', 'stripePost')->name('stripe.post');
-
         });
 
+        
         Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
     });
 });

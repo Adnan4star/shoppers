@@ -20,7 +20,6 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $product = Product::find($request->id);
-
         if ($product == null) {
             return response()->json([
                 'status' => false,
@@ -362,7 +361,6 @@ class CartController extends Controller
 
     }
 
-
     public function thankyou($id)
     {
         $data['id'] = $id;
@@ -525,5 +523,4 @@ class CartController extends Controller
         return $this->getOrderSummary($request);
     }
 
-    // stripe
 }
